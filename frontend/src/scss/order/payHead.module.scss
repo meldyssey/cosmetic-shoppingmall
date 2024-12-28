@@ -1,0 +1,37 @@
+.stepContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .circle {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: #ccc; /* 비활성 상태 */
+        margin-bottom: 8px;
+    }
+
+    .label {
+        font-size: 14px;
+        color: #666; /* 비활성 상태 */
+    }
+}
+
+.stepActive {
+    .circle {
+        background-color: #1c1c1c; /* 활성 상태 */
+    }
+
+    .label {
+        color: #1c1c1c; /* 활성 상태 텍스트 */
+        font-weight: bold;
+    }
+}

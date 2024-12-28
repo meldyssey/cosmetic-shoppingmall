@@ -1,0 +1,79 @@
+.note {
+    .noteTitle {
+        margin-right: 50px;
+        margin-left: 50px;
+        margin-bottom: 40px;
+        padding: 30px;
+    }
+    .noteWrap {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .infoWrap {
+            width: calc(100% / 3);
+            padding: 20px;
+            text-align: center;
+            .noteImg {
+                img {
+                    width: 80%;
+                    display: block;
+                    margin: 0 auto;
+                }
+            }
+            .noteName {
+                padding: 10px;
+                text-align: center;
+                font-weight: 700;
+            }
+            .noteIntro {
+                line-height: 1.2;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .note {
+        .noteTitle {
+            margin-right: 50px;
+            margin-left: 50px;
+            margin-bottom: 0;
+            padding: 30px;
+        }
+        .noteWrap {
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+            .infoWrap {
+                width: 100%;
+                padding: 20px;
+                margin: 0 auto;
+                text-align: center;
+                .noteImg {
+                    img {
+                        width: 50%;
+                        display: block;
+                        margin: 0 auto;
+                    }
+                }
+                .noteName {
+                    padding: 10px;
+                    text-align: center;
+                    font-weight: 700;
+                }
+                .noteIntro {
+                    text-align: center;
+                    line-height: 1.2;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 480px) {
+    .note {
+        .noteTitle {
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+    }
+}

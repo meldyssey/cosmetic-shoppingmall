@@ -1,0 +1,133 @@
+/* AdminDetail.module.scss */
+.detailWrap {
+    .detail {
+        padding: 20px;
+
+        .title {
+            padding: 30px;
+            font-size: 30px;
+            text-align: center;
+            a {
+                font-size: 17px;
+                margin-left: 10px; /* 제목과 간격 */
+                font-style: italic; /* 기울임 */
+                text-decoration: underline; /* 밑줄 */
+                border: none;
+                background: none;
+                color: #1c1c1c;
+                cursor: pointer;
+
+                &:hover {
+                    color: #00f;
+                }
+            }
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+
+            tr {
+                border-bottom: 1px solid #ddd;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                td {
+                    padding: 10px;
+                    vertical-align: middle;
+
+                    &:first-child {
+                        font-weight: bold;
+                        width: 20%;
+                        text-align: center;
+                        padding-right: 15px;
+                    }
+
+                    &:last-child {
+                        width: 80%;
+
+                        input[type='text'],
+                        textarea,
+                        select {
+                            width: 100%;
+                            padding: 8px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            font-size: 14px;
+                        }
+
+                        input[type='radio'] {
+                            margin-right: 5px;
+                        }
+
+                        label {
+                            margin-left: 10px;
+                        }
+                    }
+                    .red {
+                        color: #f00;
+                    }
+                }
+            }
+        }
+
+        .actionButtons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &.resetbutton {
+                    background-color: #ccc;
+                    color: #000;
+
+                    &:hover {
+                        background-color: #bbb;
+                    }
+                }
+
+                &.searchbutton {
+                    background-color: #007bff;
+                    color: #fff;
+
+                    &:hover {
+                        background-color: #0056b3;
+                    }
+                }
+            }
+        }
+    }
+    .Link {
+        display: block;
+        padding: 10px 20px;
+        margin: 20px auto;
+        border: none;
+        border-radius: 4px;
+        width: 100px;
+        text-align: center;
+        font-size: 14px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+
+    .imgTag {
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+}

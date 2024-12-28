@@ -1,0 +1,230 @@
+// Accordion.scss
+
+.accordion {
+    cursor: pointer;
+    padding: 15px;
+    margin-bottom: 10px;
+
+    &.open {
+        border: 1px dashed #1c1c1c; // 열렸을 때 대시드 보더
+    }
+
+    &:not(.open) {
+        border-bottom: 1px solid #ccc; // 닫혔을 때 보더 없음
+    }
+
+    .accordion-title {
+        font-size: 24px;
+        font-family: "NanumMyeongjo";
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .accordion-content {
+        margin-top: 10px;
+        padding-top: 10px;
+        font-size: 14px;
+        color: #1c1c1c;
+        line-height: 1.5;
+    }
+
+    p {
+        line-height: 24px;
+    }
+}
+
+.wrapper {
+    background-color: #fcf9ee;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    line-height: 22px;
+
+    // margin: 10px 20px;
+    .bold {
+        font-weight: 800;
+        margin-bottom: 30px;
+    }
+
+    .marginbottom {
+        margin-bottom: 50px;
+        line-height: 22px;
+    }
+
+    .faqtitle {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+}
+
+.orderli {
+    list-style: disc;
+    margin: 15px;
+}
+
+.hli {
+    list-style-type: "-";
+    margin-left: 20px;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-family: "NanumMyeongjo";
+}
+
+//온라인 쇼핑하기 line-height
+.onlinewrapper {
+    width: 90%;
+    margin: 0 auto;
+
+    .bold {
+        line-height: 30px;
+    }
+
+    .listyle {
+        list-style: disc;
+        margin: 15px;
+    }
+
+    .onlinep {
+        margin-top: 20px;
+    }
+
+    .linkto {
+        text-decoration: underline;
+        font-weight: 800;
+    }
+
+    .watch {
+        font-weight: 800;
+        margin-top: 30px;
+    }
+}
+
+//서비스 이용 약관
+.termswrapper {
+    width: 90%;
+    margin: 0 auto;
+    line-height: 30px;
+    font-size: 14px;
+    margin-bottom: 50px;
+
+    .termstitle {
+        font-size: 24px;
+        font-family: "NanumMyeongjo";
+    }
+
+    .tterms {
+        font-weight: bold;
+        text-decoration: underline;
+        line-height: 24px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .oli {
+        list-style: disc;
+        margin-left: 20px;
+    }
+}
+
+.p {
+    line-height: 24px;
+}
+
+//////////////반응형////////
+
+/* 태블릿 (800px 이하) */
+@media screen and (max-width: 800px) {
+    .accordion {
+        padding: 10px;
+
+        .accordion-title {
+            font-size: 20px;
+            line-height: 30px;
+        }
+
+        .accordion-content {
+            font-size: 13px;
+        }
+    }
+
+    .wrapper,
+    .onlinewrapper,
+    .termswrapper {
+        width: 95%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .wrapper .faqtitle,
+    .title,
+    .termswrapper .termstitle {
+        font-size: 20px;
+    }
+
+    .bold {
+        font-size: 16px;
+    }
+
+    .bold {
+        font-size: 16px;
+    }
+
+    .p {
+        font-size: 16px;
+        line-height: 26px;
+    }
+
+    .marginbottom {
+        line-height: 24px;
+
+    }
+}
+
+/* 모바일 (480px 이하) */
+@media screen and (max-width: 480px) {
+    .accordion {
+        padding: 10px;
+
+        .accordion-title {
+            font-size: 18px;
+        }
+
+        .accordion-content {
+            font-size: 12px;
+        }
+    }
+
+    .wrapper,
+    .onlinewrapper,
+    .termswrapper {
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .wrapper .faqtitle,
+    .title,
+    .termswrapper .termstitle {
+        font-size: 18px;
+    }
+
+    .bold {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    .hli,
+    .oli {
+        margin-left: 10px;
+    }
+}

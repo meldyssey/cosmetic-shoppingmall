@@ -1,0 +1,108 @@
+/* AdminDetail.module.scss */
+.detail {
+    padding: 20px;
+    margin-top: 20px;
+
+    > div {
+        display: inline-block;
+        padding: 10px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        &:last-of-type {
+            margin-top: 20px;
+        }
+    }
+    .title {
+        padding: 30px;
+        font-size: 30px;
+        text-align: center;
+        a {
+            font-size: 17px;
+            margin-left: 10px; /* 제목과 간격 */
+            font-style: italic; /* 기울임 */
+            text-decoration: underline; /* 밑줄 */
+            border: none;
+            background: none;
+            color: #1c1c1c;
+            cursor: pointer;
+
+            &:hover {
+                color: #00f;
+            }
+        }
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #1c1c1c;
+
+        tr {
+            border-bottom: 1px solid #1c1c1c;
+            text-align: center;
+            vertical-align: center;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            td,
+            th {
+                padding: 10px;
+                vertical-align: middle;
+
+                .price {
+                    text-align: right;
+                    .color {
+                        color: #aaa;
+                    }
+                }
+
+                &:first-child {
+                    font-weight: bold;
+                    text-align: center;
+                    padding-right: 15px;
+                }
+
+                &:last-child {
+                    input[type='text'],
+                    textarea,
+                    select {
+                        width: 100%;
+                        padding: 8px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        font-size: 14px;
+                    }
+
+                    input[type='radio'] {
+                        margin-right: 5px;
+                    }
+
+                    label {
+                        margin-left: 10px;
+                    }
+                }
+                .link {
+                    color: #007bff;
+                    div {
+                        color: #007bff;
+                    }
+                }
+            }
+        }
+    }
+
+    .imgTag {
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+}
+
+.load {
+    margin-top: 50px;
+}

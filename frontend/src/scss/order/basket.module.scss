@@ -1,0 +1,261 @@
+.wrap {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+
+    .shoppingHead {
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        margin: 20px 0;
+        color: #333;
+    }
+
+    .shoppingHead2 {
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+
+        th,
+        td {
+            padding: 16px; /* 기본 padding을 넓혀 높이 증가 */
+            text-align: center;
+            vertical-align: middle;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        td {
+            height: 50px; /* 기본 높이 추가 */
+            font-size: 14px;
+        }
+
+        th {
+            font-size: 16px;
+
+            &:last-of-type {
+                color: #fcf9ee;
+            }
+        }
+
+        select {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .deleteBtn {
+            padding: 5px 10px;
+            background-color: #fcf9ee;
+            color: #1c1c1c;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: underline;
+
+            &:hover {
+                background-color: #fcf9ee;
+            }
+        }
+    }
+
+    .footer {
+        text-align: right;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+
+        .total {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .paymentBtn {
+            padding: 10px 30px;
+            background-color: #1c1c1c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #444;
+            }
+        }
+    }
+
+    .zero {
+        text-align: center;
+        margin-top: 50px;
+
+        div {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1c1c1c;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+
+            &:hover {
+                background-color: #444;
+            }
+        }
+    }
+
+    /* 반응형 스타일 */
+    @media screen and (max-width: 700px) {
+        .shoppingHead {
+            font-size: 28px;
+        }
+
+        .shoppingHead2 {
+            font-size: 14px;
+        }
+
+        .table {
+            th,
+            td {
+                font-size: 14px;
+                padding: 16px; /* 700px 이하에서도 충분한 높이 유지 */
+            }
+
+            td {
+                height: 60px; /* 더 높은 값으로 조정 가능 */
+            }
+        }
+
+        .footer {
+            text-align: center;
+
+            .paymentBtn {
+                width: 90%;
+            }
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .shoppingHead {
+            font-size: 24px;
+        }
+
+        .shoppingHead2 {
+            font-size: 12px;
+        }
+
+        .table {
+            th,
+            td {
+                font-size: 10px;
+                padding: 12px; /* 500px 이하에서는 약간 좁은 padding */
+            }
+
+            td {
+                height: 70px; /* 500px 이하에서도 충분한 높이 확보 */
+            }
+
+            .deleteBtn {
+                font-size: 10px;
+                padding: 4px 6px;
+                background-color: #fcf9ee;
+                color: #1c1c1c;
+                text-decoration: underline;
+
+                &:hover {
+                    background-color: #fcf9ee;
+                }
+            }
+        }
+
+        .footer {
+            .total {
+                font-size: 14px;
+            }
+
+            .paymentBtn {
+                width: 100%;
+                font-size: 14px;
+            }
+        }
+
+        .zero {
+            div {
+                font-size: 1.2rem;
+            }
+
+            a {
+                width: 90%;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .shoppingHead {
+        font-size: 24px; /* 텍스트 크기 축소 */
+    }
+
+    .shoppingHead2 {
+        font-size: 12px;
+    }
+
+    .table {
+        th,
+        td {
+            font-size: 10px; /* 글씨 크기 축소 */
+            padding: 6px; /* padding 축소로 공간 확보 */
+            white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+            overflow: hidden;
+            text-overflow: ellipsis; /* 넘치는 텍스트 처리 */
+        }
+
+        td {
+            height: 40px; /* 더 낮은 높이로 조정 */
+        }
+
+        .deleteBtn {
+            font-size: 10px;
+            padding: 4px 6px;
+            background-color: #fcf9ee;
+            color: #1c1c1c;
+
+            &:hover {
+                background-color: #fcf9ee;
+            }
+        }
+    }
+
+    .footer {
+        .total {
+            font-size: 12px; /* 총합 텍스트 크기 축소 */
+        }
+
+        .paymentBtn {
+            width: 100%;
+            font-size: 12px;
+        }
+    }
+
+    .zero {
+        div {
+            font-size: 1.2rem;
+        }
+
+        a {
+            width: 90%;
+            font-size: 12px;
+        }
+    }
+}

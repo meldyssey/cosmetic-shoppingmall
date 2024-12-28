@@ -1,0 +1,81 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    .sectionContainer {
+        gap: 20px;
+        margin: 50px auto;
+        width: 95%;
+
+        .block {
+            background-color: #fefcfa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .sectionBox {
+            background-color: #fefcfa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin-bottom: 30px;
+
+            .sectionHeader {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+            .editinfo {
+                color: #007bff;
+                font-size: 14px;
+                text-decoration: none;
+                margin-right: 10px;
+            }
+            .a1 {
+                color: #007bff;
+                font-size: 14px;
+                text-decoration: none;
+            }
+            .deleteMember {
+                color: #007bff;
+                font-size: 14px;
+                text-decoration: none;
+            }
+        }
+
+        .infoBlock {
+            margin-top: 15px;
+            line-height: 1.8;
+            font-size: 14px;
+            text-align: left;
+            color: #333;
+            padding: 10px 15px;
+            border-top: 1px solid #ddd;
+
+            p {
+                margin: 0;
+            }
+            .recentOrder {
+                display: block;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+                font-size: 14px;
+                color: #333;
+            }
+            .orderMessage {
+                display: block;
+                align-items: end;
+                text-align: center;
+            }
+        }
+    }
+}

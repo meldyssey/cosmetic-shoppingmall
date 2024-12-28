@@ -1,0 +1,229 @@
+.new {
+    width: 95%;
+    margin: 100px auto;
+
+    a {
+        display: block;
+        > div {
+            width: 50%;
+            padding: 50px 0px;
+            float: left;
+        }
+        div {
+            img {
+                width: 100%;
+                margin-top: 50px;
+            }
+        }
+        > img {
+            width: 50%;
+            float: right;
+        }
+    }
+
+    &::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+.newText {
+    width: 100%;
+    text-align: center;
+
+    p {
+        padding: 30px 0px;
+        font-size: 1.5rem;
+        font-family: 'NanumMyeongjo';
+    }
+    span {
+        text-decoration: underline;
+    }
+}
+
+.scent {
+    width: 95%;
+    margin: 100px auto;
+    a {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        img {
+            width: 50%;
+            height: auto;
+            display: block;
+        }
+        div {
+            display: inline-block;
+            margin-left: 5%;
+            p {
+                line-height: 24px;
+                margin-bottom: 10%;
+
+                &:nth-of-type(1) {
+                    font-family: 'NanumMyeongjo';
+                    font-size: 2rem;
+                }
+            }
+            span {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.content {
+    width: 95%;
+    margin: 100px auto;
+    a {
+        display: block;
+
+        img {
+            width: 100%;
+            display: block;
+        }
+        p {
+            text-align: center;
+            font-family: 'NanumMyeongjo';
+            font-size: 2rem;
+            line-height: 100px;
+        }
+        span {
+            display: block;
+            text-align: center;
+            text-decoration: underline;
+        }
+    }
+}
+
+.content2 {
+    width: 95%;
+    margin: 0px auto;
+    margin-top: 100px;
+
+    div {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        height: auto;
+
+        img {
+            width: 100%;
+            height: 70%;
+        }
+        p {
+            text-align: center;
+            font-family: 'NanumMyeongjo';
+            font-size: 2rem;
+            line-height: 100px;
+        }
+        span {
+            display: block;
+            text-align: center;
+            text-decoration: underline;
+        }
+    }
+}
+
+// 반응형
+@media screen and (max-width: 800px) {
+    .new {
+        width: 100%;
+        > div {
+            width: 100%;
+            content: '';
+            display: block;
+            clear: both;
+        }
+        > img {
+            display: none;
+        }
+    }
+    .scent {
+        width: 100%;
+        a {
+            gap: 0px;
+            div {
+                margin: 0px;
+                padding: 20px;
+            }
+        }
+    }
+    .content {
+        width: 100%;
+    }
+    .content2 {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 700px) {
+    .new {
+        a {
+            > div {
+                padding: 0px;
+                margin: 0px;
+                img {
+                    margin-top: 25px;
+                }
+            }
+        }
+    }
+    .scent {
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+        a {
+            div {
+                margin: 0px;
+            }
+        }
+        div {
+            width: 80%;
+            padding: 10px;
+            text-align: left;
+        }
+    }
+}
+@media screen and (max-width: 500px) {
+    .new {
+        a {
+            div {
+                width: 100%;
+                img {
+                    display: none;
+                }
+                .newText {
+                    p {
+                        font-size: 2rem;
+                    }
+                    span {
+                        display: none;
+                    }
+                }
+            }
+            img {
+                width: 100%;
+            }
+        }
+    }
+    .scent {
+        a {
+            display: block;
+            img {
+                width: 100%;
+            }
+            div {
+                margin: 50px 0px 0px 0px;
+            }
+        }
+    }
+    .content2 {
+        div {
+            display: block;
+            a {
+                display: block;
+                margin-bottom: 100px;
+            }
+        }
+    }
+}

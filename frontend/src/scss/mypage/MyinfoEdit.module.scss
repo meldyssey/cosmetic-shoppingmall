@@ -1,0 +1,252 @@
+.main {
+    display: block;
+    width: 95%;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+
+    /* 안내 메시지 */
+    .infomessage {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
+    .block {
+        background-color: #fefcfa;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .requiredinfo {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #be0000;
+        }
+
+        .infoinput {
+            .inputgroup {
+                margin-bottom: 20px;
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+
+                label {
+                    display: block;
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 5px;
+                }
+
+                input {
+                    width: 100%;
+                    background-color: #eee;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    color: #333;
+                    box-sizing: border-box;
+                    margin-bottom: 10px;
+                }
+                .inputphone {
+                    background-color: #fff;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+
+        /* 비밀번호 모달 */
+        .modalcontent {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+
+            .modalbody {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 10px;
+            }
+
+            .modalfooter {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-top: 20px;
+
+                .modalcancel,
+                .modalconfirm {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    cursor: pointer;
+
+                    &.modalcancel {
+                        background-color: #f5f5f5;
+                        color: #888;
+
+                        &:hover {
+                            background-color: #e0e0e0;
+                            color: #333;
+                        }
+                    }
+
+                    &.modalconfirm {
+                        background-color: #1c1c1c;
+                        color: #fff;
+
+                        &:hover {
+                            background-color: #000000;
+                        }
+                    }
+                }
+            }
+        }
+
+        /* 전화번호 입력 */
+        .phonenumber {
+            margin-bottom: 20px;
+            margin-top: 10px;
+
+            label {
+                display: block;
+                font-size: 14px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .phoneinputgroup {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+
+                .phoneselect {
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    width: auto;
+                }
+
+                .phoneinput {
+                    flex: 1;
+                    max-width: 100px;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        /* 뉴스레터 설정 */
+        .newsletter {
+            margin: 0 auto;
+            font-size: 14px;
+            color: #555;
+
+            h4 {
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            p {
+                margin-bottom: 10px;
+            }
+        }
+        .newslettersettings {
+            .checkboxgroup {
+                display: block;
+                margin-bottom: 5px;
+
+                .label {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #333;
+                    margin-left: 5px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+
+        /* 생일 및 성별 */
+        .additionalinfo {
+            margin: 0 auto;
+            font-size: 14px;
+            color: #555;
+
+            h4 {
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            p {
+                margin-bottom: 10px;
+            }
+
+            .birthinputgroup {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+                flex-wrap: wrap;
+
+                .birthinput {
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    width: 30%;
+                    min-width: 80px;
+                    margin-bottom: 10px;
+                }
+            }
+            .checkboxgroup {
+                display: block;
+                margin-bottom: 5px;
+
+                .label {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #333;
+                    margin-left: 5px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+
+    /* 버튼 */
+    .btnsubmit {
+        background-color: #1c1c1c;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+
+        &:hover {
+            background-color: #000000;
+        }
+    }
+}

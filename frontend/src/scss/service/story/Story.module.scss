@@ -1,0 +1,541 @@
+.wrapper {
+    margin: 0 auto;
+    width: 85%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    .sttitle {
+        font-size: 24px;
+        font-family: 'NanumMyeongjo';
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+    }
+
+    .pp {
+        margin-bottom: 30px;
+        margin-left: 20px;
+        line-height: 24px;
+    }
+}
+
+.imgwrapper {
+    display: flex;
+
+    .stitle {
+        font-size: 24px;
+        font-family: 'NanumMyeongjo';
+    }
+
+    p {
+        font-family: 'NotoSansKR';
+        margin-bottom: 20px;
+        padding-right: 50px;
+    }
+
+    .iwrapper {
+        margin: 10px;
+        width: calc((100% - 40px) / 2);
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .ppp {
+        line-height: 24px;
+    }
+}
+
+.stitle {
+    font-size: 24px;
+    font-family: 'NanumMyeongjo';
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.mmore {
+    display: block;
+    margin-top: 20px;
+    text-decoration: underline;
+}
+
+//자선활동 미션 scss
+.charity {
+    margin: 30px;
+
+    .ibox1 {
+        margin: 10px;
+    }
+
+    .tbox3,
+    p {
+        margin: 10px;
+    }
+
+    .tbox4,
+    p {
+        margin: 20px;
+    }
+
+    .tbox4 {
+        // width: calc();
+        margin-top: 30px;
+        display: flex;
+        // border-top: 1px solid #ccc;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        .ctitle {
+            width: calc(100% / 3);
+            line-height: 30px;
+            font-size: 24px;
+            font-family: 'NanumMyeongjo';
+        }
+
+        p {
+            width: calc(100% / 3);
+            line-height: 1.6;
+        }
+    }
+
+    .cbox1 {
+        display: flex;
+        width: 95%;
+
+        // margin: 0 auto;
+        .cimg1 {
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .tbox1 {
+            margin-top: 50px;
+            width: 70%;
+
+            .ctitle {
+                font-size: 24px;
+                font-family: 'NanumMyeongjo';
+                margin-left: 20px;
+            }
+
+            p {
+                margin-top: 20px;
+                line-height: 24px;
+            }
+        }
+
+        p {
+            line-height: 24px;
+        }
+    }
+
+    .sbox1 {
+        display: flex;
+        width: 95%;
+        margin: 0 auto;
+
+        .tbox1 {
+            width: 100%;
+        }
+
+        .cimg1 {
+            width: 100%;
+        }
+
+        p {
+            line-height: 24px;
+        }
+
+        .stitle {
+            margin-bottom: 50px;
+        }
+
+        padding-bottom: 50px;
+    }
+
+    .tbox2 {
+        display: flex;
+        line-height: 24px;
+        border-top: 1px solid #ccc;
+
+        p {
+            margin-left: 30px;
+        }
+
+        .ctitle {
+            font-size: 24px;
+            line-height: 30px;
+        }
+
+        padding-top: 30px;
+        padding-bottom: 20px;
+    }
+
+    .tbox3 {
+        margin-top: 30px;
+        display: flex;
+        line-height: 24px;
+        // width: 100%;
+
+        p,
+        .ctitle {
+            width: calc(100% / 3);
+        }
+
+        .ctitle {
+            line-height: 30px;
+            font-size: 24px;
+            font-family: 'NanumMyeongjo';
+        }
+    }
+
+    .ibox1 {
+        display: flex;
+
+        div {
+            width: calc(100% / 3);
+            margin: 20px;
+
+            img {
+                width: 100%;
+            }
+
+            padding-bottom: 30px;
+        }
+    }
+}
+
+.uni {
+    font-size: 32px;
+    text-align: center;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.ibox2 {
+    display: flex;
+
+    .cimg2 {
+        justify-content: center;
+    }
+}
+
+.tbox3 {
+    border-top: 1px solid #ccc;
+    padding-top: 30px;
+    padding-bottom: 20px;
+
+    // .ctitle {
+    //     width: 80%;
+    // }
+}
+
+//사람과 일터 scss
+.people {
+    margin: 30px;
+    margin-bottom: 50px;
+    width: 95%;
+    margin: 0 auto;
+
+    .ibox1 {
+        display: flex;
+
+        div {
+            width: calc(100% / 3);
+            margin: 10px;
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .tbox7 {
+        border-top: 1px solid #ccc;
+        display: flex;
+        width: 100%;
+
+        .stitle {
+            width: calc(100% / 3);
+            line-height: 30px;
+            font-family: 'NanumMyeongjo';
+            margin: 20px 0;
+        }
+
+        .ttbox1,
+        .ttbox2 {
+            width: calc(100% / 3);
+            font-family: 'NotoSansKR';
+            font-size: 14px;
+            margin: 20px 0 20px 20px;
+        }
+
+        p {
+            line-height: 24px;
+            font-family: 'NotoSansKR';
+        }
+
+        li {
+            list-style: '-';
+        }
+    }
+
+    .simg1 {
+        padding-bottom: 40px;
+    }
+
+    .pbox1 {
+        display: flex;
+        padding-bottom: 30px;
+        width: 95%;
+        margin: 0 auto;
+
+        .tbox1 {
+            width: 60%;
+
+            p {
+                line-height: 24px;
+            }
+        }
+
+        .stitle {
+            padding-bottom: 30px;
+        }
+
+        .cimg1 {
+            width: 90%;
+        }
+    }
+
+    .iwrapper {
+        width: 50%;
+        padding-bottom: 70px;
+
+        img {
+            width: 100%;
+        }
+
+        .wide {
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    //스토리메인
+}
+
+.wideimg {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.cimg27 {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.more {
+    text-decoration: underline;
+}
+
+.stitle {
+    font-size: 24px;
+    font-family: 'NanumMyeongjo';
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+//반응형
+/* 반응형 디자인 (800px 이하일 때) */
+@media screen and (max-width: 800px) {
+    .wrapper {
+        width: 90%;
+    }
+
+    .imgwrapper {
+        flex-direction: column;
+        align-items: center;
+
+
+
+        .iwrapper {
+            width: 100%;
+        }
+    }
+
+    .stitle,
+    .ppp,
+    .more,
+    .pppp,
+    .mmore {
+        margin-left: 20px;
+    }
+
+
+    .charity {
+
+        .cbox1,
+        .sbox1 {
+            flex-direction: column;
+            width: 100%;
+
+            .tbox1 {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .cimg1 {
+                width: 100%;
+            }
+        }
+
+        .tbox4,
+        p {
+            margin: 0;
+        }
+
+        .tbox3 {
+            margin: 0;
+        }
+
+        .tbox3,
+        .tbox4 {
+            flex-direction: column;
+
+            .ctitle,
+            p {
+                width: 100%;
+                margin-bottom: 20px;
+                line-height: 1.6;
+            }
+        }
+    }
+
+    .pppp {
+        line-height: 24px;
+    }
+
+    .people {
+        padding-left: 10px;
+        padding-right: 10px;
+
+        .ibox1 {
+            flex-wrap: wrap;
+
+            div {
+                width: 100%;
+            }
+        }
+
+        .pbox1 {
+            flex-direction: column;
+
+            .tbox1 {
+                width: 100%;
+            }
+
+            .cimg1 {
+                width: 100%;
+            }
+        }
+
+        .tbox7 {
+            flex-direction: column;
+            width: 95%;
+
+            .stitle {
+                margin-left: 15px;
+            }
+
+            .ttbox1,
+            .ttbox2 {
+                width: 100%;
+            }
+        }
+    }
+}
+
+/* 모바일 (480px 이하일 때) */
+@media screen and (max-width: 480px) {
+    .wrapper {
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+
+        .sttitle {
+            font-size: 20px;
+        }
+    }
+
+    .imgwrapper {
+        .stitle {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+
+    .charity {
+
+        // padding-left: 20px;
+        // padding-right: 20px;
+        .ibox1 {
+            flex-direction: column;
+
+            div {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        .tbox2 {
+            flex-direction: column;
+
+            .ctitle,
+            p {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+    }
+
+    .people {
+
+        .ibox1 {
+            div {
+                width: 100%;
+            }
+        }
+
+        .tbox7 {
+            .stitle {
+                font-size: 20px;
+            }
+        }
+
+        .pbox1 {
+            .stitle {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .stitle {
+        font-size: 20px;
+    }
+
+    .uni {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+}

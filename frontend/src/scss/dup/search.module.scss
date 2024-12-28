@@ -1,0 +1,41 @@
+.search {
+    form {
+        display: flex;
+        align-items: center; /* Center items horizontally */
+        justify-content: center;
+        gap: 10px; /* Space between elements */
+        select {
+            height: 35px;
+            margin: 10px 0;
+        }
+        input {
+            height: 30px;
+            width: 50%;
+        }
+        button {
+            height: 35px;
+            padding: 5px 20px;
+            background-color: #1c1c1c;
+            color: #fff;
+            border-radius: 2px;
+        }
+    }
+    .defContent {
+        text-align: center;
+        background-color: #fcf9ee;
+        margin-bottom: 50px;
+        p {
+            margin: 30px;
+        }
+        a {
+            margin: 10px 5px;
+            padding: 10px 20px;
+            font-size: 12px;
+            border: 1px solid #e2e1d7;
+        }
+    }
+    .notice {
+        margin: 50px;
+        text-align: center;
+    }
+}

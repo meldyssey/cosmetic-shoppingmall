@@ -1,0 +1,147 @@
+.wrap {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+
+    .myform {
+        margin: 20px auto;
+        margin-bottom: 50px;
+        padding: 20px 20px 50px 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        .payments {
+            .orderInfo {
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 16px;
+                line-height: 1.6;
+                color: #555;
+
+                div {
+                    margin-bottom: 10px;
+                }
+            }
+
+            div {
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 10px;
+                color: #333;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-size: 16px;
+                color: #555;
+
+                input {
+                    margin-right: 10px;
+                }
+            }
+        }
+
+        .addressinfo {
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            div:nth-child(1) {
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 10px;
+                color: #333;
+            }
+            div {
+                margin-bottom: 5px;
+            }
+        }
+
+        .requirement {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+            .requirementdetail {
+                margin-bottom: 15px;
+            }
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            margin-top: 20px;
+
+            th,
+            td {
+                text-align: center;
+                vertical-align: middle;
+                border-top: 1px solid #ccc;
+            }
+
+            th {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            td {
+                font-size: 14px;
+                padding: 12px;
+                &:first-of-type {
+                    padding: 10px 0px;
+                }
+                &:last-of-type {
+                    padding: 0px;
+                }
+            }
+
+            select {
+                width: 60px;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .deleteBtn {
+                padding: 5px 10px;
+                background-color: #1c1c1c;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #1c1c1c;
+                }
+            }
+        }
+
+        .submit {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #1c1c1c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #444;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .wrap {
+        width: 90%;
+        margin: 0 auto;
+    }
+}

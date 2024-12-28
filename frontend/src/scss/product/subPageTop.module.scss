@@ -1,0 +1,30 @@
+.subPageTop {
+    margin-top: 40px;
+    text-align: center;
+    line-height: 1.5;
+    .title {
+        font-size: 25px;
+        padding: 10px;
+    }
+    .content {
+        padding: 30px 0;
+        p {
+        }
+        img {
+            margin: 20px 0;
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+}
+@media screen and (max-width: 480px) {
+    .subPageTop {
+        .content {
+            p {
+                font-size: 16px;
+            }
+        }
+    }
+}
