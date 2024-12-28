@@ -1,0 +1,38 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+
+    button {
+        display: block;
+        height: 25px;
+        line-height: 25px;
+    }
+
+    .page {
+        width: 25px;
+        border-radius: 30px;
+        border: solid 1px rgba(0, 0, 0, 0);
+        text-align: center;
+        &:hover {
+            border: solid 1px #aaa;
+        }
+    }
+    .move {
+        margin: 0 10px;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    button.active {
+        font-weight: 700;
+        color: white;
+        background-color: #1c1c1c;
+    }
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

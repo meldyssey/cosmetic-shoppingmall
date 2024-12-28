@@ -1,0 +1,128 @@
+.list {
+    margin-top: 20px;
+    font-size: 14px;
+    .rtitle {
+        margin: 29px 0px;
+    }
+    .title {
+        padding: 30px;
+        font-size: 25px;
+        text-align: center;
+    }
+    .searchbar {
+        margin: 20px 0px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        select,
+        input {
+            padding: 5px;
+            font-size: 14px;
+        }
+        .actionButtons {
+            .searchbutton,
+            .resetbutton,
+            .changebutton,
+            .deletebutton,
+            .modifybutton,
+            .modiclearbutton {
+                padding: 10px 10px;
+                font-size: 14px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &.searchbutton {
+                    background-color: #007bff;
+                    color: white;
+                }
+
+                &.resetbutton {
+                    margin-left: 10px;
+                    background-color: #6c757d;
+                    color: white;
+                }
+
+                &.changebutton {
+                    margin-left: 500px;
+                    background-color: #007bff;
+                    color: white;
+                }
+
+                &.deletebutton {
+                    margin-left: 10px;
+                    background-color: #6c757d;
+                    color: white;
+                }
+
+                &.modifybutton,
+                &.modiclearbutton {
+                    margin-left: 10px;
+                    background-color: #6c757d;
+                    color: white;
+                }
+            }
+        }
+    }
+    .chgstatus {
+        padding: 10px 10px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        background-color: #007bff;
+        color: white;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+
+        tr:nth-child(1) {
+            input[type='checkbox'] {
+                margin-right: 5px;
+            }
+            background-color: #ddd;
+            height: 20px;
+            line-height: 20px;
+        }
+    }
+
+    tr {
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            .link {
+                color: #007bff;
+            }
+            .invoicebar {
+                width: 100px;
+            }
+        }
+    }
+}
+
+//일대일문의
+.changebutton {
+    margin-left: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+.center{
+    width: 80%;
+    margin-top: 30px;
+    margin-left: 30px;
+}

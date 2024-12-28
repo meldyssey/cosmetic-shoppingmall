@@ -1,0 +1,42 @@
+.homeTop {
+    .breadCrum {
+        font-size: 12px;
+        padding: 0 30px;
+    }
+    .title {
+        padding: 30px;
+        font-size: 30px;
+        text-align: center;
+    }
+    .content {
+        padding: 30px;
+        font-size: 15px;
+        text-align: center;
+        p {
+            line-height: 1.5;
+        }
+    }
+    img {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+}
+@media screen and (max-width: 480px) {
+    .homeTop {
+        .breadCrum {
+            font-size: 10px;
+        }
+        .title {
+            padding: 30px;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+            p {
+                font-size: 17px;
+            }
+        }
+    }
+}

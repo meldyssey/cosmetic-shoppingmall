@@ -1,0 +1,124 @@
+.one {
+    width: 80%;
+    margin: 0 auto;
+
+    .onetitle {
+        font-size: 24px;
+    }
+
+    .gray {
+        color: #aaa;
+        text-align: right;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .red {
+        color: #f00;
+        line-height: 40px;
+    }
+
+    .inquiryForm {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        label {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+
+        }
+
+        textarea {
+            min-height: 200px;
+            resize: none;
+        }
+
+        .buttonGroup {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+            margin-top: 35px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #1c1c1c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+
+            &:hover {
+                background-color: #ccc;
+            }
+        }
+
+        .cbutton {
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #1c1c1c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .filewrap {
+
+            input,
+            label {
+                display: block;
+            }
+
+            .filefile {
+                margin-bottom: 5px;
+            }
+
+        }
+    }
+
+    margin-bottom: 70px;
+}
+
+/* 반응형 디자인 (800px 이하일 때) */
+@media screen and (max-width: 800px) {
+    .onetitle {
+        margin-bottom: 15px;
+    }
+
+    .filewrap {
+
+        input,
+        label {
+            display: block;
+        }
+
+        label {
+            padding-bottom: 20px;
+        }
+
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    .onetitle {
+        margin-bottom: 15px;
+    }
+}

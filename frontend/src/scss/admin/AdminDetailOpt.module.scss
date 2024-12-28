@@ -1,0 +1,80 @@
+/* AdminDetail.module.scss */
+.detail {
+    .title {
+        padding: 30px;
+        font-size: 30px;
+        text-align: center;
+        a {
+            font-size: 17px;
+            margin-left: 10px; /* 제목과 간격 */
+            font-style: italic; /* 기울임 */
+            text-decoration: underline; /* 밑줄 */
+            border: none;
+            background: none;
+            color: #1c1c1c;
+            cursor: pointer;
+            &:hover {
+                color: #00f;
+            }
+        }
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+
+        tr:nth-child(1) {
+            background-color: #ddd;
+            height: 20px;
+            line-height: 20px;
+        }
+        tr {
+            td {
+                vertical-align: middle; /* Vertical centering */
+
+                padding: 10px;
+                border-bottom: 1px solid #ccc;
+                .link {
+                    color: #007bff;
+                }
+                img {
+                    width: 100px;
+                }
+            }
+        }
+    }
+
+    .actionButtons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &.resetbutton {
+                background-color: #ccc;
+                color: #000;
+
+                &:hover {
+                    background-color: #bbb;
+                }
+            }
+
+            &.searchbutton {
+                background-color: #007bff;
+                color: #fff;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+        }
+    }
+}

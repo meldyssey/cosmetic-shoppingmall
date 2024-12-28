@@ -1,0 +1,60 @@
+.navbarContainer {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #fcf9ee;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;
+    background-color: transparent;
+    border-bottom: 1px solid #ddd;
+
+    .leftLinks,
+    .centerLinks,
+    .rightLinks {
+        font-size: 14px;
+        display: flex;
+        gap: 20px;
+    }
+
+    .centerLinks {
+        justify-content: center;
+        gap: 30px;
+    }
+
+    .rightLinks {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 800px) {
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        background-color: transparent;
+        border-bottom: 1px solid #ddd;
+
+        .leftLinks,
+        .centerLinks,
+        .rightLinks {
+            font-size: 12px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .centerLinks {
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .rightLinks {
+            justify-content: flex-end;
+        }
+    }
+}

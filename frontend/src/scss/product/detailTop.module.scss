@@ -1,0 +1,102 @@
+.detailTop {
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+    .imgWrap {
+        width: calc(100% / 2);
+        img {
+            width: 100%;
+        }
+    }
+    .contentWrap {
+        padding: 50px;
+        width: calc(100% / 2);
+        .textWrap {
+            line-height: 1.5;
+            margin: 10px;
+            .tag,
+            .prodName,
+            .price {
+                padding: 10px 0 0;
+                text-align: center;
+            }
+            .price {
+                font-weight: 700;
+            }
+            .prodInfo {
+                padding: 20px 0;
+                font-size: 14px;
+            }
+        }
+        .btnWrap {
+            display: flex;
+            align-content: space-between;
+            button {
+                margin: 0 10px;
+                display: block;
+                width: 100%;
+                font-size: 15px;
+                padding: 10px 0;
+                border: 1px solid #999;
+                background-color: #1c1c1c;
+                color: #fff;
+                &:hover {
+                    background-color: #555;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+}
+@media screen and (max-width: 480px) {
+    .detailTop {
+        display: block;
+        .imgWrap {
+            width: 100%;
+            img {
+                width: 100%;
+            }
+        }
+        .contentWrap {
+            width: 100%;
+            padding: 10px;
+
+            .textWrap {
+                line-height: 1.5;
+                margin: 10px;
+                .tag,
+                .prodName,
+                .price {
+                    padding: 10px 0 0;
+                    text-align: center;
+                }
+                .price {
+                    font-weight: 700;
+                }
+                .prodInfo {
+                    padding: 20px 0;
+                    font-size: 14px;
+                }
+            }
+            .btnWrap {
+                display: flex;
+                align-content: space-between;
+                button {
+                    margin: 0 10px;
+                    display: block;
+                    width: 100%;
+                    font-size: 15px;
+                    padding: 10px 0;
+                    border: 1px solid #999;
+                    background-color: #1c1c1c;
+                    color: #fff;
+                    &:hover {
+                        background-color: #555;
+                    }
+                }
+            }
+        }
+    }
+}

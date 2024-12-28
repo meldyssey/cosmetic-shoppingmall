@@ -1,0 +1,193 @@
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* 메뉴를 가운데 정렬 */
+    align-items: center;
+}
+.menu {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu li {
+    float: left;
+    padding: 0 10px;
+    font-size: 14px;
+}
+.menu > li > a {
+    padding: 0 10px;
+}
+.menuBg {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+.submenu {
+    display: none;
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    width: 100%;
+    height: 300px;
+    background-color: #fcf9ee;
+    z-index: 2;
+}
+.submenu li {
+    position: relative;
+    top: 0px;
+    left: 31%;
+}
+.subItem a:hover {
+    opacity: 0.5;
+}
+.bold {
+    font-weight: bold;
+    display: block;
+    margin-top: 20px;
+    font-size: 12px;
+}
+.submenu img {
+    display: block;
+    width: 160px;
+    height: 100px;
+    margin-top: 30px;
+}
+.submenu span {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 12px;
+}
+.subItem a {
+    display: block;
+    margin: 10px 0px;
+    font-size: 12px;
+}
+.menu li:hover .submenu {
+    display: block;
+}
+/* 반응형 관련 */
+.hamIcon {
+    display: none;
+}
+.footerIcons .up,
+.footerIcons .down {
+    display: none;
+}
+.tt a {
+    display: block;
+}
+/* 햄버거 메뉴 */
+#hamMenu {
+    display: none;
+    position: fixed;
+    width: 80%;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    overflow-y: auto;
+    z-index: 100;
+    background: #fcf9ee;
+}
+.hamBg {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+.hMenu {
+    width: 100%;
+    height: auto;
+    background-color: #fcf9ee;
+}
+.hMenu > li {
+    width: 100%;
+}
+.hMenu > li > a {
+    display: block;
+    padding: 20px;
+    font-weight: bold;
+}
+.hSubmenu {
+    display: none;
+}
+.hSubmenu li > a {
+    display: block;
+    padding: 20px 30px;
+}
+.hSubitem {
+    display: none;
+}
+.hSubitem li > a {
+    display: block;
+    padding: 20px 30px;
+    color: #888;
+}
+.bb {
+    font-weight: bold;
+}
+.hMenu li:nth-last-of-type(3) > a,
+.hMenu li:nth-last-of-type(2) > a,
+.hMenu li:last-of-type > a {
+    font-weight: normal;
+}
+
+/* 반응형 */
+@media screen and (max-width: 800px) {
+    .hamIcon {
+        display: block;
+    }
+    nav,
+    .mapIcon {
+        display: none !important;
+    }
+    .myPageIcon {
+        margin-right: -20px;
+    }
+    /* 검색 */
+    #search {
+        height: auto;
+        padding-bottom: 100px;
+    }
+    .activeContent h2 {
+        font-size: 1.5rem;
+    }
+    .items {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .item {
+        align-items: center;
+    }
+    .txt {
+        margin-left: -50px;
+    }
+    .mm1,
+    .mm2,
+    .mm3 {
+        margin-left: 0px;
+    }
+    .user {
+        margin-left: -10px;
+    }
+    .logOn {
+        display: none;
+    }
+    .logo {
+        margin-left: 0px;
+    }
+}

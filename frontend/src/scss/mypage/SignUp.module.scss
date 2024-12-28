@@ -1,0 +1,270 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #fcf9ee;
+
+    .wrap {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+
+        .joinContainer {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+/* 상단 버튼 */
+.topBtn {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .signIn,
+    .signUp {
+        width: 48%;
+        height: 50px;
+        background: none;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            line-height: 50px;
+        }
+    }
+
+    .signIn {
+        border-bottom: 2px solid #ddd;
+    }
+    .signUp {
+        border-bottom: 2px solid #1c1c1c;
+    }
+}
+
+.bottomCnt {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    > div:first-of-type {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        .kakao,
+        .naver {
+            display: inline-block;
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: 50%;
+            }
+        }
+
+        .kakao {
+            background-color: #ffe809;
+        }
+
+        .naver {
+            background-color: #1ec800;
+        }
+    }
+
+    .or {
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        position: relative;
+
+        &::before,
+        &::after {
+            content: '';
+            display: inline-block;
+            width: 30%;
+            height: 1px;
+            background-color: #aaa;
+            vertical-align: middle;
+        }
+
+        &::before {
+            margin-right: 10px;
+        }
+
+        &::after {
+            margin-left: 10px;
+        }
+    }
+    .inform {
+        .inputWrapper {
+            display: flex;
+            flex-direction: column; // 입력 필드와 에러 메시지를 세로로 배치
+            position: relative; // 에러 메시지가 필드에 맞게 배치되도록 설정
+            margin-bottom: 10px; // 입력 필드 간 기본 간격
+
+            .input {
+                width: 100%;
+                height: 44px;
+                box-sizing: border-box;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #fff;
+                font-size: 14px;
+            }
+
+            .error {
+                color: #ff4d4f; // 에러 메시지 색상
+                font-size: 12px; // 에러 메시지 크기
+                margin-left: 5px;
+            }
+        }
+        select,
+        input[type='date'],
+        .gender {
+            width: 100%;
+            height: 44px;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            font-size: 14px;
+        }
+
+        .chkbtn {
+            width: 100%;
+            height: 30px;
+            background-color: #ffe68d;
+            color: #1c1c1c;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .checkboxgroup {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+
+            .chk1 .chk2 {
+                align-items: start;
+                accent-color: #1c1c1c;
+            }
+        }
+        .marketing {
+            color: #ebbb00;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .join {
+            width: 100%;
+            height: 50px;
+            padding: 10px;
+            font-size: 14px;
+            background-color: #1c1c1c;
+            color: #ddd;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #999;
+                color: #1c1c1c;
+            }
+        }
+    }
+}
+
+/* 반응형 */
+@media screen and (max-width: 800px) {
+    .wrapper {
+        padding: 0;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .wrap {
+        max-width: 90%;
+    }
+
+    .checkboxgroup {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wrapper {
+        padding: 0;
+        width: 90%;
+    }
+
+    .wrap {
+        max-width: 90%;
+        margin: 0;
+    }
+
+    .topBtn {
+        .signIn,
+        .signUp {
+            font-size: 12px;
+        }
+    }
+
+    .bottomCnt {
+        .or {
+            font-size: 12px;
+        }
+        .inform {
+            .inputWrapper {
+                .input {
+                    font-size: 12px;
+                }
+                .error {
+                    font-size: 10px;
+                }
+            }
+            select,
+            input[type='date'],
+            .gender {
+                font-size: 12px;
+            }
+            .chkbtn {
+                font-size: 12px;
+            }
+            .marketing {
+                font-size: 12px;
+            }
+            .join {
+                font-size: 12px;
+            }
+        }
+    }
+    .checkboxgroup {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,175 @@
+// 지속가능성 scss
+.sustainable {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 20px;
+
+    .stitle {
+        font-size: 24px;
+        font-family: 'NanumMyeongjo';
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .sbox1 {
+        display: flex;
+
+        div {
+            width: calc(100% / 2);
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .font14 {
+            font-size: 15px;
+            line-height: 25px;
+        }
+    }
+
+    .tbox7 {
+        margin-top: 30px;
+        border-top: 1px solid #ccc;
+        display: flex;
+        width: 100%;
+
+        .stitle {
+            width: calc(100% / 3);
+            line-height: 30px;
+            font-family: 'NanumMyeongjo';
+            margin: 20px;
+        }
+
+        .ttbox1,
+        .ttbox2 {
+            width: calc(100% / 3);
+            font-family: 'NotoSansKR';
+            font-size: 14px;
+            margin: 20px;
+        }
+
+        p {
+            line-height: 24px;
+            font-family: 'NotoSansKR';
+        }
+
+        li {
+            list-style: '-';
+        }
+    }
+
+    .ibox1 {
+        display: flex;
+
+        div {
+            width: calc(100% / 3);
+            margin: 20px;
+
+            img {
+                width: 100%;
+            }
+
+            padding-bottom: 30px;
+        }
+    }
+
+    .cimg27 {
+        margin: 0 auto 50px;
+        width: 100%;
+    }
+
+    .cimg26 {
+        margin-left: 38px;
+    }
+}
+
+/* 태블릿 (800px 이하) */
+@media screen and (max-width: 800px) {
+    .sustainable {
+
+        // width: 100%;
+        .sbox1 {
+            flex-direction: column;
+
+            div {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+        .tbox7 {
+            flex-direction: column;
+
+            .stitle,
+            .ttbox1,
+            .ttbox2 {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        .ibox1 {
+            flex-direction: column;
+
+            div {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        .cimg27,
+        .cimg26 {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+}
+
+/* 모바일 (480px 이하) */
+@media screen and (max-width: 480px) {
+    .sustainable {
+        margin-top: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        .stitle {
+            font-size: 20px;
+        }
+
+        .sbox1 {
+            div {
+                width: 100%;
+            }
+
+            .font14 {
+                font-size: 14px;
+                line-height: 22px;
+            }
+        }
+
+        .tbox7 {
+            .stitle {
+                font-size: 18px;
+            }
+
+            .ttbox1,
+            .ttbox2 {
+                font-size: 12px;
+                margin: 10px 0;
+            }
+        }
+
+        .ibox1 {
+            div {
+                width: 100%;
+            }
+        }
+
+        .cimg27,
+        .cimg26 {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+}

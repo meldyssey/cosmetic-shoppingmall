@@ -1,0 +1,80 @@
+.list {
+    margin-top: 20px;
+    width: 100%;
+
+    .rtitle {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 30px 0px;
+        margin-left: 5%;
+    }
+
+    table {
+        width: 90%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        text-align: center;
+
+        tr:nth-child(1) {
+            background-color: #ccc;
+            color: #fff;
+            height: 20px;
+            line-height: 20px;
+            font-weight: 600;
+        }
+
+        tr {
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #1c1c1c;
+            }
+
+            .post1 {
+                width: 30%;
+            }
+
+            .post2 {
+                width: 40%;
+                line-height: 1.6;
+            }
+
+            .post3 {
+                width: 15%;
+            }
+
+            .post4 {
+                width: 15%;
+            }
+        }
+    }
+
+    .createButton {
+        background-color: #1c1c1c;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-left: 5%;
+        margin-top: 50px;
+        margin-bottom: 50px;
+
+        &:hover {
+            background-color: #ccc;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .list {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .list {
+        font-size: 12px;
+    }
+}

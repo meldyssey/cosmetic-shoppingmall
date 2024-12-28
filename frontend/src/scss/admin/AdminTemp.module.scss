@@ -1,0 +1,180 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 전체 컨테이너 */
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    position: relative;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    width: 250px;
+    background-color: #f1f3f5;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+
+    .topLink {
+        display: flex;
+        justify-content: space-around;
+        padding: 20px;
+        color: #333;
+        font-size: 14px;
+        text-align: center;
+        border-bottom: 1px solid #dee2e6;
+        text-decoration: none;
+        margin-bottom: 50px;
+
+        &:hover {
+            background-color: #e9ecef;
+            color: #616161;
+        }
+    }
+
+    .menu {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 10px;
+
+        /* 사이드바 메뉴 */
+        .subbar {
+            position: relative;
+            padding: 15px 20px;
+            height: 30px;
+            line-height: 30px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            background-color: #f1f3f5;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #e9ecef;
+            }
+
+            span {
+                color: #333;
+                font-size: 16px;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    font-weight: bold;
+                    color: #2986cc;
+                }
+            }
+
+            .arrow {
+                position: absolute;
+                right: 15px;
+                font-size: 20px;
+                color: #555;
+                transition: color 0.3s ease;
+            }
+        }
+
+        .subbar.active {
+            font-weight: bold;
+
+            span {
+                color: #2986cc;
+            }
+
+            .arrow {
+                color: #2986cc;
+            }
+        }
+    }
+
+    .bottomLink {
+        margin-top: auto;
+        padding: 20px;
+        color: #333;
+        font-size: 14px;
+        text-align: center;
+        border-top: 1px solid #dee2e6;
+        text-decoration: none;
+
+        &:hover {
+            background-color: #e9ecef;
+            color: #616161;
+        }
+    }
+}
+
+/* 콘텐츠 영역 */
+.content {
+    flex-grow: 1;
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #ffffff;
+    overflow-x: auto;
+
+    /* 탑바 스타일 */
+    .topbar {
+        display: flex;
+        background-color: #f1f3f5;
+        border-bottom: 1px solid #dee2e6;
+        padding: 10px 20px;
+        gap: 15px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+
+        a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.2s ease;
+
+            &:hover {
+                color: #2986cc;
+            }
+        }
+
+        /* 현재 클릭된 링크 강조 */
+        .active {
+            color: #2986cc;
+            font-weight: bold;
+        }
+    }
+}
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .content {
+        margin-left: 200px; /* 사이드바 너비만큼 조정 */
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 150px;
+
+        .menu .subbar span {
+            display: none; /* 작은 화면에서 텍스트 숨김 */
+        }
+    }
+
+    .content {
+        margin-left: 150px;
+    }
+}

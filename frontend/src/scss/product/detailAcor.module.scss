@@ -1,0 +1,33 @@
+.infoTotal {
+    padding: 0 50px;
+    .infoWrap {
+        line-height: 1.5;
+        .infoTitle {
+            padding: 30px;
+        }
+        .infoContent {
+            position: relative;
+            padding: 50px;
+            border: 0px solid rgba(225, 228, 230, 0.5);
+            border-top-width: 1px;
+            transition: all 0.5s;
+            font-size: 14px;
+
+            &.infoNone {
+                padding-top: 0;
+                padding-bottom: 0;
+                height: 0px;
+                overflow: hidden;
+                transition: all 0.5s;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+}
+@media screen and (max-width: 480px) {
+    .infoTotal {
+        padding: 0;
+    }
+}
