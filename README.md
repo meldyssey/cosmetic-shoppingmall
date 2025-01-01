@@ -20,3 +20,6 @@
 |           최종테스트           |     |     |     |     |     |     |      |   O  |      |      |
 |            발표준비           |     |     |     |     |     |     |      |      |   O  |      |
 |             발표             |     |     |     |     |     |     |      |      |      |   O  |
+
+## 아키텍처
+![architecture_final](https://github.com/user-attachments/assets/6678940e-3242-47fc-b491-84465c5ad7bd)
