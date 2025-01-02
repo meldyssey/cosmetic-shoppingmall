@@ -4,48 +4,52 @@ import styles from '../../scss/dup/footer.module.scss';
 
 function Footer(props) {
     const location = useLocation(); // 현재 경로 가져오기
-    const [isSize, setIsSize] = useState(window.innerWidth <= 800);
+    const [size, setSize] = useState(window.innerWidth <= 800);
+
+    // 메뉴 상태 관리 (태블릿 전용)
+    const [customerServiceOpen, setCustomerServiceOpen] = useState(false);
+    const [exploreOpen, setExploreOpen] = useState(false);
+    const [socialOpen, setSocialOpen] = useState(false);
 
     // 화면 크기 변경 감지
     useEffect(() => {
-        const handleResize = () => setIsSize(window.innerWidth <= 800);
+        const handleResize = () => setSize(window.innerWidth <= 800);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // 메뉴 상태 관리 (태블릿릿 전용)
-    const [isCustomerServiceOpen, setIsCustomerServiceOpen] = useState(false);
-    const [isExploreOpen, setIsExploreOpen] = useState(false);
-    const [isSocialOpen, setIsSocialOpen] = useState(false);
+    // 경로 변경 시 모든 메뉴 닫기
+    useEffect(() => {
+        setCustomerServiceOpen(false);
+        setExploreOpen(false);
+        setSocialOpen(false);
+    }, [location.pathname]); // 경로가 변경될 때 실행
 
     return (
         <footer>
             <div className={styles.footerSite}>
                 {/* 고객 서비스 */}
                 <div>
-                    <div
-                        className={styles.tt}
-                        onClick={() => isSize && setIsCustomerServiceOpen(!isCustomerServiceOpen)}
-                    >
+                    <div className={styles.tt} onClick={() => size && setCustomerServiceOpen(!customerServiceOpen)}>
                         <span>고객 서비스</span>
-                        {isSize && (
+                        {size && (
                             <div className={styles.footerIcons}>
                                 <img
                                     className={styles.down}
                                     src="/imgs/main/downIcon.svg"
-                                    alt="펼치기"
-                                    style={{ display: isCustomerServiceOpen ? 'none' : 'inline' }}
+                                    alt=""
+                                    style={{ display: customerServiceOpen ? 'none' : 'inline' }}
                                 />
                                 <img
                                     className={styles.up}
                                     src="/imgs/main/upIcon.svg"
-                                    alt="접기"
-                                    style={{ display: isCustomerServiceOpen ? 'inline' : 'none' }}
+                                    alt=""
+                                    style={{ display: customerServiceOpen ? 'inline' : 'none' }}
                                 />
                             </div>
                         )}
                     </div>
-                    {(isSize && isCustomerServiceOpen) || !isSize ? (
+                    {(size && customerServiceOpen) || !size ? (
                         <div>
                             <Link to="/info/faq" className={location.pathname === '/info/faq' ? styles.active : ''}>
                                 자주 묻는 질문
@@ -84,7 +88,9 @@ function Footer(props) {
                                 to="/info/terms"
                                 className={`${styles.link} ${location.pathname === '/info/terms' ? styles.active : ''}`}
                             >
-                                <p className={styles.fterms}>서비스 이용약관 <br /> 및 개인정보 처리방침</p>
+                                <p className={styles.fterms}>
+                                    서비스 이용약관 <br /> 및 개인정보 처리방침
+                                </p>
                             </Link>
                         </div>
                     ) : null}
@@ -92,26 +98,26 @@ function Footer(props) {
 
                 {/* 살펴보기 */}
                 <div>
-                    <div className={styles.tt} onClick={() => isSize && setIsExploreOpen(!isExploreOpen)}>
+                    <div className={styles.tt} onClick={() => size && setExploreOpen(!exploreOpen)}>
                         <span>살펴보기</span>
-                        {isSize && (
+                        {size && (
                             <div className={styles.footerIcons}>
                                 <img
                                     className={styles.down}
                                     src="/imgs/main/downIcon.svg"
-                                    alt="펼치기"
-                                    style={{ display: isExploreOpen ? 'none' : 'inline' }}
+                                    alt=""
+                                    style={{ display: exploreOpen ? 'none' : 'inline' }}
                                 />
                                 <img
                                     className={styles.up}
                                     src="/imgs/main/upIcon.svg"
-                                    alt="접기"
-                                    style={{ display: isExploreOpen ? 'inline' : 'none' }}
+                                    alt=""
+                                    style={{ display: exploreOpen ? 'inline' : 'none' }}
                                 />
                             </div>
                         )}
                     </div>
-                    {(isSize && isExploreOpen) || !isSize ? (
+                    {(size && exploreOpen) || !size ? (
                         <div>
                             <Link to="/storymain">브랜드 소개</Link>
                             <Link to="/all-product">제품 전체</Link>
@@ -123,26 +129,26 @@ function Footer(props) {
 
                 {/* 소셜 네트워크 */}
                 <div>
-                    <div className={styles.tt} onClick={() => isSize && setIsSocialOpen(!isSocialOpen)}>
+                    <div className={styles.tt} onClick={() => size && setSocialOpen(!socialOpen)}>
                         <span>소셜 네트워크</span>
-                        {isSize && (
+                        {size && (
                             <div className={styles.footerIcons}>
                                 <img
                                     className={styles.down}
                                     src="/imgs/main/downIcon.svg"
-                                    alt="펼치기"
-                                    style={{ display: isSocialOpen ? 'none' : 'inline' }}
+                                    alt=""
+                                    style={{ display: socialOpen ? 'none' : 'inline' }}
                                 />
                                 <img
                                     className={styles.up}
                                     src="/imgs/main/upIcon.svg"
-                                    alt="접기"
-                                    style={{ display: isSocialOpen ? 'inline' : 'none' }}
+                                    alt=""
+                                    style={{ display: socialOpen ? 'inline' : 'none' }}
                                 />
                             </div>
                         )}
                     </div>
-                    {(isSize && isSocialOpen) || !isSize ? (
+                    {(size && socialOpen) || !size ? (
                         <div>
                             <Link to="https://www.instagram.com/jomalonelondon">인스타그램</Link>
                             <Link to="https://www.facebook.com/JoMaloneLondon">페이스북</Link>

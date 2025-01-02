@@ -82,15 +82,19 @@
 
     .bold {
         line-height: 30px;
+        font-size: 14px;
     }
 
     .listyle {
         list-style: disc;
         margin: 15px;
+        font-size: 14px;
+        line-height: 1.6;
     }
 
     .onlinep {
         margin-top: 20px;
+        font-size: 14px;
     }
 
     .linkto {
@@ -101,6 +105,9 @@
     .watch {
         font-weight: 800;
         margin-top: 30px;
+    }
+    .font14{
+        font-size: 14px;
     }
 }
 

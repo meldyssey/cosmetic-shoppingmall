@@ -66,13 +66,10 @@ function PayModal1({ onClose, onSave, btnData, email }) {
             const trimmedDetailAddress = myData.detail_address ? myData.detail_address.trim() : '';
             const trimmedNum = myData.contact_number ? myData.contact_number.trim() : '';
 
-            if (!trimmedZip || !trimmedRoadnameAddress || !trimmedBuildingName || !trimmedDetailAddress) {
-                alert('빈칸 없이 주소를 입력해주세요.');
-                return;
-            }
-
             const nameTest = /^[가-힣]{2,5}$/;
             const numTest = /^01[0-9]-\d{3,4}-\d{4}$/;
+            // 우편번호 유효성 검사 (숫자 5글자만 허용)
+            const ziptype = /^\d{5}$/;
 
             if (!trimmedName) {
                 alert('수령인을 입력해주세요.');
@@ -86,12 +83,12 @@ function PayModal1({ onClose, onSave, btnData, email }) {
                 alert('정확한 정보를 입력해주세요.');
                 return;
             }
-
-            // 우편번호 유효성 검사 (숫자 5글자만 허용)
-            const ziptype = /^\d{5}$/;
-
             if (!ziptype.test(trimmedZip)) {
                 alert('정확한 우편번호를 입력해주세요.');
+                return;
+            }
+            if (!trimmedZip || !trimmedRoadnameAddress || !trimmedBuildingName || !trimmedDetailAddress) {
+                alert('빈칸 없이 주소를 입력해주세요.');
                 return;
             }
 
@@ -102,10 +99,11 @@ function PayModal1({ onClose, onSave, btnData, email }) {
                         email,
                         ...myData,
                     });
-                    alert('배송지가 추가되었습니다.');
+                    alert('배송지가 저장되었습니다.');
                 }
 
                 onSave(formData);
+                alert('배송지가 수정되었습니다');
                 onClose();
             } catch (error) {
                 console.error('배송지 저장 중 에러 발생:', error);
@@ -117,7 +115,7 @@ function PayModal1({ onClose, onSave, btnData, email }) {
     return (
         <div className={styles.overlay}>
             <div className={styles.modal}>
-                <h2>{btnData ? '배송지 수정' : '배송지 추가'}</h2>
+                <h2>{btnData.zip ? '배송지 수정' : '배송지 추가'}</h2>
                 <form ref={formRef}>
                     {' '}
                     {/* ref 속성으로 form 요소를 참조 */}

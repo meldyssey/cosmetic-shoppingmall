@@ -47,19 +47,19 @@ const OnlineShopping = () => {
                     <li className={styles.listyle}>장바구니 페이지에서 주문수량을 조정하실 수 있습니다.</li>
                 </ul>
                 <b className={styles.bold}>2. 장바구니</b> <br /> <br />
-                <p>
+                <p className={styles.font14}>
                     쇼핑을 마치셨다면 각 페이지의 장바구니 아이콘을 클릭하세요. 장바구니 페이지에서 쇼핑 정보를 확인하고
                     주문 수량를 조정하실 수 있습니다. 결제를 진행하시려면 결제 버튼을 클릭하세요.
                 </p>
                 <br />
                 <b className={styles.bold}>3. 주문 상세 정보</b> <br /> <br />
-                <p>
+                <p className={styles.font14}>
                     아직 로그인을 하지 않으셨다면 로그인 페이지로 넘어가게 됩니다. 로그인 후 결제 밎 배송지 정보를
                     입력하세요. 계정 정보에 저장해 둔 결제 및 배송지 정보가 있다면 재입력하지 않으셔도 됩니다.
                 </p>
                 <br />
                 <b className={styles.bold}>4. 확인</b> <br /> <br />
-                <p>
+                <p className={styles.font14}>
                     주문 확인이 끝나면, 주문 확인 번호 및 결제 금액이 주문 확인 페이지에 나타납니다. 이 페이지를 즉시
                     출력 후 보관하실 수 있으며 고객님의 이메일로도 주문 확인서가 발송됩니다. 이메일에는 주문하신 제품
                     정보, 배송지 주소, 배송 방법, 포장 관련 모든 정보가 포함되어 있습니다. 문의사항이 있으시면 언제든지
@@ -82,7 +82,7 @@ const OnlineShopping = () => {
                     Internet Explorer 7.0 또는 그 이상을 권장하며 최소 모니터 해상도는 1024 x 768 입니다.
                 </p>
                 <br />
-                <p>설정에 따라 모니터 상 색상이 다르게 보일 수 있음을 유념해 주시기 바랍니다.</p>
+                <p className={styles.font14}>설정에 따라 모니터 상 색상이 다르게 보일 수 있음을 유념해 주시기 바랍니다.</p>
             </Accordion>
             <Accordion title="인터넷 브라우저 권장 사양">
                 <p className={styles.onlinep}>
@@ -90,7 +90,7 @@ const OnlineShopping = () => {
                 </p>
                 <br />
 
-                <p>
+                <p className={styles.font14}> 
                     본 웹사이트는 Google Chrome, PC 및 MAC에선 Firefox 3 또는 그 이상, MAC에 한하여 Safari 2.0.4를
                     지원합니다.
                 </p>
@@ -104,7 +104,7 @@ const OnlineShopping = () => {
                     jomalone.co.kr에서의 주문 과정에서 수집되는 모든 정보는 온라인 보안 관련 최신 암호화 기술인 Secure
                     Socket Layer (SSL)을 이용하여 암호화 됩니다.
                 </p>
-                <p>
+                <p className={styles.font14}>
                     암호화 기능이 작동하기 위해서는 SSL프로토콜을 사용할 수 있는 브라우저가 필요합니다. SSL프로토콜이
                     사용 가능한 브라우저는 다음과 같습니다 :
                 </p>
@@ -114,7 +114,7 @@ const OnlineShopping = () => {
                     <li className={styles.listyle}>Safari 2.0.4 또는 그 이상</li>
                 </ul>
                 <b className={styles.bold}>ISIS & IDIS 인증</b>
-                <p>
+                <p className={styles.font14}>
                     jomalone.co.kr는 ISIS & IDIS 인증을 받은 웹사이트입니다. 웹사이트 내에 ISIS & IDIS 로고가 보이면
                     안심하고 쇼핑하셔도 됩니다. 로고가 의미하는 바는 다음과 같습니다 :
                 </p>
@@ -122,7 +122,7 @@ const OnlineShopping = () => {
                     <li className={styles.listyle}>
                         ISIS 프로그램이 설치되어 있으며 적법한, 정직한, 진실된, 공정한 방법으로 거래할 것을 약속함.
                     </li>
-                    <li>웹사이트에서 제공하는 서비스를 IMRG가 검토한 바 있음.</li>
+                    <li className={styles.listyle}>웹사이트에서 제공하는 서비스를 IMRG가 검토한 바 있음.</li>
                     <li className={styles.listyle}>
                         웹사이트 내 사업, VAT, 정보보호등록 관련 사항을 IMRG가 검토한 바 있음.
                     </li>
@@ -161,7 +161,7 @@ const OnlineShopping = () => {
                     <li className={styles.listyle}>신용카드</li>
                     <li className={styles.listyle}>무통장 입금</li>
                     <li className={styles.listyle}>휴대폰 소액 결제</li>
-                    <p>
+                    <p className={styles.font14}>
                         5만원 이상의 현금으로 물품 거래 시 구매자의 피해보호를 위해 전자결제서비스 사업자인 이니시스를
                         통해 결제대금을 예치하는 에스크로 서비스를 시행하고 있습니다.
                     </p>

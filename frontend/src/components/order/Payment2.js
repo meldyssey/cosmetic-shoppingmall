@@ -112,7 +112,7 @@ function Payment2(props) {
                 setTimeout(() => {
                     setIsLoading(false);
                     navigate('/payment3', { state: { orderId: res.data } });
-                }, 3000);
+                }, 2000);
             })
             .catch((err) => {
                 console.log('삭제오류 : ', err);

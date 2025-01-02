@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../../scss/dup/header.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser as solidUser } from '@fortawesome/free-solid-svg-icons';
-import { faUser as regularUser } from '@fortawesome/free-regular-svg-icons';
 
 function Header({ ham, setHam }) {
     const navigate = useNavigate();
@@ -44,7 +41,7 @@ function Header({ ham, setHam }) {
             <div className={styles.wrap}>
                 <div className={styles.lefticonbox}>
                     <div className={styles.hamIcon} onClick={showHamMenu}>
-                        <img src={`${url}menuIcon.svg`} alt="Menu Icon" />
+                        <img src={`${url}menuIcon.svg`} alt="" />
                     </div>
                     <div
                         className={styles.searchIcon}
@@ -52,17 +49,17 @@ function Header({ ham, setHam }) {
                             navigate('/search');
                         }}
                     >
-                        <img src={`${url}searchIcon.svg`} alt="Search Icon" />
+                        <img src={`${url}searchIcon.svg`} alt="" />
                     </div>
                     <div className={styles.mapIcon}>
                         <Link to="/map">
-                            <img src={`${url}mapIcon.svg`} alt="Map Icon" />
+                            <img src={`${url}mapIcon.svg`} alt="" />
                         </Link>
                     </div>
                 </div>
                 <div className={styles.logo}>
                     <Link to="/">
-                        <img src={`${url}조말론로고.svg`} alt="Logo" />
+                        <img src={`${url}조말론로고.svg`} alt="" />
                     </Link>
                 </div>
                 <div className={styles.righticonbox}>
@@ -83,7 +80,7 @@ function Header({ ham, setHam }) {
                         </div>
                     )}
                     <div className={styles.basketIcon} onClick={LoginBsk}>
-                        <img src={`${url}basketIcon.svg`} alt="Basket Icon" />
+                        <img src={`${url}basketIcon.svg`} alt="" />
                     </div>
                 </div>
             </div>
