@@ -1,11 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const conn = require('../db');
+const conn = require("../db");
 
 module.exports = () => {
-    router.get('/day', async (req, res) => {
-        console.log(`매출 /day 진입 확인`);
-
+    router.get("/day", async (req, res) => {
         try {
             const [ret] = await conn.execute(
                 `SELECT 
@@ -20,17 +18,13 @@ module.exports = () => {
         ORDER BY 
           order_date`
             );
-            // console.log(ret)
             res.json(ret);
         } catch (err) {
-            console.error('SQL 실패: ', err.message);
-            res.status(500).send('DB 오류');
+            res.status(500).send("DB 오류");
         }
     });
 
-    router.get('/month', async (req, res) => {
-        console.log(`매출 /month 진입 확인`);
-
+    router.get("/month", async (req, res) => {
         try {
             const [ret] = await conn.execute(
                 `SELECT 
@@ -48,14 +42,11 @@ module.exports = () => {
             );
             res.json(ret);
         } catch (err) {
-            console.error('SQL 실패: ', err.message);
-            res.status(500).send('DB 오류');
+            res.status(500).send("DB 오류");
         }
     });
 
-    router.get('/year', async (req, res) => {
-        console.log(`매출 /year 진입 확인`);
-
+    router.get("/year", async (req, res) => {
         try {
             const [ret] = await conn.execute(
                 `SELECT 
@@ -72,8 +63,7 @@ module.exports = () => {
             );
             res.json(ret);
         } catch (err) {
-            console.error('SQL 실패: ', err.message);
-            res.status(500).send('DB 오류');
+            res.status(500).send("DB 오류");
         }
     });
 

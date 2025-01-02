@@ -8,16 +8,13 @@ module.exports = () => {
         // 요청 액션에 따라서 같은 post 엔드포인트로 작업 가능
         if (action === 'askCount') {
             try {
-                console.log('문의 미답변건수를 확인 진입합니까');
                 // onetoone에서 reply_status 대기인거
                 const [ret] = await db.query(`SELECT COUNT(*) AS count FROM one_to_one WHERE reply_status = ?`, ['대기']);
                 if (ret[0].count === 0) {
                     return res.json('0');
                 }
-                console.log('문의 미답변건수를 확인합니다.');
                 return res.json(ret[0].count);
             } catch (err) {
-                console.error('주문 정보 조회 실패:', err.message);
                 return res.json({ error: 'DB 조회 오류' });
             }
         }
@@ -33,10 +30,8 @@ module.exports = () => {
                 if (ret[0].count === 0) {
                     return res.json('0');
                 }
-                console.log('신고 접수건수를 확인합니다.');
                 return res.json(ret[0].count);
             } catch (err) {
-                console.error('주문 정보 조회 실패:', err.message);
                 return res.json({ error: 'DB 조회 오류' });
             }
         }
@@ -52,10 +47,8 @@ module.exports = () => {
                 if (ret[0].count === 0) {
                     return res.json('0');
                 }
-                console.log('신규 주문건수를 확인합니다.');
                 return res.json(ret[0].count); // 숫자만 반환
             } catch (err) {
-                console.error('주문 정보 조회 실패:', err.message);
                 return res.json({ error: 'DB 조회 오류' });
             }
         } else if (action === 'refundCount') {
@@ -65,10 +58,8 @@ module.exports = () => {
                 if (ret[0].count === 0) {
                     return res.json('0');
                 }
-                console.log('반품 접수건수를 확인합니다.');
                 return res.json(ret[0].count);
             } catch (err) {
-                console.error('주문 정보 조회 실패:', err.message);
                 return res.json({ error: 'DB 조회 오류' });
             }
         }

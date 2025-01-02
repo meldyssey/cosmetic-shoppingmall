@@ -65,7 +65,7 @@ function Basket(props) {
             {prod.length > 0 ? (
                 <>
                     <h2 className={styles.shoppingHead}>장바구니</h2>
-                    <div className={styles.shoppingHead2}>({prod.length} 개의 제품 / 장바구니에 담긴 제품 수량)</div>
+                    <div className={styles.shoppingHead2}>({prod.length} 개의 제품 / 장바구니에 담긴 제품 개수)</div>
 
                     <table className={styles.table}>
                         <thead>
@@ -79,6 +79,7 @@ function Basket(props) {
                         </thead>
                         <tbody>
                             {prod.map((pp) => {
+                                // 각 합계 계산
                                 const totalPrice = pp.product_price * pp.quantity;
 
                                 return (

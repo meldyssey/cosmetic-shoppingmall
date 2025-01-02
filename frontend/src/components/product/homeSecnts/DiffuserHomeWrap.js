@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import ProductNav from '../ProductNav';
-import axios from 'axios';
-import ProductCard from '../ProductCard';
-import DiffuserHomeTop from './DiffuserHomeTop';
-import Citrus from '../Citrus';
-import Floral from '../Floral';
-import Fruity from '../Fruity';
-import LightFloral from '../LightFloral';
-import Woody from '../Woody';
-import DiffuserTotal from './DiffuserTotal';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import ProductNav from "../ProductNav";
+import axios from "axios";
+import ProductCard from "../ProductCard";
+import DiffuserHomeTop from "./DiffuserHomeTop";
+import Citrus from "../Citrus";
+import Floral from "../Floral";
+import Fruity from "../Fruity";
+import LightFloral from "../LightFloral";
+import Woody from "../Woody";
+import DiffuserTotal from "./DiffuserTotal";
 
 const bkURL = process.env.REACT_APP_BACK_URL;
 
@@ -20,7 +20,7 @@ const DiffuserHomeWrap = () => {
     const [diffusers, setDiffusers] = useState([]);
 
     const colognesGetAxios = () => {
-        console.log('product_scent : ', product_scent);
+        console.log("product_scent : ", product_scent);
 
         axios
             .get(`${bkURL}/product/home-scents/diffusers`)
@@ -36,15 +36,17 @@ const DiffuserHomeWrap = () => {
                 //     })
                 // );
                 let curProduct = res.data;
-                console.log(curProduct);
+                // console.log(curProduct);
 
                 if (product_scent) {
-                    curProduct = res.data.filter((item) => item.product_scent == `${product_scent}`);
+                    curProduct = res.data.filter(
+                        (item) => item.product_scent == `${product_scent}`
+                    );
                 }
                 setDiffusers(curProduct);
             })
             .catch((err) => {
-                console.error('에러발생 ; ', err);
+                console.error("에러발생 ; ", err);
             });
     };
     useEffect(() => {
@@ -79,15 +81,15 @@ const DiffuserHomeWrap = () => {
             <DiffuserHomeTop />
             <ProductNav
                 navInfo={[
-                    { url: '/home-scents/diffusers', title: '전체' },
-                    { url: '/home-scents/diffusers/citrus', title: '시트러스' },
-                    { url: '/home-scents/diffusers/fruity', title: '프루티' },
+                    { url: "/home-scents/diffusers", title: "전체" },
+                    { url: "/home-scents/diffusers/citrus", title: "시트러스" },
+                    { url: "/home-scents/diffusers/fruity", title: "프루티" },
                     {
-                        url: '/home-scents/diffusers/light-floral',
-                        title: '라이트 플로랄',
+                        url: "/home-scents/diffusers/light-floral",
+                        title: "라이트 플로랄",
                     },
-                    { url: '/home-scents/diffusers/floral', title: '플로랄' },
-                    { url: '/home-scents/diffusers/woody', title: '우디' },
+                    { url: "/home-scents/diffusers/floral", title: "플로랄" },
+                    { url: "/home-scents/diffusers/woody", title: "우디" },
                 ]}
             />
             {comp}

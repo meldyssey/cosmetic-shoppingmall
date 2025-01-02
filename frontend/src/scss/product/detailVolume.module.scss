@@ -1,14 +1,13 @@
 .volumeWrap {
-    margin: 20px 0;
+    margin: 20px 10px;
     display: flex;
-    gap: 10px;
+    gap: 20px;
 
     button {
         display: block;
         width: calc(100% / 3);
         font-size: 13px;
         padding: 10px 0;
-        margin: 0 10px;
         border: 1px solid #999;
         &:hover {
             font-weight: 700;

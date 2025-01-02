@@ -20,7 +20,6 @@ router.post('/findPw', async (req, res) => {
 
         res.json({ success: true, message: '비밀번호 재설정이 필요합니다.' });
     } catch (err) {
-        console.error('비밀번호 찾기 오류:', err);
         res.json({ success: false, message: '서버 오류가 발생했습니다.' });
     }
 });
@@ -36,14 +35,11 @@ router.post('/resetPw', async (req, res) => {
         return res.json({ success: false, message: '비밀번호가 서로 일치하지 않습니다.' });
     }
     if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%~]).{12,16}$/.test(newPassword)) {
-        console.log('비밀번호 유효성 검사 통과 못함');
         return res.json({ success: false, message: '비밀번호는 12~16자 이내로 반드시 특수문자(!,@,#,$,%,~)가 들어가야 합니다.' });
     }
     if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%~]).{12,16}$/.test(newPassword2)) {
-        console.log('비밀번호 유효성 검사 통과 못함');
         return res.json({ success: false, message: '비밀번호는 12~16자 이내로 반드시 특수문자(!,@,#,$,%,~)가 들어가야 합니다.' });
     }
-    console.log(email, newPassword, newPassword2);
 
     try {
         // 기존 비밀번호 확인
@@ -68,7 +64,6 @@ router.post('/resetPw', async (req, res) => {
 
         res.json({ success: true, message: '비밀번호 변경이 완료되었습니다. 로그인 페이지로 이동합니다.' });
     } catch (err) {
-        console.error('비밀번호 재설정 오류:', err);
         res.json({ success: false, message: '서버 오류가 발생했습니다.' });
     }
 });

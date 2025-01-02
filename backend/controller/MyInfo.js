@@ -31,10 +31,8 @@ module.exports = () => {
                     ret[0].birthdate = ret[0].birthdate.toISOString().split('T')[0];
                 }
 
-                console.log('조회된 고객 정보:', ret[0]);
                 return res.json(ret[0]);
             } catch (err) {
-                console.error('고객 정보 조회 실패:', err.message);
                 return res.json({ error: 'DB 조회 오류' });
             }
         } else if (action === 'updateChkbox') {
@@ -58,10 +56,8 @@ module.exports = () => {
                     return res.json({ error: '해당 이메일의 사용자를 찾을 수 없습니다.' });
                 }
 
-                console.log(`optional_agree 업데이트 완료: ${email} -> ${optional_agree}`);
                 return res.json({ success: true, message: 'optional_agree가 성공적으로 업데이트되었습니다.' });
             } catch (err) {
-                console.error('optional_agree 업데이트 실패:', err.message);
                 return res.json({ error: 'DB 업데이트 오류' });
             }
         } else if (action === 'updateUserInfo') {
@@ -87,10 +83,8 @@ module.exports = () => {
                     return res.json({ error: '해당 이메일의 사용자를 찾을 수 없습니다.' });
                 }
 
-                console.log('사용자 정보 업데이트 완료:', { email, contact_number, optional_agree });
                 return res.json({ success: true, message: '사용자 정보가 성공적으로 업데이트되었습니다.' });
             } catch (err) {
-                console.error('사용자 정보 업데이트 실패:', err.message);
                 return res.json({ error: 'DB 업데이트 오류' });
             }
         } else if (action === 'updateGender') {
@@ -108,7 +102,6 @@ module.exports = () => {
 
                 return res.json({ success: true, message: '성별이 성공적으로 업데이트되었습니다.' });
             } catch (err) {
-                console.error('성별 업데이트 실패:', err.message);
                 return res.json({ error: 'DB 업데이트 오류' });
             }
         } else if (action === 'getAddressInfo') {
@@ -126,7 +119,6 @@ module.exports = () => {
 
                 return res.json(address[0] || { error: '배송지 정보가 없습니다.' });
             } catch (err) {
-                console.error('배송지 정보 조회 실패:', err.message);
                 return res.json({ error: 'DB 조회 오류' });
             }
         } else if (action === 'updateAddressInfo') {
@@ -150,7 +142,6 @@ module.exports = () => {
 
                 return res.json({ success: true, message: '배송지 정보가 성공적으로 업데이트되었습니다.' });
             } catch (err) {
-                console.error('배송지 정보 수정 실패:', err.message);
                 return res.json({ error: 'DB 업데이트 오류' });
             }
         } else if (action === 'getOrders') {
@@ -163,7 +154,6 @@ module.exports = () => {
             return res.json({ orders });
         } else if (action === 'deleteMember') {
             try {
-                console.log('/deleteMember 진입');
                 const { email } = req.body;
                 if (!email) {
                     return res.status(400).send('탈퇴 처리할 이메일이 없습니다.');
@@ -226,7 +216,6 @@ module.exports = () => {
 
                 res.send('회원 탈퇴 처리가 완료되었습니다.');
             } catch (err) {
-                console.error('회원 탈퇴 실패:', err.message);
                 return res.json({ error: '탈퇴 진행 중 오류' });
             }
         } else {
@@ -247,7 +236,6 @@ module.exports = () => {
 
             res.status(200).json({ message: '주문이 취소되었습니다.' });
         } catch (err) {
-            console.error('주문 취소 실패:', err);
             res.status(500).json({ message: '서버 오류로 주문을 취소할 수 없습니다.' });
         }
     });

@@ -142,7 +142,7 @@ const AProductRegister = () => {
         <div className={styles.detailWrap}>
             <div className={styles.detail}>
                 <div className={styles.title}>제품 등록</div>
-                <form name="myFrm" onSubmit={submitGo}>
+                <form name="myFrm">
                     <table>
                         <tr>
                             <td>
@@ -331,6 +331,7 @@ const AProductRegister = () => {
                     </table>
                     <div className={styles.actionButtons}>
                         <button
+                            type="button"
                             className={styles.resetbutton}
                             onClick={() => {
                                 navigate(`/admin/product`);
