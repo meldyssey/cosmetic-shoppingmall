@@ -5,6 +5,7 @@ const multer = require("multer");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
+require("dotenv").config(); // .env 파일을 로드
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -24,7 +25,18 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-app.use(cors());
+// CORS 설정
+const corsOptions = {
+    origin: [
+        process.env.SERVER_ADDRESS,
+        process.env.SERVICE_ADDRESS,
+        "http://localhost:3000",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

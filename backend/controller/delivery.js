@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const conn = require("../db");
 const axios = require("axios"); // Add this line to import axios
-const apiKey = "m93YKUl1LrjSSqiioJsiVQ";
 
 module.exports = () => {
     const apiUrl = "https://info.sweettracker.co.kr/api/v1/trackingInfo";
@@ -11,7 +10,7 @@ module.exports = () => {
         const params = {
             t_code: "04", // Delivery company code (e.g., CJ Logistics)
             t_invoice: invoice, // Invoice number
-            t_key: apiKey,
+            t_key: process.env.DELIVERY_API_KEY,
         };
         try {
             // Make the GET request
