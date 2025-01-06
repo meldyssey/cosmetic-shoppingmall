@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import styles from '../../scss/mypage/SignUp.module.scss';
 import axios from 'axios';
 
 function SignUp() {
+    const location = useLocation();
     const navigator = useNavigate();
     const bkURL = process.env.REACT_APP_BACK_URL;
+
+    const kakaoEmail = location.state?.user?.kakao_account?.email || ''; // 전달받은 이메일
+
     const [formData, setFormData] = useState({
         //초기 폼데이터 세팅값
         name: '',
@@ -20,6 +24,12 @@ function SignUp() {
     const [editChk, seteditChk] = useState(false); //readOnly 초기값 false
     const [errors, setErrors] = useState({}); // 유효성 검사 에러 메시지 -- 각 인풋 필드마다 에러메시지 표기
     const [showErrors, setShowErrors] = useState(false); // 에러 메시지 표시 여부 상태 추가
+
+    useEffect(() => {
+        if (kakaoEmail) {
+            setFormData(prev => ({ ...prev, email: kakaoEmail })); // 카카오 이메일 설정
+        }
+    }, [kakaoEmail]);
 
     const handleChange = async e => {
         //각 요소 이름, 값, 종류, 체크여부 데이터 저장(폼데이터 바꾸기)
@@ -81,61 +91,68 @@ function SignUp() {
     const handleSubmit = async e => {
         e.preventDefault(); // 기본 동작 방지
         setShowErrors(true); // 에러 메시지 표시
-
-        if (!emailChkFinish) {
-            alert('이메일 중복 확인을 완료해주세요.');
+    
+        const { email } = formData;
+    
+        // 이메일 유효성 검사
+        if (!email) {
+            alert('이메일이 비어 있습니다.');
             return;
         }
-
-        const errorsChk = {}; // 에러 메시지를 수집할 객체
-
-        // 각 필드의 유효성 검사 결과 수집
-        for (const field in formData) {
-            const error = ValueChk(field, formData[field]);
-            if (error) {
-                errorsChk[field] = error; // 에러가 있을 경우 저장
-            }
-        }
-
-        setErrors(errorsChk); // 상태 업데이트
-
-        if (Object.keys(errorsChk).length > 0) {
-            alert('입력 내용을 다시 확인해주세요.');
-            return; // 에러가 있으면 요청 중단
-        }
-
-        console.log(formData);
-
+    
         try {
+            // 이메일 중복 확인 요청
+            const emailCheckResponse = await axios.get(`${bkURL}/signUp/checkEmail`, {
+                params: { email },
+            });
+    
+            // 응답 확인 및 처리
+            if (emailCheckResponse.data.exists) {
+                alert('이미 가입된 회원입니다.');
+                return; // 중복된 이메일이 있으면 처리 중단
+            }
+    
+            // 유효성 검사 로직
+            const errorsChk = {}; // 에러 메시지를 수집할 객체
+    
+            // 각 필드의 유효성 검사 결과 수집
+            for (const field in formData) {
+                const error = ValueChk(field, formData[field]);
+                if (error) {
+                    errorsChk[field] = error; // 에러가 있을 경우 저장
+                }
+            }
+    
+            setErrors(errorsChk); // 상태 업데이트
+    
+            if (Object.keys(errorsChk).length > 0) {
+                alert('입력 내용을 다시 확인해주세요.');
+                return; // 에러가 있으면 요청 중단
+            }
+    
+            // 회원가입 데이터 준비 및 요청
             const customerData = { ...formData, requiredAgree: 1 };
-            //고객데이터를 저장 : 기존 폼데이터 불러오고 필수동의약관은 항상 1 값으로 저장
-
-            // 회원가입 요청을 서버로 전송
             const res = await axios.post(`${bkURL}/signUp/`, customerData);
-
+    
             if (res.data.error) {
-                // 백에서 에러를 보내면
-                alert(res.data.message); // 에러메시지 띄우기
+                alert(res.data.message); // 서버에서 에러 응답 시 메시지 표시
                 return;
             }
-
-            // 서버 응답이 성공일 경우
+    
+            // 성공 시 처리
             alert(`${formData.name}님 가입을 환영합니다.`);
-            navigator('/signIn'); // 홈으로 이동
+            navigator('/signIn'); // 로그인 페이지로 이동
         } catch (err) {
-            // 서버 오류 또는 네트워크 오류 처리
-            if (err.res) {
-                // 서버에서 오류 응답을 보낸 경우
-                console.error('회원가입 실패:', err.res.data.message);
-                alert(err.res.data.message);
+            if (err.response) {
+                console.error('회원가입 실패:', err.response.data.message);
+                alert(err.response.data.message);
             } else {
-                // 네트워크 오류 또는 기타 문제
                 console.error('회원가입 요청 오류:', err);
-                alert('서버 문제 발생');
+                alert('서버와 통신 중 오류가 발생했습니다.');
             }
         }
     };
-
+    
     const emailChk = async () => {
         const { email } = formData;
         const emailtype = /^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
@@ -182,7 +199,7 @@ function SignUp() {
                         </button>
                     </div>
                     <div className={styles.bottomCnt}>
-                        <div>
+                        {/* <div>
                             <div className={styles.kakao}>
                                 <a href="#">
                                     <img src="/imgs/sign/kakao.svg" alt="카카오" />
@@ -194,7 +211,7 @@ function SignUp() {
                                 </a>
                             </div>
                         </div>
-                        <div className={styles.or}>또는</div>
+                        <div className={styles.or}>또는</div> */}
 
                         <form className={styles.inform}>
                             <div className={styles.inputWrapper}>
@@ -203,12 +220,12 @@ function SignUp() {
                             </div>
 
                             <div className={styles.inputWrapper}>
-                                <input type="email" name="email" placeholder="*이메일" className={styles.input} required value={formData.email} onChange={handleChange} readOnly={editChk} />
+                                <input type="email" name="email" placeholder="*이메일" className={styles.input} required value={formData.email} onChange={handleChange} readOnly={true} />
                                 {showErrors && errors.email && <div className={styles.error}>{errors.email}</div>}
                             </div>
-                            <button className={styles.chkbtn} onClick={emailChk}>
+                            {/* <button className={styles.chkbtn} onClick={emailChk}>
                                 이메일 중복확인
-                            </button>
+                            </button> */}
 
                             <div className={styles.inputWrapper}>
                                 <input type="text" name="phone" placeholder="*핸드폰 번호 (하이픈(-)포함하여 기재해주세요.)" className={styles.input} required onChange={handleChange} />
