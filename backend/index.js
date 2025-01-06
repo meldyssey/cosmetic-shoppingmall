@@ -77,6 +77,9 @@ app.use('/signUp', emailChkRouter);
 const signInRouter = require('./controller/SignIn.js');
 app.use('/signIn', signInRouter);
 
+const kakaoLoginRouter = require('./controller/KakaoLogin.js');
+app.use('/auth', kakaoLoginRouter);
+
 //마이페이지 라우터
 const myinfoRouter = require('./controller/MyInfo.js');
 app.use('/myPage/', myinfoRouter());

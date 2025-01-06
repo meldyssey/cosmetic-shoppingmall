@@ -10,6 +10,7 @@ import Basket from "./components/order/Basket";
 import Payment1 from "./components/order/Payment1";
 import Payment2 from "./components/order/Payment2";
 import Payment3 from "./components/order/Payment3";
+import KakaoLogin from "./components/mypage/KakaoLogin";
 import Mypage from "./Mypage";
 import Footer from "./components/dup/Footer";
 import Admin from "./components/admin/Admin";
@@ -48,6 +49,7 @@ function AppContent() {
                 <Route path="/payment1" element={<Payment1 />} />
                 <Route path="/payment2" element={<Payment2 />} />
                 <Route path="/payment3" element={<Payment3 />} />
+                <Route path="/kakaoLogin" element={<KakaoLogin />} />
             </Routes>
             <Product />
             <Services />
