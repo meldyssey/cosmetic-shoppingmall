@@ -3,44 +3,38 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function KakaoLoginHandler() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const urlParams = new URL(window.location.href);
-    const code = urlParams.searchParams.get('code');
-    const state = urlParams.searchParams.get('state'); 
+    useEffect(() => {
+        const urlParams = new URL(window.location.href);
+        const code = urlParams.searchParams.get('code');
 
-    if (code) {
-      axios.post(`${process.env.REACT_APP_BACK_URL}/auth/kakao`, { code })
-    .then(response => {
-        const { sessionToken, customer_name, email } = response.data;
+        if (code) {
+          axios.post(`${process.env.REACT_APP_BACK_URL}/auth/kakao`, { code })
+          .then(response => {
+              const { success, email, nickname, sessionToken } = response.data; // nickname이 customer_name으로 변경될 수도 있음
+      
+              console.log('로그인 응답 데이터:', response.data); // 디버깅용
+      
+              if (!success) {
+                  navigate('/signUp', { state: { email, nickname } }); // 회원가입 필요
+              } else {
+                  sessionStorage.setItem('sessionToken', sessionToken);
+                  sessionStorage.setItem('email', email);
+                  sessionStorage.setItem('customerName', nickname); // 이름 저장
+                  alert(`${nickname || '이름 없음'}님 로그인되었습니다.`);
+                  navigate('/');
+              }
+          })
+          .catch(error => {
+              console.error('로그인 실패:', error);
+              alert('로그인에 실패했습니다.');
+          });
+      
+        }
+    }, [navigate]);
 
-        // 세션 저장
-        sessionStorage.setItem('sessionToken', sessionToken);
-        sessionStorage.setItem('customerName', customer_name);
-        sessionStorage.setItem('email', email);
-
-        console.log('세션 저장 확인:', {
-            sessionToken: sessionStorage.getItem('sessionToken'),
-            customerName: sessionStorage.getItem('customerName'),
-            email: sessionStorage.getItem('email'),
-        });
-
-        navigate('/'); // 메인 페이지로 이동
-    })
-    .catch(error => {
-        console.error('카카오 로그인 실패:', error);
-        alert('카카오 로그인에 실패했습니다. 다시 시도해주세요.');
-    });
-
-    }
-  }, [navigate]);
-
-  return (
-    <div>
-      <p>카카오 로그인 처리 중...</p>
-    </div>
-  );
+    return <p>카카오 로그인 처리 중...</p>;
 }
 
 export default KakaoLoginHandler;
