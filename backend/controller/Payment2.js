@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const con = require("../db");
-const apiSecretKey = "test_sk_jExPeJWYVQeAoYOYALPqV49R5gvN";
-const encryptedApiSecretKey =
-    "Basic " + Buffer.from(apiSecretKey + ":").toString("base64");
+require("dotenv").config();
+
+// const apiSecretKey = "test_sk_jExPeJWYVQeAoYOYALPqV49R5gvN";
+// const encryptedApiSecretKey =
+//     "Basic " + Buffer.from(apiSecretKey + ":").toString("base64");
 
 module.exports = () => {
     router.get("/:id", async (req, res) => {
@@ -90,7 +92,9 @@ module.exports = () => {
                 {
                     method: "POST",
                     headers: {
-                        Authorization: encryptedApiSecretKey,
+                        Authorization: `Basic ${Buffer.from(
+                            process.env.TOSS_SECRET_KEY + ":"
+                        ).toString("base64")}`,
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(payData),
@@ -152,12 +156,8 @@ module.exports = () => {
             }
 
             //payment저장
-            // let totalPrice = 0;
-            // for (let product of prod) {
-            //     totalPrice += product.quantity * product.product_price;
-            // }
-            const sql3 = `INSERT INTO payment (payment_id, order_id, price, pay_date) VALUES (?, ?, ?, SYSDATE())`;
-            const data3 = [orderId, maxOrderId, amount];
+            const sql3 = `INSERT INTO payment (payment_id, order_id, price, payment_key, pay_date) VALUES (?, ?, ?, ?, SYSDATE())`;
+            const data3 = [orderId, maxOrderId, amount, paymentKey];
             console.log("결제테이블", data3);
             await con.execute(sql3, data3);
 
@@ -178,20 +178,6 @@ module.exports = () => {
         }
     });
     ////////////////////////
-
-    // 결제되면 장바구니 삭제
-    // router.delete("/delete/:id", async (req, res) => {
-    //     console.log("payment2 basket delete");
-
-    //     try {
-    //         await con.execute("DELETE FROM basket WHERE bs_email = ?", [
-    //             req.params.id,
-    //         ]);
-    //     } catch (err) {
-    //         console.log("sql 실패 : ", err.message);
-    //         res.status(500).send("db 오류");
-    //     }
-    // });
 
     return router;
 };
