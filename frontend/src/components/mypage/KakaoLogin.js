@@ -31,7 +31,7 @@ function KakaoLoginHandler() {
                     customerName: sessionStorage.getItem('customerName'),
                 });
 
-                  alert(`${customer_name || '이름 없음'}님 로그인되었습니다gdd.`);
+                  alert(`${customer_name || '이름 없음'}님 로그인되었습니다.`);
                   navigate('/');
               }
           })
@@ -45,7 +45,6 @@ function KakaoLoginHandler() {
         }
     }, [navigate]);
 
-    return <p>카카오 로그인 처리 중...</p>;
 }
 
 export default KakaoLoginHandler;
