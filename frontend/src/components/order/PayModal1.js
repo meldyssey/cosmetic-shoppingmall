@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import styles from '../../scss/order/paymodal1.module.scss';
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import styles from "../../scss/order/paymodal1.module.scss";
+import { useDaumPostcodePopup } from "react-daum-postcode";
 
-function PayModal1({ onClose, onSave, btnData, email }) {
+function PayModal1({ onClose, onSave, btnData, email, setModal }) {
     const [formData, setFormData] = useState({
-        customer_name: '',
-        zip: '',
-        roadname_address: '',
-        building_name: '',
-        detail_address: '',
+        customer_name: "",
+        zip: "",
+        roadname_address: "",
+        building_name: "",
+        detail_address: "",
         ...btnData,
     });
 
@@ -20,7 +21,7 @@ function PayModal1({ onClose, onSave, btnData, email }) {
         if (btnData) {
             setFormData(btnData);
         }
-    }, [btnData]);
+    }, []);
 
     // 입력 필드 값 변경 핸들러
     const handleChange = (e) => {
@@ -29,25 +30,70 @@ function PayModal1({ onClose, onSave, btnData, email }) {
     };
 
     // 주소 검색 버튼 클릭 핸들러
-    const handleAddressSearch = (e) => {
+    // const handleAddressSearch = (e) => {
+    //     e.preventDefault();
+
+    //     // 예제용 주소 데이터 (실제 주소 검색 API 연동 시 이 부분을 변경)
+    //     const newAddress = {
+    //         zip: "12345",
+    //         roadname_address: "서울특별시 강남구 테헤란로 123",
+    //         building_name: "테헤란빌딩",
+    //     };
+
+    //     setFormData({
+    //         ...formData,
+    //         zip: newAddress.zip,
+    //         roadname_address: newAddress.roadname_address,
+    //         building_name: newAddress.building_name,
+    //     });
+
+    //     // 주소 입력란을 readonly로 변경
+    //     setIsAddressReadOnly(true);
+    // };
+
+    // Daum Postcode API
+    const open = useDaumPostcodePopup();
+
+    const handleComplete = (data) => {
+        let extraAddress = "";
+
+        if (data.addressType === "R") {
+            if (data.bname !== "") {
+                extraAddress += data.bname;
+            }
+            if (data.buildingName !== "") {
+                extraAddress +=
+                    extraAddress !== ""
+                        ? `, ${data.buildingName}`
+                        : data.buildingName;
+            }
+        }
+
+        console.log(extraAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+        console.log(data);
+
+        if (extraAddress == "") {
+            setFormData({
+                ...formData,
+                zip: data.zonecode,
+                roadname_address: data.roadAddress,
+                building_name: ``,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                zip: data.zonecode,
+                roadname_address: data.roadAddress,
+                building_name: `(${extraAddress})`,
+            });
+        }
+    };
+
+    const handleClick = (e) => {
         e.preventDefault();
-
-        // 예제용 주소 데이터 (실제 주소 검색 API 연동 시 이 부분을 변경)
-        const newAddress = {
-            zip: '12345',
-            roadname_address: '서울특별시 강남구 테헤란로 123',
-            building_name: '테헤란빌딩',
-        };
-
-        setFormData({
-            ...formData,
-            zip: newAddress.zip,
-            roadname_address: newAddress.roadname_address,
-            building_name: newAddress.building_name,
+        open({
+            onComplete: handleComplete,
         });
-
-        // 주소 입력란을 readonly로 변경
-        setIsAddressReadOnly(true);
     };
 
     // 저장 버튼 클릭 핸들러
@@ -59,12 +105,22 @@ function PayModal1({ onClose, onSave, btnData, email }) {
             console.log(myData);
 
             // 유효성 검사
-            const trimmedName = myData.customer_name ? myData.customer_name.trim() : '';
-            const trimmedZip = myData.zip ? myData.zip.trim() : '';
-            const trimmedRoadnameAddress = myData.roadname_address ? myData.roadname_address.trim() : '';
-            const trimmedBuildingName = myData.building_name ? myData.building_name.trim() : '';
-            const trimmedDetailAddress = myData.detail_address ? myData.detail_address.trim() : '';
-            const trimmedNum = myData.contact_number ? myData.contact_number.trim() : '';
+            const trimmedName = myData.customer_name
+                ? myData.customer_name.trim()
+                : "";
+            const trimmedZip = myData.zip ? myData.zip.trim() : "";
+            const trimmedRoadnameAddress = myData.roadname_address
+                ? myData.roadname_address.trim()
+                : "";
+            const trimmedBuildingName = myData.building_name
+                ? myData.building_name.trim()
+                : "";
+            const trimmedDetailAddress = myData.detail_address
+                ? myData.detail_address.trim()
+                : "";
+            const trimmedNum = myData.contact_number
+                ? myData.contact_number.trim()
+                : "";
 
             const nameTest = /^[가-힣]{2,5}$/;
             const numTest = /^01[0-9]-\d{3,4}-\d{4}$/;
@@ -72,23 +128,28 @@ function PayModal1({ onClose, onSave, btnData, email }) {
             const ziptype = /^\d{5}$/;
 
             if (!trimmedName) {
-                alert('수령인을 입력해주세요.');
+                alert("수령인을 입력해주세요.");
                 return;
             }
             if (!trimmedNum) {
-                alert('수령인 전화번호를 입력해주세요.');
+                alert("수령인 전화번호를 입력해주세요.");
                 return;
             }
             if (!nameTest.test(trimmedName) || !numTest.test(trimmedNum)) {
-                alert('정확한 정보를 입력해주세요.');
+                alert("정확한 정보를 입력해주세요.");
                 return;
             }
             if (!ziptype.test(trimmedZip)) {
-                alert('정확한 우편번호를 입력해주세요.');
+                alert("정확한 우편번호를 입력해주세요.");
                 return;
             }
-            if (!trimmedZip || !trimmedRoadnameAddress || !trimmedBuildingName || !trimmedDetailAddress) {
-                alert('빈칸 없이 주소를 입력해주세요.');
+            if (
+                !trimmedZip ||
+                !trimmedRoadnameAddress ||
+                !trimmedBuildingName ||
+                !trimmedDetailAddress
+            ) {
+                alert("빈칸 없이 주소를 입력해주세요.");
                 return;
             }
 
@@ -99,15 +160,15 @@ function PayModal1({ onClose, onSave, btnData, email }) {
                         email,
                         ...myData,
                     });
-                    alert('배송지가 저장되었습니다.');
+                    alert("배송지가 저장되었습니다.");
                 }
 
                 onSave(formData);
-                alert('배송지가 수정되었습니다');
+                alert("배송지가 수정되었습니다");
                 onClose();
             } catch (error) {
-                console.error('배송지 저장 중 에러 발생:', error);
-                alert('배송지 저장 중 문제가 발생했습니다.');
+                console.error("배송지 저장 중 에러 발생:", error);
+                alert("배송지 저장 중 문제가 발생했습니다.");
             }
         }
     };
@@ -115,9 +176,9 @@ function PayModal1({ onClose, onSave, btnData, email }) {
     return (
         <div className={styles.overlay}>
             <div className={styles.modal}>
-                <h2>{btnData.zip ? '배송지 수정' : '배송지 추가'}</h2>
+                <h2>{btnData.zip ? "배송지 수정" : "배송지 추가"}</h2>
                 <form ref={formRef}>
-                    {' '}
+                    {" "}
                     {/* ref 속성으로 form 요소를 참조 */}
                     <div>
                         <label>이름:</label>
@@ -135,10 +196,13 @@ function PayModal1({ onClose, onSave, btnData, email }) {
                             name="zip"
                             value={formData.zip}
                             onChange={handleChange}
-                            readOnly={isAddressReadOnly}
+                            readOnly
                         />
-                        <button className={styles.addressBtn} onClick={handleAddressSearch}>
-                            주소검색
+                        <button
+                            className={styles.addressBtn}
+                            onClick={handleClick}
+                        >
+                            주소 검색
                         </button>
                     </div>
                     <div>
@@ -148,7 +212,7 @@ function PayModal1({ onClose, onSave, btnData, email }) {
                             name="roadname_address"
                             value={formData.roadname_address}
                             onChange={handleChange}
-                            readOnly={isAddressReadOnly}
+                            readOnly
                         />
                     </div>
                     <div>
@@ -158,7 +222,7 @@ function PayModal1({ onClose, onSave, btnData, email }) {
                             name="building_name"
                             value={formData.building_name}
                             onChange={handleChange}
-                            readOnly={isAddressReadOnly}
+                            readOnly
                         />
                     </div>
                     <div>

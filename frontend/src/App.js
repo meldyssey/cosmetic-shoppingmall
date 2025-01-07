@@ -19,7 +19,7 @@ import Mypage from "./Mypage";
 import Footer from "./components/dup/Footer";
 import Admin from "./components/admin/Admin";
 import ScrollToTop from "./components/dup/ScrollToTop";
-import DeliveryTest from "./components/order/DeliveryTest";
+import AddressInput from "./components/dup/AddressInput";
 
 function AdminChk() {
     const email = sessionStorage.getItem("email");
@@ -57,7 +57,7 @@ function AppContent() {
                 <Route path="/payment2/success" element={<SuccessPage />} />
                 <Route path="/payment2/fail" element={<FailPage />} />
                 <Route path="/payment3" element={<Payment3 />} />
-                <Route path="/delivery" element={<DeliveryTest />} />
+                <Route path="/address" element={<AddressInput />} />
                 <Route path="/kakaoLogin" element={<KakaoLogin />} />
                 {/* <Route path="/payment2/cab" element={<Payment3 />} /> */}
             </Routes>

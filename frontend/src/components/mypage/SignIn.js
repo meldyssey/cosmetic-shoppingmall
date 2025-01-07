@@ -22,39 +22,6 @@ function SignIn() {
         window.location.href = KAKAO_AUTH_URL;
     };
 
-    // 카카오 로그인 콜백 처리
-    const handleKakaoLoginCallback = async (code) => {
-        try {
-            console.log('카카오 인증 코드:', code); // 디버깅
-            const response = await axios.post(`${bkURL}/signIn/kakao`, { code });
-
-            console.log('카카오 로그인 응답 데이터:', response.data); // 응답 확인
-            const { sessionToken, customer_name, email } = response.data;
-
-            if (!sessionToken || !customer_name || !email) {
-                alert('카카오 로그인에 실패했습니다.');
-                return;
-            }
-
-            // 세션 저장
-            sessionStorage.setItem('sessionToken', sessionToken);
-            sessionStorage.setItem('customerName', customer_name);
-            sessionStorage.setItem('email', email);
-
-            console.log('세션 저장 확인:', {
-                sessionToken: sessionStorage.getItem('sessionToken'),
-                customerName: sessionStorage.getItem('customerName'),
-                email: sessionStorage.getItem('email'),
-            }); // 세션 값 확인
-
-            alert(`${customer_name}님 카카오 로그인되었습니다.`);
-            navigate('/');
-        } catch (error) {
-            console.error('카카오 로그인 실패:', error.response?.data || error.message);
-            alert('카카오 로그인에 실패했습니다. 다시 시도해 주세요.');
-        }
-    };
-
     // 비밀번호 숨기기 토글
     const passwordHide = () => {
         setshowPassword((prevState) => !prevState);
@@ -90,9 +57,14 @@ function SignIn() {
                 email: sessionStorage.getItem('email'),
                 customerName: sessionStorage.getItem('customerName'),
             });
-    
-            alert(`${customer_name}님 로그인되었습니다.`);
-            navigate('/');
+            // 관리자 계정 여부 확인 및 페이지 이동
+            if (email === 'admin@jomalone.kr' && customer_name === '관리자') {
+                console.log('관리자 계정');
+                location.href = '/admin';
+            } else {
+                alert(`${customer_name}님 로그인 되었습니다.`);
+                location.href = '/';
+            }     
         } catch (err) {
             console.error('로그인 요청 오류:', err.response?.data || err.message);
             alert('정확한 정보를 입력해주세요.');
