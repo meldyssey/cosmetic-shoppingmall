@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styles from "../../scss/mypage/OrderDetail.module.scss";
+import Delivery from "../order/Delivery";
 
 function OrderDetail() {
     const [detailorders, setDetailOrders] = useState([]); // 주문 목록 상태
@@ -33,6 +34,8 @@ function OrderDetail() {
             } catch (err) {
                 console.error("데이터 가져오기 오류:", err);
                 alert("데이터를 불러올 수 없습니다.");
+                console.error("데이터 가져오기 오류:", err);
+                alert("데이터를 불러올 수 없습니다.");
             }
         };
 
@@ -52,6 +55,7 @@ function OrderDetail() {
             axios
                 .post(`${bkURL}/myPage/cancelOrder/${orderId}`)
                 .then(() => {
+                    alert("주문이 취소되었습니다.");
                     alert("주문이 취소되었습니다.");
                     // 상태를 갱신하거나 페이지를 새로고침
                     window.location.reload();
@@ -143,8 +147,10 @@ function OrderDetail() {
                                         >
                                             취소하기
                                         </button>
+                                    ) : od.invoice ? (
+                                        <Delivery invoice={od.invoice} />
                                     ) : (
-                                        od.invoice || "-"
+                                        "-"
                                     )}
                                 </div>
                             </div>

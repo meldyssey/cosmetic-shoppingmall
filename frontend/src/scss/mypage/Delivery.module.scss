@@ -1,0 +1,9 @@
+.delivery {
+    .btn {
+        color: #007bff;
+        text-decoration: none;
+        &:hover {
+            font-weight: bold;
+        }
+    }
+}
