@@ -28,12 +28,15 @@ router.post('/kakao', async (req, res) => {
         const email = userResponse.data.kakao_account.email;
         const nickname = userResponse.data.kakao_account.profile.nickname;
 
+        console.log('카카오 이메일 확인:', email);
+
         if (!email) {
             return res.status(400).json({ error: '카카오 계정에 이메일이 없습니다.' });
         }
 
         // DB에서 이메일 확인
-        const [user] = await db.query('SELECT customer_id, customer_name FROM customers WHERE email = ?', [email]);
+        const [user] = await db.query('SELECT * FROM customers WHERE email = ?', [email]);
+        console.log('DB 조회 결과:', user); 
 
         if (user.length === 0) {
             // 회원가입 필요

@@ -10,43 +10,27 @@ const MyInfo = () => {
     const bkURL = process.env.REACT_APP_BACK_URL;
 
     useEffect(() => {
-        const sessionToken = sessionStorage.getItem("sessionToken");
-        const email = sessionStorage.getItem("email");
-
-        if (!sessionToken) {
-            navigate("/signIn");
-        } else {
-            Promise.all([
-                axios.post(
-                    `${bkURL}/myPage`,
-                    { action: "getUserInfo", email },
-                    { headers: { Authorization: sessionToken } }
-                ),
-                axios.post(
-                    `${bkURL}/myPage`,
-                    { action: "getOrders", email },
-                    { headers: { Authorization: sessionToken } }
-                ),
-            ])
-                .then(([userResponse, orderResponse]) => {
-                    console.log("사용자 정보 응답 데이터:", userResponse.data);
-                    setUserInfo(userResponse.data || {});
-
-                    const orders = orderResponse.data.orders || [];
-                    if (orders.length > 0) {
-                        const sortedOrders = orders.sort(
-                            (a, b) => new Date(b.order_date) - new Date(a.order_date)
-                        );
-                        setRecentOrder(sortedOrders[0]); // 최신 주문 저장
-                    }
-                })
-                .catch((error) => {
-                    console.error("데이터 가져오기 실패:", error);
-                    setUserInfo({});
-                    setRecentOrder(null);
-                });
+        const sessionToken = sessionStorage.getItem('sessionToken');
+        const email = sessionStorage.getItem('email');
+    
+        if (!sessionToken || !email) {
+            navigate('/signIn'); // 세션 또는 이메일이 없으면 로그인 페이지로 이동
+            return;
         }
+    
+        axios.post(`${bkURL}/myPage`, { action: 'getUserInfo', email }, {
+            headers: { Authorization: sessionToken },
+        })
+        .then(response => {
+            setUserInfo(response.data);
+        })
+        .catch(error => {
+            console.error('사용자 정보 가져오기 실패:', error);
+            navigate('/signIn');
+        });
     }, []);
+    
+    
 
     const formatDate = (dateString) => {
         if (!dateString) return "-";

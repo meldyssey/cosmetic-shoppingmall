@@ -12,17 +12,26 @@ function KakaoLoginHandler() {
         if (code) {
           axios.post(`${process.env.REACT_APP_BACK_URL}/auth/kakao`, { code })
           .then(response => {
-              const { success, email, nickname, sessionToken } = response.data; // nickname이 customer_name으로 변경될 수도 있음
+              const { success, email, customer_name, sessionToken } = response.data;
       
               console.log('로그인 응답 데이터:', response.data); // 디버깅용
       
               if (!success) {
-                  navigate('/signUp', { state: { email, nickname } }); // 회원가입 필요
+                  // 회원가입 필요 시 이메일 전달
+                  navigate('/signUp', { state: { email } });
               } else {
+                  // 로그인 성공 시 세션 저장 및 페이지 이동
                   sessionStorage.setItem('sessionToken', sessionToken);
                   sessionStorage.setItem('email', email);
-                  sessionStorage.setItem('customerName', nickname); // 이름 저장
-                  alert(`${nickname || '이름 없음'}님 로그인되었습니다.`);
+                  sessionStorage.setItem('customerName', customer_name);
+
+                  console.log('세션 저장 확인:', {
+                    sessionToken: sessionStorage.getItem('sessionToken'),
+                    email: sessionStorage.getItem('email'),
+                    customerName: sessionStorage.getItem('customerName'),
+                });
+
+                  alert(`${customer_name || '이름 없음'}님 로그인되었습니다gdd.`);
                   navigate('/');
               }
           })
@@ -30,6 +39,8 @@ function KakaoLoginHandler() {
               console.error('로그인 실패:', error);
               alert('로그인에 실패했습니다.');
           });
+      
+
       
         }
     }, [navigate]);
