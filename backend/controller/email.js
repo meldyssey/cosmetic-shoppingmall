@@ -17,16 +17,18 @@ module.exports = () => {
 
     // 메일 전송 API
     router.post("/send", async (req, res) => {
+        console.log(req.body);
+
         try {
-            const num = parseInt(Math.random() * 100 + 1);
-
             //const { to, subject, text } = req.body;
-            const to = "meldyssey15@gmail.com";
-            const subject = "express 가 보낸다";
-            const text = `내용이지 : ${num}`;
+            const to = `meldyssey15@gmail.com`;
+            const subject = "[Jomalone] 남겨주신 1:1 문의에 답변 드립니다.";
+            const text = `
+작성해주신 문의 : ${req.body.post_detail}
+답변 : ${req.body.reply}
+`;
 
-            //이메일 - db 테이블에 저장해두고, 가장 큰 번호 기준으로 매칭시킴
-            //sms 인증 -
+            let data = [req.body.reply, req.body.post_no];
 
             // 이메일 내용 설정
             const mailOptions = {
@@ -36,8 +38,14 @@ module.exports = () => {
                 text: text, // 이메일 본문
             };
             const info = await transporter.sendMail(mailOptions);
+
+            const [ret] = await conn.execute(
+                "update one_to_one set reply_status = '답변완료', reply_date = sysdate(), reply_detail = ? where post_no = ?",
+                data
+            );
+            console.log("수정완료", ret);
             res.status(200).send({
-                message: `이메일 전송 성공: ${num}`,
+                message: `이메일 전송 성공`,
                 response: info.response,
             });
         } catch (error) {
