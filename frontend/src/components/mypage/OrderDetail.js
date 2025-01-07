@@ -34,6 +34,8 @@ function OrderDetail() {
             } catch (err) {
                 console.error("데이터 가져오기 오류:", err);
                 alert("데이터를 불러올 수 없습니다.");
+                console.error("데이터 가져오기 오류:", err);
+                alert("데이터를 불러올 수 없습니다.");
             }
         };
 
@@ -41,23 +43,24 @@ function OrderDetail() {
     }, []);
 
     // 날짜 포맷팅 함수
-    const formatDate = (dateString) => {
+    const formatDate = dateString => {
         if (!dateString) return "-";
         const date = new Date(dateString);
         return date.toISOString().split("T")[0];
     };
 
     // 주문 취소하기
-    const handleCancelOrder = (orderId) => {
+    const handleCancelOrder = orderId => {
         if (window.confirm("주문을 취소하시겠습니까?")) {
             axios
                 .post(`${bkURL}/myPage/cancelOrder/${orderId}`)
                 .then(() => {
                     alert("주문이 취소되었습니다.");
+                    alert("주문이 취소되었습니다.");
                     // 상태를 갱신하거나 페이지를 새로고침
                     window.location.reload();
                 })
-                .catch((err) => {
+                .catch(err => {
                     console.error("주문 취소 실패:", err);
                     alert("주문 취소에 실패했습니다.");
                 });
@@ -104,7 +107,7 @@ function OrderDetail() {
                                 <div>{od.order_id}</div>
                                 <div>
                                     {products.length > 0
-                                        ? products.map((product) => (
+                                        ? products.map(product => (
                                               <p
                                                   key={product.product_id}
                                                   className={styles.productItem}
