@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "../../../scss/admin/AdminList.module.scss";
@@ -11,6 +11,8 @@ const OneToOneDetail = () => {
     const [onetoone, setOnetoone] = useState(null); // 1:1 문의 데이터 상태
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 에러 상태
+    const [reply, setReply] = useState("");
+    const replyRef = useRef(null);
 
     // 서버에서 특정 문의 상세 정보를 가져오는 함수
     const fetchOnetooneDetail = async () => {
@@ -88,8 +90,25 @@ const OneToOneDetail = () => {
         return date.toISOString().split("T")[0];
     };
 
-    const emailSend = () => {
+    const emailSend = async () => {
         console.log("1:1 문의 답변 이메일 전송");
+        try {
+            const reportData = {
+                post_no: onetoone.post_no,
+                email: onetoone.email,
+                post_detail: onetoone.post_detail,
+                reply: reply,
+            };
+
+            console.log("보내는 데이터:", reportData);
+
+            await axios.post(`${bkURL}/email/send`, reportData);
+            alert("1:1 문의 답변 이메일 전송이 완료되었습니다.");
+            window.location.reload(); // 페이지 새로고침
+        } catch (error) {
+            console.error("1:1 문의 이메일 전송 실패:", error);
+            alert("1:1 문의 이메일 전송애 실패했습니다.");
+        }
     };
 
     return (
@@ -145,10 +164,15 @@ const OneToOneDetail = () => {
                             <strong>문의 답변</strong>
                         </td>
                         <td>
-                            <input type="textarea" />
+                            <input
+                                type="textarea"
+                                onChange={(e) => setReply(e.target.value)}
+                                value={onetoone.reply_detail}
+                            />
                             <button
                                 className={styles.changebutton}
                                 onClick={emailSend}
+                                disabled={onetoone.reply_detail ? true : false}
                             >
                                 전송하기
                             </button>
@@ -159,7 +183,7 @@ const OneToOneDetail = () => {
                             <strong>처리 상태</strong>
                         </td>
                         <td>
-                            <select
+                            {/* <select
                                 name="reply_status"
                                 id="reply_status"
                                 onChange={(e) =>
@@ -176,7 +200,8 @@ const OneToOneDetail = () => {
                                 onClick={statusChgGo}
                             >
                                 저장
-                            </button>
+                            </button> */}
+                            {onetoone.reply_status}
                         </td>
                     </tr>
                 </tbody>
