@@ -151,31 +151,7 @@ export function CheckoutPage() {
             alert("결제 중 문제가 발생했습니다.");
         }
     }
-    // axios
-    //     .post(`${bkURL}/payment2/join/${customerEmail}`, orderPayload)
-    //     .then(res => {
-    //         alert("결제되었습니다.");
-    //         // navigate('/payment3')
-    //         setIsLoading(true);
-    //         // console.log(res.data)
 
-    //         setTimeout(() => {
-    //             setIsLoading(false);
-    //             navigate("/payment3", {
-    //                 state: { orderId: res.data, myData, ordersData, prod },
-    //             });
-    //         }, 2000);
-    //     })
-    //     .catch(err => {
-    //         console.log("결제오류 : ", err);
-    //     });
-    // // 4. 장바구니 데이터 삭제
-    // axios
-    //     .delete(`${bkURL}/payment2/delete/${customerEmail}`)
-    //     .then(res => {})
-    //     .catch(err => {
-    //         console.log("삭제오류 : ", err);
-    //     });
     async function requestBillingAuth() {
         await payment.requestBillingAuth({
             method: "CARD", // 자동결제(빌링)은 카드만 지원합니다

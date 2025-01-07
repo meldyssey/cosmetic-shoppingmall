@@ -50,20 +50,37 @@ function OrderDetail() {
     };
 
     // 주문 취소하기
-    const handleCancelOrder = orderId => {
+    const handleCancelOrder = async orderId => {
         if (window.confirm("주문을 취소하시겠습니까?")) {
-            axios
-                .post(`${bkURL}/myPage/cancelOrder/${orderId}`)
-                .then(() => {
-                    alert("주문이 취소되었습니다.");
-                    alert("주문이 취소되었습니다.");
-                    // 상태를 갱신하거나 페이지를 새로고침
-                    window.location.reload();
-                })
-                .catch(err => {
-                    console.error("주문 취소 실패:", err);
-                    alert("주문 취소에 실패했습니다.");
+            try {
+                await axios.post(`${bkURL}/myPage/cancelOrder/${orderId}`);
+                // alert("주문이 취소되었습니다.");
+
+                //토스
+                const response = await fetch(`${bkURL}/myPage/payment/cancel`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        cancelReason: "사용자 주문 취소",
+                    }),
                 });
+
+                const json = await response.json();
+
+                if (response.ok) {
+                    alert("주문이 취소되었습니다.");
+                } else {
+                    alert("토스결제 취소 실패: " + json.message);
+                }
+
+                window.location.reload();
+            } catch (err) {
+                console.error("주문 취소 실패:", err);
+                alert("주문 취소에 실패했습니다.");
+            }
         }
     };
 
