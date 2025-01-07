@@ -9,6 +9,10 @@ import Map from "./components/dup/Map";
 import Basket from "./components/order/Basket";
 import Payment1 from "./components/order/Payment1";
 import Payment2 from "./components/order/Payment2";
+import { CheckoutPage } from "./components/order/Checkout copy";
+import { SuccessPage } from "./components/order/Success";
+import { FailPage } from "./components/order/Fail";
+// import { CancelPage } from "./components/order/Cancel";
 import Payment3 from "./components/order/Payment3";
 import Mypage from "./Mypage";
 import Footer from "./components/dup/Footer";
@@ -47,7 +51,11 @@ function AppContent() {
                 <Route path="/basket" element={<Basket />} />
                 <Route path="/payment1" element={<Payment1 />} />
                 <Route path="/payment2" element={<Payment2 />} />
+                <Route path="/payment2/2" element={<CheckoutPage />} />
+                <Route path="/payment2/success" element={<SuccessPage />} />
+                <Route path="/payment2/fail" element={<FailPage />} />
                 <Route path="/payment3" element={<Payment3 />} />
+                {/* <Route path="/payment2/cab" element={<Payment3 />} /> */}
             </Routes>
             <Product />
             <Services />

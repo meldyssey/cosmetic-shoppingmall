@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PayHead from "./PayHead";
 import styles from "../../scss/order/payment2.module.scss";
 import axios from "axios";
+import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
 
 function Payment2(props) {
     const location = useLocation();
@@ -77,7 +78,7 @@ function Payment2(props) {
     };
 
     // 결제 정보 넘기기
-    function orderFin(e) {
+    async function orderFin(e) {
         e.preventDefault();
         const myData = Object.fromEntries(new FormData(document.myFrm));
 
@@ -104,31 +105,48 @@ function Payment2(props) {
             })),
             status: "주문완료",
         };
-        console.log(orderPayload);
+        console.log("orderPayload:", orderPayload);
+        console.log("data:", data);
+        //이동연습
+        navigate("/payment2/2", {
+            state: { orderPayload, prod, ordersData },
+        });
+        // 기존 백엔드 서버 코드
+        // axios
+        //     .post(`${bkURL}/payment2/join/${email}`, orderPayload)
+        //     .then(res => {
+        //         alert("결제되었습니다.");
+        //         // navigate('/payment3')
+        //         setIsLoading(true);
+        //         // console.log(res.data)
 
-        axios
-            .post(`${bkURL}/payment2/join/${email}`, orderPayload)
-            .then(res => {
-                alert("결제되었습니다.");
-                // navigate('/payment3')
-                setIsLoading(true);
-                // console.log(res.data)
+        //         setTimeout(() => {
+        //             setIsLoading(false);
+        //             navigate("/payment2/2", {
+        //                 state: { orderId: res.data, myData, ordersData, prod },
+        //             });
+        //             console.log(
+        //                 "orderId:",
+        //                 orderId,
+        //                 "myData:",
+        //                 myData,
+        //                 "ordersData:",
+        //                 ordersData,
+        //                 "prod:",
+        //                 prod
+        //             );
+        //         }, 2000);
+        //     })
+        //     .catch(err => {
+        //         console.log("삭제오류 : ", err);
+        //     });
 
-                setTimeout(() => {
-                    setIsLoading(false);
-                    navigate("/payment3", { state: { orderId: res.data } });
-                }, 2000);
-            })
-            .catch(err => {
-                console.log("삭제오류 : ", err);
-            });
-
-        axios
-            .delete(`${bkURL}/payment2/delete/${email}`)
-            .then(res => {})
-            .catch(err => {
-                console.log("삭제오류 : ", err);
-            });
+        // axios
+        //     .delete(`${bkURL}/payment2/delete/${email}`)
+        //     .then(res => {})
+        //     .catch(err => {
+        //         console.log("삭제오류 : ", err);
+        //     });
     }
 
     return (
