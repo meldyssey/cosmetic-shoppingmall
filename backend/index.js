@@ -123,6 +123,9 @@ app.use("/analysis", analysisRouter());
 const deliveryRouter = require("./controller/delivery.js");
 app.use("/delivery", deliveryRouter());
 
+const emailRouter = require("./controller/email.js");
+app.use("/email", emailRouter());
+
 app.get("/", (req, res) => {
     console.log("백엔드 서버 진입"); //정상작동 확인
     res.send("백엔드 서버 진입");

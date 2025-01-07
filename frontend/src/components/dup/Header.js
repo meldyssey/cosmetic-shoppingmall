@@ -1,32 +1,32 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styles from '../../scss/dup/header.module.scss';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "../../scss/dup/header.module.scss";
 
 function Header({ ham, setHam }) {
     const navigate = useNavigate();
 
     // 세션토큰 사용
-    const Loginchk = sessionStorage.getItem('sessionToken');
-    const email = sessionStorage.getItem('email');
+    const Loginchk = sessionStorage.getItem("sessionToken");
+    const email = sessionStorage.getItem("email");
 
     const Loginbtn = () => {
         if (Loginchk) {
-            navigate('/myPage'); // 로그인 상태면 마이페이지로 이동
+            navigate("/myPage"); // 로그인 상태면 마이페이지로 이동
         } else {
-            navigate('/signIn'); // 아니면 로그인 페이지로 이동
+            navigate("/signIn"); // 아니면 로그인 페이지로 이동
         }
     };
 
     const LoginBsk = () => {
         if (Loginchk) {
-            navigate('/basket'); // 로그인 상태면 장바구니로 이동
+            navigate("/basket"); // 로그인 상태면 장바구니로 이동
         } else {
-            navigate('/signIn'); // 아니면 로그인 페이지로 이동
+            navigate("/signIn"); // 아니면 로그인 페이지로 이동
         }
     };
 
     const Adminbtn = () => {
-        navigate('/admin'); // 관리자 페이지로 이동
+        navigate("/admin"); // 관리자 페이지로 이동
     };
 
     const showHamMenu = (e) => {
@@ -34,7 +34,7 @@ function Header({ ham, setHam }) {
         setHam(!ham);
     };
 
-    const url = '/imgs/main/';
+    const url = "/imgs/main/";
 
     return (
         <header>
@@ -46,7 +46,7 @@ function Header({ ham, setHam }) {
                     <div
                         className={styles.searchIcon}
                         onClick={() => {
-                            navigate('/search');
+                            navigate("/search");
                         }}
                     >
                         <img src={`${url}searchIcon.svg`} alt="" />
@@ -59,13 +59,13 @@ function Header({ ham, setHam }) {
                 </div>
                 <div className={styles.logo}>
                     <Link to="/">
-                        <img src={`${url}조말론로고.svg`} alt="" />
+                        <img src={`${url}jomalonelogo.svg`} alt="" />
                     </Link>
                 </div>
                 <div className={styles.righticonbox}>
                     {/* 로그인 혹은 마이페이지 버튼 */}
                     {email ? (
-                        email === 'admin@jomalone.kr' ? (
+                        email === "admin@jomalone.kr" ? (
                             <div className={styles.userLink} onClick={Adminbtn}>
                                 <i className="fa-solid fa-user"></i>
                             </div>
