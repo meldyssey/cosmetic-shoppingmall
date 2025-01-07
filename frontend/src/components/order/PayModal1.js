@@ -196,10 +196,10 @@ function PayModal1({ onClose, onSave, btnData, email, setModal }) {
                             name="zip"
                             value={formData.zip}
                             onChange={handleChange}
-                            readOnly={isAddressReadOnly}
+                            readOnly
                         />
                         <button
-                            className={styles.searchAddress}
+                            className={styles.addressBtn}
                             onClick={handleClick}
                         >
                             주소 검색
@@ -212,7 +212,7 @@ function PayModal1({ onClose, onSave, btnData, email, setModal }) {
                             name="roadname_address"
                             value={formData.roadname_address}
                             onChange={handleChange}
-                            readOnly={isAddressReadOnly}
+                            readOnly
                         />
                     </div>
                     <div>
@@ -222,7 +222,7 @@ function PayModal1({ onClose, onSave, btnData, email, setModal }) {
                             name="building_name"
                             value={formData.building_name}
                             onChange={handleChange}
-                            readOnly={isAddressReadOnly}
+                            readOnly
                         />
                     </div>
                     <div>
