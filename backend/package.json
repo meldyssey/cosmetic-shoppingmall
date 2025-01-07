@@ -10,6 +10,7 @@
     "mysql2": "^3.11.5",
     "node-imap": "^0.9.6",
     "nodemailer": "^6.9.16",
+    "react-daum-postcode": "^3.2.0",
     "view": "^1.1.1"
   },
   "name": "backend",
