@@ -59,7 +59,7 @@ function Header({ ham, setHam }) {
                 </div>
                 <div className={styles.logo}>
                     <Link to="/">
-                        <img src={`/imgs/main/조말론로고.svg`} alt="" />
+                        <img src={`${url}jomalonelogo.svg`} alt="" />
                     </Link>
                 </div>
                 <div className={styles.righticonbox}>
