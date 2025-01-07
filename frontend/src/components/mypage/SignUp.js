@@ -8,18 +8,19 @@ function SignUp() {
     const navigator = useNavigate();
     const bkURL = process.env.REACT_APP_BACK_URL;
 
-    const kakaoEmail = location.state?.user?.kakao_account?.email || ''; // 전달받은 이메일
+    const kakaoEmail = location.state?.email || '';
+
 
     const [formData, setFormData] = useState({
-        //초기 폼데이터 세팅값
-        name: '',
-        email: '',
+        name: '',      // 닉네임은 사용자가 직접 입력
+        email: kakaoEmail, // 전달받은 이메일을 기본값으로 설정
         phone: '',
         password: '',
         gender: '',
         requiredAgree: true,
         optionalAgree: false,
     });
+
     const [emailChkFinish, setemailChkFinish] = useState(false); // 중복 확인 여부 상태
     const [editChk, seteditChk] = useState(false); //readOnly 초기값 false
     const [errors, setErrors] = useState({}); // 유효성 검사 에러 메시지 -- 각 인풋 필드마다 에러메시지 표기
@@ -27,7 +28,7 @@ function SignUp() {
 
     useEffect(() => {
         if (kakaoEmail) {
-            setFormData(prev => ({ ...prev, email: kakaoEmail })); // 카카오 이메일 설정
+            setFormData(prev => ({ ...prev, email: kakaoEmail }));
         }
     }, [kakaoEmail]);
 
