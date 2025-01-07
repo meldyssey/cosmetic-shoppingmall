@@ -93,13 +93,24 @@ function SignUp() {
         e.preventDefault(); // 기본 동작 방지
         setShowErrors(true); // 에러 메시지 표시
     
-        const { email } = formData;
+        const errorsChk = {}; // 에러 메시지를 수집할 객체
     
-        // 이메일 유효성 검사
-        if (!email) {
-            alert('이메일이 비어 있습니다.');
-            return;
+        // 각 필드의 유효성 검사 결과 수집
+        for (const field in formData) {
+            const error = ValueChk(field, formData[field]);
+            if (error) {
+                errorsChk[field] = error; // 에러가 있을 경우 저장
+            }
         }
+    
+        setErrors(errorsChk); // 상태 업데이트
+    
+        if (Object.keys(errorsChk).length > 0) {
+            alert('입력 내용을 다시 확인해주세요.');
+            return; // 에러가 있으면 요청 중단
+        }
+    
+        const { email } = formData;
     
         try {
             // 이메일 중복 확인 요청
@@ -107,52 +118,28 @@ function SignUp() {
                 params: { email },
             });
     
-            // 응답 확인 및 처리
             if (emailCheckResponse.data.exists) {
                 alert('이미 가입된 회원입니다.');
-                return; // 중복된 이메일이 있으면 처리 중단
+                return; // 중복된 이메일이 있으면 요청 중단
             }
     
-            // 유효성 검사 로직
-            const errorsChk = {}; // 에러 메시지를 수집할 객체
-    
-            // 각 필드의 유효성 검사 결과 수집
-            for (const field in formData) {
-                const error = ValueChk(field, formData[field]);
-                if (error) {
-                    errorsChk[field] = error; // 에러가 있을 경우 저장
-                }
-            }
-    
-            setErrors(errorsChk); // 상태 업데이트
-    
-            if (Object.keys(errorsChk).length > 0) {
-                alert('입력 내용을 다시 확인해주세요.');
-                return; // 에러가 있으면 요청 중단
-            }
-    
-            // 회원가입 데이터 준비 및 요청
-            const customerData = { ...formData, requiredAgree: 1 };
-            const res = await axios.post(`${bkURL}/signUp/`, customerData);
+            // 회원가입 요청 전송
+            const res = await axios.post(`${bkURL}/signUp/`, formData);
     
             if (res.data.error) {
                 alert(res.data.message); // 서버에서 에러 응답 시 메시지 표시
                 return;
             }
     
-            // 성공 시 처리
             alert(`${formData.name}님 가입을 환영합니다.`);
             navigator('/signIn'); // 로그인 페이지로 이동
         } catch (err) {
-            if (err.response) {
-                console.error('회원가입 실패:', err.response.data.message);
-                alert(err.response.data.message);
-            } else {
-                console.error('회원가입 요청 오류:', err);
-                alert('서버와 통신 중 오류가 발생했습니다.');
-            }
+            console.error('회원가입 요청 오류:', err);
+            alert('서버와 통신 중 오류가 발생했습니다.');
         }
     };
+    
+    
     
     const emailChk = async () => {
         const { email } = formData;
