@@ -164,8 +164,7 @@ const OneToOneDetail = () => {
                             <strong>문의 답변</strong>
                         </td>
                         <td>
-                            <input
-                                type="textarea"
+                            <textarea
                                 onChange={(e) => setReply(e.target.value)}
                                 value={onetoone.reply_detail}
                             />

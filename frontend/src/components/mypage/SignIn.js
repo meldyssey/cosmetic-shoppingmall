@@ -59,7 +59,6 @@ function SignIn() {
             });
             // 관리자 계정 여부 확인 및 페이지 이동
             if (email === 'admin@jomalone.kr' && customer_name === '관리자') {
-                console.log('관리자 계정');
                 location.href = '/admin';
             } else {
                 alert(`${customer_name}님 로그인 되었습니다.`);
