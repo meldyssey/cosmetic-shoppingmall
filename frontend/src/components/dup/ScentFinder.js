@@ -48,10 +48,6 @@ const ScentFinder = () => {
         console.log('현재 Kakao 상태:', window.Kakao);
     }, []);
     
-    
-    
-    
-
     const shareToKakao = () => {
         if (!window.Kakao || !window.Kakao.Share) {
             console.error('Kakao SDK가 초기화되지 않았거나 Share 모듈이 없습니다.');
@@ -72,16 +68,11 @@ const ScentFinder = () => {
             });
     
             // 성공 메시지를 표시합니다.
-            console.log('공유요청전송');
+            console.log('공유 요청 전송');
         } catch (error) {
-            console.error('공유실행오류:', error);
+            console.error('공유 실행 오류:', error);
         }
     };
-    
-    
-    
-    
-
     
     return (
         <>
