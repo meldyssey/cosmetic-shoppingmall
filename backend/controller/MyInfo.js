@@ -83,6 +83,62 @@ module.exports = () => {
                     success: true,
                     message: "성별이 성공적으로 업데이트되었습니다.",
                 });
+            } else if (action === "getAddressInfo") {
+                // 배송지 정보 조회 추가
+                if (!email) {
+                    return res.json({ error: "이메일이 필요합니다." });
+                }
+
+                try {
+                    const [address] = await db.query(
+                        `SELECT customer_name, zip, roadname_address, building_name, detail_address, contact_number 
+                        FROM customers WHERE email = ?`,
+                        [email]
+                    );
+
+                    return res.json(
+                        address[0] || { error: "배송지 정보가 없습니다." }
+                    );
+                } catch (err) {
+                    return res.json({ error: "DB 조회 오류" });
+                }
+            } else if (action === "updateAddressInfo") {
+                // 배송지 정보 수정 추가
+                const { zip, roadname_address, building_name, detail_address } =
+                    req.body;
+
+                if (!email || !zip || !roadname_address || !detail_address) {
+                    return res.json({
+                        error: "입력된 정보가 유효하지 않습니다.",
+                    });
+                }
+
+                try {
+                    const [result] = await db.query(
+                        `UPDATE customers SET zip = ?, roadname_address = ?, building_name = ?, detail_address = ?
+                        WHERE email = ?`,
+                        [
+                            zip,
+                            roadname_address,
+                            building_name,
+                            detail_address,
+                            email,
+                        ]
+                    );
+
+                    if (result.affectedRows === 0) {
+                        return res.json({
+                            error: "배송지 정보를 찾을 수 없습니다.",
+                        });
+                    }
+
+                    return res.json({
+                        success: true,
+                        message: "배송지 정보가 성공적으로 업데이트되었습니다.",
+                    });
+                } catch (err) {
+                    return res.json({ error: "DB 업데이트 오류" });
+                }
             } else if (action === "getOrders") {
                 // 주문 내역 조회
                 const [orders] = await db.query(
