@@ -21,7 +21,7 @@ module.exports = () => {
 
         try {
             //const { to, subject, text } = req.body;
-            const to = `meldyssey15@gmail.com`;
+            const to = `notify.jomalone@gmail.com`;
             const subject = "[Jomalone] 남겨주신 1:1 문의에 답변 드립니다.";
             const text = `
 작성해주신 문의 : ${req.body.post_detail}
