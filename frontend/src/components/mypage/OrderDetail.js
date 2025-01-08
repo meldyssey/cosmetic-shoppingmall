@@ -54,7 +54,6 @@ function OrderDetail() {
         if (window.confirm("주문을 취소하시겠습니까?")) {
             try {
                 await axios.post(`${bkURL}/myPage/cancelOrder/${orderId}`);
-                // alert("주문이 취소되었습니다.");
 
                 //토스
                 const response = await fetch(`${bkURL}/myPage/payment/cancel`, {
