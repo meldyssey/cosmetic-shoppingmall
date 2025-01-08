@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PayHead from './PayHead';
-import PayModal1 from './PayModal1';
-import axios from 'axios';
-import styles from '../../scss/order/payment1.module.scss';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import PayHead from "./PayHead";
+import PayModal1 from "./PayModal1";
+import axios from "axios";
+import styles from "../../scss/order/payment1.module.scss";
 
 function Payment1(props) {
-    const email = sessionStorage.getItem('email');
+    const email = sessionStorage.getItem("email");
     const [ordersData, setOrder] = useState();
-    const [isModal, setModal] = useState(false);
+    const [isModal, setModal] = useState();
     const navigate = useNavigate();
 
     const bkURL = process.env.REACT_APP_BACK_URL;
 
     if (!email) {
-        navigate('/signIn');
+        navigate("/signIn");
     }
 
     // 기본 회원 정보 가져오기
@@ -25,12 +25,13 @@ function Payment1(props) {
                 setOrder(res.data);
             })
             .catch((err) => {
-                console.error('에러발생 : ', err);
+                console.error("에러발생 : ", err);
             });
     }
 
     useEffect(() => {
         pageLoad();
+        console.log("Payment1 useEffect : " + isModal);
     }, []);
 
     const handleOpenModal = (e) => {
@@ -49,11 +50,11 @@ function Payment1(props) {
 
     function payment2GO() {
         if (!fullAddress) {
-            alert('배송지를 등록해주세요');
+            alert("배송지를 등록해주세요");
             return;
         }
         const myData = Object.fromEntries(new FormData(document.myFrm));
-        navigate('/payment2', {
+        navigate("/payment2", {
             state: { myData: myData, ordersData: ordersData },
         });
     }
@@ -63,7 +64,10 @@ function Payment1(props) {
     }
 
     const fullAddress =
-        ordersData.zip && ordersData.roadname_address && ordersData.building_name && ordersData.detail_address;
+        ordersData.zip &&
+        ordersData.roadname_address &&
+        ordersData.building_name &&
+        ordersData.detail_address;
 
     return (
         <div className={styles.wrap}>
@@ -82,7 +86,7 @@ function Payment1(props) {
                             </div>
                         </>
                     ) : (
-                        '배송지를 등록해주세요.'
+                        "배송지를 등록해주세요."
                     )}
 
                     <div>전화번호 : {ordersData.contact_number}</div>
@@ -97,7 +101,13 @@ function Payment1(props) {
                 </div>
 
                 {isModal && (
-                    <PayModal1 onClose={handleCloseModal} onSave={handleSave} btnData={ordersData} email={email} />
+                    <PayModal1
+                        onClose={handleCloseModal}
+                        onSave={handleSave}
+                        btnData={ordersData}
+                        email={email}
+                        setModal={setModal}
+                    />
                 )}
 
                 <div className={styles.deliveryRequest}>
@@ -107,7 +117,12 @@ function Payment1(props) {
                     </label>
                 </div>
 
-                <input type="button" onClick={payment2GO} value="주문검토" className={styles.submitBtn} />
+                <input
+                    type="button"
+                    onClick={payment2GO}
+                    value="주문검토"
+                    className={styles.submitBtn}
+                />
             </form>
         </div>
     );
