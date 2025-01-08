@@ -36,6 +36,8 @@ const corsOptions = {
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
 };
 
+app.use(express.static(path.join(__dirname, "build")));
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -126,13 +128,34 @@ app.use("/delivery", deliveryRouter());
 const emailRouter = require("./controller/email.js");
 app.use("/email", emailRouter());
 
+app.get("/scent-finder", (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>센트 파인더</title>
+            <meta property="og:title" content="센트 파인더" />
+            <meta property="og:description" content="조 말론 런던에서 나만의 향을 찾아보세요!" />
+            <meta property="og:image" content="http://localhost:3000/imgs/product/scentFinderBanner.jpg" />
+            <meta property="og:url" content="http://localhost:3000/scent-finder" />
+        </head>
+        <body>
+            <div id="root"></div>
+            <script src="/static/js/main.js"></script>
+        </body>
+        </html>
+    `);
+});
+
 app.get("/", (req, res) => {
     console.log("백엔드 서버 진입"); //정상작동 확인
     res.send("백엔드 서버 진입");
 });
 
 app.get("*", (req, res) => {
-    res.send("404에러");
+    res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 app.listen(5001, () => {

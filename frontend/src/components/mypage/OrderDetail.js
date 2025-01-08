@@ -7,8 +7,9 @@ import Delivery from "../order/Delivery";
 function OrderDetail() {
     const [detailorders, setDetailOrders] = useState([]); // 주문 목록 상태
     const [products, setProducts] = useState([]); // 주문 제품 목록
-
     const bkURL = process.env.REACT_APP_BACK_URL;
+
+    const email = sessionStorage.getItem("email");
 
     useEffect(() => {
         const OrderDetail = async () => {

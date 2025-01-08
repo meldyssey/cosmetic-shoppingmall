@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import FinderModal from './FinderModal';
 import styles from '../../scss/dup/scentFinder.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import { faQuoteRight } from '@fortawesome/free-solid-svg-icons';
+import { Helmet } from "react-helmet";
 
 const finderData = [
     {
@@ -30,7 +31,52 @@ const finderData = [
 
 const ScentFinder = () => {
     const [openModal, setOpenModal] = useState(false);
+
+    // 카카오 SDK 초기화
+    useEffect(() => {
+        if (!window.Kakao) {
+            console.error('Kakao SDK가 로드되지 않았습니다.');
+            return;
+        }
+
+        if (!window.Kakao.isInitialized()) {
+            // JavaScript 키를 사용해 SDK 초기화
+            window.Kakao.init(process.env.REACT_APP_KAKAO_JS_KEY);
+            console.log('Kakao SDK initialized with key:', process.env.REACT_APP_KAKAO_JS_KEY);
+        }
+    }, []);
+    
+
+    const shareToKakao = () => {
+        try {
+            if (!window.Kakao || !window.Kakao.Share) {
+                alert('Kakao SDK가 초기화되지 않았습니다.');
+                return;
+            }
+    
+            window.Kakao.Share.sendScrap({
+                requestUrl: 'https://web-jomalone-deploy-frontend-m5gmo1isb2cc7449.sel4.cloudtype.app/scent-finder', // 공유할 URL
+                templateId: 116083, // 템플릿 ID
+            });
+    
+            // 성공적으로 호출된 경우
+            alert('카카오톡으로 공유되었습니다!');
+        } catch (error) {
+            // 오류 처리
+            console.error('카카오톡 공유 실패:', error);
+            alert('카카오톡 공유에 실패했습니다.');
+        }
+    };
+    
     return (
+        <>
+        <Helmet>
+                <title>센트 파인더</title>
+                <meta property="og:title" content="센트 파인더" />
+                <meta property="og:description" content="조 말론 런던에서 나만의 향을 찾아보세요!" />
+                <meta property="og:image" content="http://localhost:3000/imgs/product/scentFinderBanner.jpg" />
+                <meta property="og:url" content="https://web-jomalone-deploy-frontend-m5gmo1isb2cc7449.sel4.cloudtype.app/scent-finder" />
+        </Helmet>
         <div className={styles.scentFinder}>
             <div className={styles.title}>센트파인더</div>
             <div className={styles.content}>
@@ -59,12 +105,16 @@ const ScentFinder = () => {
                     <p>셀린 루</p>
                     <p>글로벌 프레그런스 헤드 디렉터</p>
                 </div>
+                <button className={styles.kakaoShareBtn} onClick={shareToKakao}>
+                    카카오톡으로 공유하기
+                </button>
             </div>
 
             {openModal ? (
                 <FinderModal openModal={openModal} setOpenModal={setOpenModal} finderData={finderData} />
             ) : null}
         </div>
+        </>
     );
 };
 
