@@ -31,15 +31,15 @@ function OrderList(props) {
     const orderListAxios = () => {
         axios
             .get(`${bkURL}/admin/order/`)
-            .then((res) => {
-                const updatedData = res.data.map((item) => ({
+            .then(res => {
+                const updatedData = res.data.map(item => ({
                     ...item,
                     status: item.order_status,
                     invoice: item.invoice || "",
                 }));
                 setOrder(updatedData);
             })
-            .catch((err) => {
+            .catch(err => {
                 console.error("에러발생 : ", err);
             });
     };
@@ -51,13 +51,13 @@ function OrderList(props) {
             .then(() => {
                 console.log("배송 완료 업데이트");
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error("배송 완료 업데이트실패:", error);
             });
     }, []);
 
     const handleInvoiceChange = (id, newInvoice) => {
-        const updatedArr = order.map((item) =>
+        const updatedArr = order.map(item =>
             item.order_id === id
                 ? { ...item, invoice: newInvoice || "", status: item.status }
                 : item
@@ -67,7 +67,7 @@ function OrderList(props) {
 
     // select로 상태 변경시 동작하는 함수
     const handleStatusChange = (id, newStatus) => {
-        const updatedArr = order.map((item) => {
+        const updatedArr = order.map(item => {
             // console.log('item', item);
             return item.order_id === id
                 ? { ...item, order_status: newStatus, status: newStatus } // 상태 값을 일관되게 업데이트
@@ -79,10 +79,10 @@ function OrderList(props) {
     };
 
     // 수정 완료 핸들러 (DB에 업데이트)
-    const handleSaveChanges = (e) => {
+    const handleSaveChanges = e => {
         e.preventDefault();
 
-        const modifyOrder = order.map((item) => ({
+        const modifyOrder = order.map(item => ({
             ...item,
             invoice: item.invoice || "",
             status: item.status || item.order_status,
@@ -90,12 +90,12 @@ function OrderList(props) {
 
         axios
             .post(`${bkURL}/admin/order/update`, modifyOrder)
-            .then((res) => {
+            .then(res => {
                 alert("수정이 완료되었습니다.");
                 setIsEditable(false); // 수정하기 버튼 표시
                 navigate("/admin/order");
             })
-            .catch((err) => {
+            .catch(err => {
                 console.error("수정 실패 :", err);
                 alert("수정에 실패했습니다.");
             });
@@ -104,7 +104,7 @@ function OrderList(props) {
     };
 
     // 일시들 변경
-    const formatDate = (dateString) => {
+    const formatDate = dateString => {
         if (!dateString) return "-";
         const date = new Date(dateString);
         return date.toLocaleDateString("ko-KR", {
@@ -119,7 +119,7 @@ function OrderList(props) {
     };
 
     // 검색어 검색 함수
-    const searchGo = (me) => {
+    const searchGo = me => {
         me.preventDefault();
         console.log("submitGo 진입");
         const frmData = new FormData(document.myFrm);
@@ -127,7 +127,7 @@ function OrderList(props) {
         const data = Object.fromEntries(frmData);
         console.log("order 검색:", data);
 
-        Object.keys(data).forEach((key) => {
+        Object.keys(data).forEach(key => {
             if (data[key] === "") {
                 data[key] = null;
             }
@@ -141,12 +141,12 @@ function OrderList(props) {
 
         axios
             .post(`${bkURL}/admin/order/search`, data)
-            .then((res) => {
+            .then(res => {
                 console.log("검색 완료", res.data);
 
                 const dataText = ["주문완료", "배송중", "배송완료"];
 
-                const validOrders = res.data.filter((od) =>
+                const validOrders = res.data.filter(od =>
                     dataText.includes(od.order_status)
                 );
                 // res.data.filter((od) => console.log('주문관리', dataText.includes(od.order_status)));
@@ -155,12 +155,12 @@ function OrderList(props) {
 
                 setOrder(validOrders);
             })
-            .catch((err) => {
+            .catch(err => {
                 console.error("에러발생: ", err);
             });
     };
 
-    const resetSearch = (e) => {
+    const resetSearch = e => {
         e.preventDefault(); // 기본 동작 방지
         // 검색 필드 초기화
         const form = document.myFrm;
@@ -172,15 +172,15 @@ function OrderList(props) {
         // 데이터를 원래 상태로 복원
         axios
             .get(`${bkURL}/admin/order/`)
-            .then((res) => {
-                const updatedData = res.data.map((item) => ({
+            .then(res => {
+                const updatedData = res.data.map(item => ({
                     ...item,
                     status: item.order_status,
                     invoice: item.invoice || "",
                 }));
                 setOrder(updatedData); // 초기 상태 데이터로 복원
             })
-            .catch((err) => {
+            .catch(err => {
                 console.error("초기화 중 에러 발생:", err);
             });
 
@@ -263,7 +263,7 @@ function OrderList(props) {
                         <td>
                             <select
                                 value={mm.order_status}
-                                onChange={(e) =>
+                                onChange={e =>
                                     handleStatusChange(
                                         mm.order_id,
                                         e.target.value
@@ -271,7 +271,7 @@ function OrderList(props) {
                                 }
                                 disabled={!isEditable}
                             >
-                                {orderStatuses.map((status) => (
+                                {orderStatuses.map(status => (
                                     <option key={status} value={status}>
                                         {status}
                                     </option>
@@ -288,7 +288,7 @@ function OrderList(props) {
                                 value={mm.invoice}
                                 readOnly={!isEditable}
                                 maxLength={14}
-                                onChange={(e) =>
+                                onChange={e =>
                                     handleInvoiceChange(
                                         mm.order_id,
                                         e.target.value
