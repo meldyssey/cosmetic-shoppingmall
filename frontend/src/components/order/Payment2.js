@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import PayHead from './PayHead';
-import styles from '../../scss/order/payment2.module.scss';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import PayHead from "./PayHead";
+import styles from "../../scss/order/payment2.module.scss";
+import axios from "axios";
+import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
 
 function Payment2(props) {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const email = sessionStorage.getItem('email');
+    const email = sessionStorage.getItem("email");
     const [ordersData, setOrder] = useState();
     const [data, setData] = useState();
     const [prod, setProd] = useState();
@@ -17,34 +18,34 @@ function Payment2(props) {
     const bkURL = process.env.REACT_APP_BACK_URL;
 
     if (!email) {
-        navigate('/signIn');
+        navigate("/signIn");
     }
 
     function dataInit() {
         // 해당 고객의 장바구니 접근
         axios
             .get(`${bkURL}/payment2/${email}`)
-            .then((res) => {
+            .then(res => {
                 // console.log(res.data)
-                const updatedProd = res.data.map((item) => ({
+                const updatedProd = res.data.map(item => ({
                     ...item,
                     quantity: 1,
                 }));
                 setProd(updatedProd);
             })
-            .catch((err) => {
-                console.error('에러발생 : ', err);
+            .catch(err => {
+                console.error("에러발생 : ", err);
             });
     }
 
     useEffect(() => {
         const { myData, ordersData } = location.state;
-        if (myData.order_msg === '') {
-            myData.order_msg = '없음';
+        if (myData.order_msg === "") {
+            myData.order_msg = "없음";
         }
         setData(myData);
         setOrder(ordersData);
-        console.log('myData', myData.order_msg);
+        console.log("myData", myData.order_msg);
         dataInit();
     }, []);
 
@@ -60,24 +61,29 @@ function Payment2(props) {
     }
 
     const handleQuantityChange = (id, quantity) => {
-        const updatedProd = prod.map((item) =>
-            item.bs_product_id === id ? { ...item, quantity: parseInt(quantity, 10) } : item
+        const updatedProd = prod.map(item =>
+            item.bs_product_id === id
+                ? { ...item, quantity: parseInt(quantity, 10) }
+                : item
         );
         setProd(updatedProd);
     };
 
     const getTotal = () => {
         // console.log(prod)
-        return prod.reduce((sum, product) => sum + product.product_price * product.quantity, 0);
+        return prod.reduce(
+            (sum, product) => sum + product.product_price * product.quantity,
+            0
+        );
     };
 
     // 결제 정보 넘기기
-    function orderFin(e) {
+    async function orderFin(e) {
         e.preventDefault();
         const myData = Object.fromEntries(new FormData(document.myFrm));
 
         if (!myData.payment) {
-            alert('결제수단을 정해주세요');
+            alert("결제수단을 정해주세요");
             return;
         }
 
@@ -92,38 +98,55 @@ function Payment2(props) {
             building_name: ordersData.building_name,
             detail_address: ordersData.detail_address,
             order_msg: data.order_msg || null,
-            products: prod.map((item) => ({
+            products: prod.map(item => ({
                 product_id: item.bs_product_id,
                 order_cnt: item.quantity,
                 product_price: item.product_price * item.quantity,
             })),
-            status: '주문완료',
+            status: "주문완료",
         };
-        console.log(orderPayload);
+        console.log("orderPayload:", orderPayload);
+        console.log("data:", data);
+        //이동연습
+        navigate("/payment2/2", {
+            state: { orderPayload, prod, ordersData },
+        });
+        // 기존 백엔드 서버 코드
+        // axios
+        //     .post(`${bkURL}/payment2/join/${email}`, orderPayload)
+        //     .then(res => {
+        //         alert("결제되었습니다.");
+        //         // navigate('/payment3')
+        //         setIsLoading(true);
+        //         // console.log(res.data)
 
-        axios
-            .post(`${bkURL}/payment2/join/${email}`, orderPayload)
-            .then((res) => {
-                alert('결제되었습니다.');
-                // navigate('/payment3')
-                setIsLoading(true);
-                // console.log(res.data)
+        //         setTimeout(() => {
+        //             setIsLoading(false);
+        //             navigate("/payment2/2", {
+        //                 state: { orderId: res.data, myData, ordersData, prod },
+        //             });
+        //             console.log(
+        //                 "orderId:",
+        //                 orderId,
+        //                 "myData:",
+        //                 myData,
+        //                 "ordersData:",
+        //                 ordersData,
+        //                 "prod:",
+        //                 prod
+        //             );
+        //         }, 2000);
+        //     })
+        //     .catch(err => {
+        //         console.log("삭제오류 : ", err);
+        //     });
 
-                setTimeout(() => {
-                    setIsLoading(false);
-                    navigate('/payment3', { state: { orderId: res.data } });
-                }, 2000);
-            })
-            .catch((err) => {
-                console.log('삭제오류 : ', err);
-            });
-
-        axios
-            .delete(`${bkURL}/payment2/delete/${email}`)
-            .then((res) => {})
-            .catch((err) => {
-                console.log('삭제오류 : ', err);
-            });
+        // axios
+        //     .delete(`${bkURL}/payment2/delete/${email}`)
+        //     .then(res => {})
+        //     .catch(err => {
+        //         console.log("삭제오류 : ", err);
+        //     });
     }
 
     return (
@@ -134,7 +157,7 @@ function Payment2(props) {
                     <div>결제방법</div>
                     <label>
                         <input type="radio" name="payment" value="card" />
-                        신용카드
+                        토스
                     </label>
                     <label>
                         <input type="radio" name="payment" value="kakao" />
@@ -162,7 +185,9 @@ function Payment2(props) {
                 </div>
                 <div>
                     <div className={styles.requirement}>배송요청사항</div>
-                    <div className={styles.requirementdetail}>{data.order_msg}</div>
+                    <div className={styles.requirementdetail}>
+                        {data.order_msg}
+                    </div>
                 </div>
                 <div>
                     <table className={styles.table}>
@@ -176,7 +201,8 @@ function Payment2(props) {
                         </thead>
                         <tbody>
                             {prod.map((pp, i) => {
-                                const totalPrice = pp.product_price * pp.quantity;
+                                const totalPrice =
+                                    pp.product_price * pp.quantity;
                                 return (
                                     <tr key={i}>
                                         <td className={styles.productInfo}>
@@ -186,14 +212,28 @@ function Payment2(props) {
                                                 <div>{pp.product_volume}</div>
                                             </div>
                                         </td>
-                                        <td>₩ {pp.product_price.toLocaleString()}</td>
+                                        <td>
+                                            ₩{" "}
+                                            {pp.product_price.toLocaleString()}
+                                        </td>
                                         <td>
                                             <select
                                                 value={pp.quantity}
-                                                onChange={(e) => handleQuantityChange(pp.bs_product_id, e.target.value)}
+                                                onChange={e =>
+                                                    handleQuantityChange(
+                                                        pp.bs_product_id,
+                                                        e.target.value
+                                                    )
+                                                }
                                             >
-                                                {Array.from({ length: 8 }, (_, i) => i + 1).map((qty) => (
-                                                    <option key={qty} value={qty}>
+                                                {Array.from(
+                                                    { length: 8 },
+                                                    (_, i) => i + 1
+                                                ).map(qty => (
+                                                    <option
+                                                        key={qty}
+                                                        value={qty}
+                                                    >
                                                         {qty}
                                                     </option>
                                                 ))}
@@ -209,11 +249,18 @@ function Payment2(props) {
                                 <td></td>
                                 <td></td>
                                 <td className={styles.totalLabel}>총합계</td>
-                                <td className={styles.totalAmount}>₩ {getTotal().toLocaleString()}</td>
+                                <td className={styles.totalAmount}>
+                                    ₩ {getTotal().toLocaleString()}
+                                </td>
                             </tr>
                         </tfoot>
                     </table>
-                    <input type="submit" onClick={orderFin} value="결제하기" className={styles.submit} />
+                    <input
+                        type="submit"
+                        onClick={orderFin}
+                        value="결제하기"
+                        className={styles.submit}
+                    />
                     {isLoading && <div>로딩중...</div>}
                 </div>
             </form>

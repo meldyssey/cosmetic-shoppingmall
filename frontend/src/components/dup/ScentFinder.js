@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import FinderModal from './FinderModal';
 import styles from '../../scss/dup/scentFinder.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,7 +30,52 @@ const finderData = [
 
 const ScentFinder = () => {
     const [openModal, setOpenModal] = useState(false);
+
+    // 카카오 SDK 초기화
+    useEffect(() => {
+        if (!window.Kakao) {
+            console.error('Kakao SDK가 로드되지 않았습니다.');
+            return;
+        }
+    
+        if (!window.Kakao.isInitialized()) {
+            window.Kakao.init(process.env.REACT_APP_KAKAO_JS_KEY);
+            console.log('Kakao SDK 초기화 완료');
+        } else {
+            console.log('Kakao SDK는 이미 초기화되었습니다.');
+        }
+    
+        console.log('현재 Kakao 상태:', window.Kakao);
+    }, []);
+    
+    const shareToKakao = () => {
+        if (!window.Kakao || !window.Kakao.Share) {
+            console.error('Kakao SDK가 초기화되지 않았거나 Share 모듈이 없습니다.');
+            alert('카카오톡 공유를 사용할 수 없습니다.');
+            return;
+        }
+    
+        console.log('Kakao.Share.sendScrap 호출 준비');
+    
+        try {
+            window.Kakao.Share.sendScrap({
+                requestUrl: 'http://localhost:3000/scent-finder',
+                templateId: 116083, // 템플릿 ID
+                templateArgs: {
+                    title: '나만의 시그니처 향을 찾아보세요!',
+                    description: '조 말론 런던의 센트 파인더와 함께 특별한 향기를 찾아보세요.',
+                },
+            });
+    
+            // 성공 메시지를 표시합니다.
+            console.log('공유 요청 전송');
+        } catch (error) {
+            console.error('공유 실행 오류:', error);
+        }
+    };
+    
     return (
+        <>
         <div className={styles.scentFinder}>
             <div className={styles.title}>센트파인더</div>
             <div className={styles.content}>
@@ -59,12 +104,16 @@ const ScentFinder = () => {
                     <p>셀린 루</p>
                     <p>글로벌 프레그런스 헤드 디렉터</p>
                 </div>
+                <button className={styles.kakaoShareBtn} onClick={shareToKakao}>
+                    카카오톡으로 공유하기
+                </button>
             </div>
 
             {openModal ? (
                 <FinderModal openModal={openModal} setOpenModal={setOpenModal} finderData={finderData} />
             ) : null}
         </div>
+        </>
     );
 };
 

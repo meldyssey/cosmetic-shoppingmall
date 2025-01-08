@@ -1,35 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import styles from '../../scss/mypage/OrderDetail.module.scss';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import styles from "../../scss/mypage/OrderDetail.module.scss";
+import Delivery from "../order/Delivery";
 
 function OrderDetail() {
     const [detailorders, setDetailOrders] = useState([]); // 주문 목록 상태
     const [products, setProducts] = useState([]); // 주문 제품 목록
-
     const bkURL = process.env.REACT_APP_BACK_URL;
+
+    const email = sessionStorage.getItem("email");
 
     useEffect(() => {
         const OrderDetail = async () => {
-            const sessionToken = sessionStorage.getItem('sessionToken');
-            const orderId = window.location.pathname.split('/').pop(); // URL에서 order_id 추출
+            const sessionToken = sessionStorage.getItem("sessionToken");
+            const orderId = window.location.pathname.split("/").pop(); // URL에서 order_id 추출
 
             if (!sessionToken) {
-                alert('로그인이 필요합니다.');
+                alert("로그인이 필요합니다.");
                 return;
             }
 
             try {
-                const response = await axios.get(`${bkURL}/myPage/orderDetail/${orderId}`, {
-                    headers: { Authorization: sessionToken },
-                });
+                const response = await axios.get(
+                    `${bkURL}/myPage/orderDetail/${orderId}`,
+                    {
+                        headers: { Authorization: sessionToken },
+                    }
+                );
 
                 // console.log('order:',response.data.order)
                 setDetailOrders(response.data.order);
                 setProducts(response.data.products); // 주문 제품 목록 추가
             } catch (err) {
-                console.error('데이터 가져오기 오류:', err);
-                alert('데이터를 불러올 수 없습니다.');
+                console.error("데이터 가져오기 오류:", err);
+                alert("데이터를 불러올 수 없습니다.");
+                console.error("데이터 가져오기 오류:", err);
+                alert("데이터를 불러올 수 없습니다.");
             }
         };
 
@@ -37,26 +44,43 @@ function OrderDetail() {
     }, []);
 
     // 날짜 포맷팅 함수
-    const formatDate = (dateString) => {
-        if (!dateString) return '-';
+    const formatDate = dateString => {
+        if (!dateString) return "-";
         const date = new Date(dateString);
-        return date.toISOString().split('T')[0];
+        return date.toISOString().split("T")[0];
     };
 
     // 주문 취소하기
-    const handleCancelOrder = (orderId) => {
-        if (window.confirm('주문을 취소하시겠습니까?')) {
-            axios
-                .post(`${bkURL}/myPage/cancelOrder/${orderId}`)
-                .then(() => {
-                    alert('주문이 취소되었습니다.');
-                    // 상태를 갱신하거나 페이지를 새로고침
-                    window.location.reload();
-                })
-                .catch((err) => {
-                    console.error('주문 취소 실패:', err);
-                    alert('주문 취소에 실패했습니다.');
+    const handleCancelOrder = async orderId => {
+        if (window.confirm("주문을 취소하시겠습니까?")) {
+            try {
+                await axios.post(`${bkURL}/myPage/cancelOrder/${orderId}`);
+
+                //토스
+                const response = await fetch(`${bkURL}/myPage/payment/cancel`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        cancelReason: "사용자 주문 취소",
+                    }),
                 });
+
+                const json = await response.json();
+
+                if (response.ok) {
+                    alert("주문이 취소되었습니다.");
+                } else {
+                    alert("토스결제 취소 실패: " + json.message);
+                }
+
+                window.location.reload();
+            } catch (err) {
+                console.error("주문 취소 실패:", err);
+                alert("주문 취소에 실패했습니다.");
+            }
         }
     };
 
@@ -81,10 +105,16 @@ function OrderDetail() {
                         <div
                             className={styles.headerColumn}
                             style={{
-                                color: detailorders.length > 0 && !detailorders[0].invoice ? '#f5f5f5' : 'inherit',
+                                color:
+                                    detailorders.length > 0 &&
+                                    !detailorders[0].invoice
+                                        ? "#f5f5f5"
+                                        : "inherit",
                             }}
                         >
-                            {detailorders.length > 0 && detailorders[0].invoice ? '송장번호' : '취소'}
+                            {detailorders.length > 0 && detailorders[0].invoice
+                                ? "송장번호"
+                                : "취소"}
                         </div>
                     </div>
 
@@ -94,18 +124,26 @@ function OrderDetail() {
                                 <div>{od.order_id}</div>
                                 <div>
                                     {products.length > 0
-                                        ? products.map((product) => (
-                                              <p key={product.product_id} className={styles.productItem}>
+                                        ? products.map(product => (
+                                              <p
+                                                  key={product.product_id}
+                                                  className={styles.productItem}
+                                              >
                                                   <Link
                                                       to={`/product/${product.product_opt_id}`}
-                                                      className={styles.productLink}
+                                                      className={
+                                                          styles.productLink
+                                                      }
                                                   >
-                                                      {product.product_name_kor} &nbsp;
-                                                      {product.product_volume} ({`${product.order_cnt}개`})
+                                                      {product.product_name_kor}{" "}
+                                                      &nbsp;
+                                                      {product.product_volume} (
+                                                      {`${product.order_cnt}개`}
+                                                      )
                                                   </Link>
                                               </p>
                                           ))
-                                        : '제품 정보 없음'}
+                                        : "제품 정보 없음"}
                                 </div>
                                 <div>{formatDate(od.order_date)}</div>
                                 <div>{od.pay_to}</div>
@@ -117,15 +155,19 @@ function OrderDetail() {
                                     {od.order_addredetail}
                                 </div>
                                 <div>
-                                    {od.order_status === '주문완료' ? (
+                                    {od.order_status === "주문완료" ? (
                                         <button
                                             className={styles.cancelButton}
-                                            onClick={() => handleCancelOrder(od.order_id)}
+                                            onClick={() =>
+                                                handleCancelOrder(od.order_id)
+                                            }
                                         >
                                             취소하기
                                         </button>
+                                    ) : od.invoice ? (
+                                        <Delivery invoice={od.invoice} />
                                     ) : (
-                                        od.invoice || '-'
+                                        "-"
                                     )}
                                 </div>
                             </div>
