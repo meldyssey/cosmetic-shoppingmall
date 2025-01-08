@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
+require("dotenv").config();
 
 // 공통 유효성 검사 함수
-const validateEmail = async (email) => {
+const validateEmail = async email => {
     if (!email) {
         throw new Error("이메일이 필요합니다.");
     }
@@ -262,11 +263,58 @@ module.exports = () => {
                     .status(404)
                     .json({ message: "주문을 찾을 수 없습니다." });
             }
-
+            //결제테이블 환불처리
+            await db.execute(
+                "UPDATE payment SET refund_date = sysdate(), refund = 1 WHERE order_id = ?",
+                [orderId]
+            );
             res.status(200).json({ message: "주문이 취소되었습니다." });
         } catch (err) {
             res.status(500).json({
                 message: "서버 오류로 주문을 취소할 수 없습니다.",
+            });
+        }
+    });
+    //토스결제취소
+    router.post("/payment/cancel", async (req, res) => {
+        const { orderId, cancelReason } = req.body;
+        console.log("토스취소접근");
+        try {
+            const [ret] = await db.execute(
+                "select payment_key from payment where order_id = ?",
+                [orderId]
+            );
+            const paymentKey = ret[0].payment_key;
+            console.log("페이먼트키확인", paymentKey);
+            console.log("시크릿 키:", process.env.TOSS_SECRET_KEY);
+
+            // TossPayments 결제 취소 API 호출
+            const response = await fetch(
+                `https://api.tosspayments.com/v1/payments/${paymentKey}/cancel`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Basic ${Buffer.from(
+                            process.env.TOSS_SECRET_KEY + ":"
+                        ).toString("base64")}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ cancelReason }),
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                return res.status(response.status).json(result);
+            }
+
+            res.status(200).json({ message: "결제 취소 성공", result });
+        } catch (err) {
+            console.error("결제 취소 오류:", err.message);
+            res.status(500).json({
+                message: "서버 오류 발생",
+                error: err.message,
             });
         }
     });

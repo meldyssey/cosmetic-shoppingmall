@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const con = require("../db");
+require("dotenv").config();
 
 module.exports = () => {
     // 주문 조회
@@ -44,17 +45,68 @@ module.exports = () => {
     // 주문 상태 및 운송장 번호 업데이트
     router.post("/update", async (req, res) => {
         const orders = req.body;
-
+        console.log("관리자 상태변경 처리 요청");
         try {
             for (let order of orders) {
                 await con.execute(
                     `UPDATE orders SET order_status =  ?, invoice = ?, status_date = SYSDATE() WHERE order_id = ?`,
                     [order.status, order.invoice, order.order_id]
                 );
+                // 토스환불처리
+                if (order.status === "환불접수") {
+                    const [ret] = await con.execute(
+                        "select payment_key from payment where order_id = ?",
+                        [order.order_id]
+                    );
+                    if (!ret.length) {
+                        console.log("payment_key 없음", order.order_id);
+                    } else {
+                        const paymentKey = ret[0].payment_key;
+
+                        const response = await fetch(
+                            `https://api.tosspayments.com/v1/payments/${paymentKey}/cancel`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Basic ${Buffer.from(
+                                        process.env.TOSS_SECRET_KEY + ":"
+                                    ).toString("base64")}`,
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    cancelReason: "관리자환불처리",
+                                }),
+                            }
+                        );
+
+                        const result = await response.json();
+
+                        if (!response.ok) {
+                            console.error("Toss api 오류:", result);
+                        }
+                    }
+
+                    const [stateupdate] = await con.execute(
+                        "UPDATE orders SET order_status = '환불완료' WHERE order_id = ? ",
+                        [order.order_id]
+                    );
+
+                    await con.execute(
+                        "UPDATE payment SET refund = 1 WHERE order_id = ?",
+                        [order.order_id]
+                    );
+                    console.log("토스환불취소성공");
+                }
             }
-            res.json({ message: "수정이 완료되었습니다." });
+            res.status(200).json({
+                message: "환불 완료 처리 성공",
+            });
         } catch (err) {
-            res.status(500).send("DB 오류");
+            console.error("수정 처리 오류:", err.message);
+            res.status(500).json({
+                message: "서버 오류 발생",
+                error: err.message,
+            });
         }
     });
 

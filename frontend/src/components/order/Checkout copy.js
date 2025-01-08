@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
 import axios from "axios";
-import "../../scss/order/tossStyle.css";
+import "../../scss/order/tossStyle.scss";
 
 // ------  SDK 초기화 ------
 // TODO: clientKey는 개발자센터의 API 개별 연동 키 > 결제창 연동에 사용하려할 MID > 클라이언트 키로 바꾸세요.
@@ -151,31 +151,7 @@ export function CheckoutPage() {
             alert("결제 중 문제가 발생했습니다.");
         }
     }
-    // axios
-    //     .post(`${bkURL}/payment2/join/${customerEmail}`, orderPayload)
-    //     .then(res => {
-    //         alert("결제되었습니다.");
-    //         // navigate('/payment3')
-    //         setIsLoading(true);
-    //         // console.log(res.data)
 
-    //         setTimeout(() => {
-    //             setIsLoading(false);
-    //             navigate("/payment3", {
-    //                 state: { orderId: res.data, myData, ordersData, prod },
-    //             });
-    //         }, 2000);
-    //     })
-    //     .catch(err => {
-    //         console.log("결제오류 : ", err);
-    //     });
-    // // 4. 장바구니 데이터 삭제
-    // axios
-    //     .delete(`${bkURL}/payment2/delete/${customerEmail}`)
-    //     .then(res => {})
-    //     .catch(err => {
-    //         console.log("삭제오류 : ", err);
-    //     });
     async function requestBillingAuth() {
         await payment.requestBillingAuth({
             method: "CARD", // 자동결제(빌링)은 카드만 지원합니다
@@ -187,104 +163,112 @@ export function CheckoutPage() {
     }
 
     return (
-        <div className="wrapper w-100">
-            <div className="max-w-540 w-100">
-                <div id="payment-method" className="w-100" />
-                <div id="agreement" className="w-100" />
-                <div className="btn-wrapper w-100"></div>
-                <div className="wrapper">
-                    <div className="box_section">
-                        <h1>일반 결제</h1>
-                        <div id="payment-method" style={{ display: "flex" }}>
-                            <input
-                                type="checkbox"
-                                value="카드"
-                                id="CARD"
-                                className={`button2 ${
-                                    selectedPaymentMethod === "CARD"
-                                        ? "active"
-                                        : ""
-                                }`}
-                                onClick={() => selectPaymentMethod("CARD")}
-                            />
-                            <label htmlFor="CARD" className="label-text">
-                                카드
-                            </label>
-                            <button
-                                id="TRANSFER"
-                                className={`button2 ${
-                                    selectedPaymentMethod === "TRANSFER"
-                                        ? "active"
-                                        : ""
-                                }`}
-                                onClick={() => selectPaymentMethod("TRANSFER")}
+        <div className="toss">
+            <div className="wrapper w-100">
+                <div className="max-w-540 w-100">
+                    <div id="payment-method" className="w-100" />
+                    <div id="agreement" className="w-100" />
+                    <div className="btn-wrapper w-100"></div>
+                    <div className="wrapper">
+                        <div className="box_section">
+                            <h1>일반 결제</h1>
+                            <div
+                                id="payment-method"
+                                style={{ display: "flex" }}
                             >
-                                계좌이체
-                            </button>
-                            <button
-                                id="VIRTUAL_ACCOUNT"
-                                className={`button2 ${
-                                    selectedPaymentMethod === "VIRTUAL_ACCOUNT"
-                                        ? "active"
-                                        : ""
-                                }`}
-                                onClick={() =>
-                                    selectPaymentMethod("VIRTUAL_ACCOUNT")
-                                }
-                            >
-                                가상계좌
-                            </button>
-                            <button
-                                id="MOBILE_PHONE"
-                                className={`button2 ${
-                                    selectedPaymentMethod === "MOBILE_PHONE"
-                                        ? "active"
-                                        : ""
-                                }`}
-                                onClick={() =>
-                                    selectPaymentMethod("MOBILE_PHONE")
-                                }
-                            >
-                                휴대폰
-                            </button>
-                            <button
-                                id="CULTURE_GIFT_CERTIFICATE"
-                                className={`button2 ${
-                                    selectedPaymentMethod ===
-                                    "CULTURE_GIFT_CERTIFICATE"
-                                        ? "active"
-                                        : ""
-                                }`}
-                                onClick={() =>
-                                    selectPaymentMethod(
+                                <input
+                                    type="checkbox"
+                                    value="카드"
+                                    id="CARD"
+                                    className={`button2 ${
+                                        selectedPaymentMethod === "CARD"
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() => selectPaymentMethod("CARD")}
+                                />
+                                <label htmlFor="CARD" className="label-text">
+                                    카드
+                                </label>
+                                <button
+                                    id="TRANSFER"
+                                    className={`button2 ${
+                                        selectedPaymentMethod === "TRANSFER"
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() =>
+                                        selectPaymentMethod("TRANSFER")
+                                    }
+                                >
+                                    계좌이체
+                                </button>
+                                <button
+                                    id="VIRTUAL_ACCOUNT"
+                                    className={`button2 ${
+                                        selectedPaymentMethod ===
+                                        "VIRTUAL_ACCOUNT"
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() =>
+                                        selectPaymentMethod("VIRTUAL_ACCOUNT")
+                                    }
+                                >
+                                    가상계좌
+                                </button>
+                                <button
+                                    id="MOBILE_PHONE"
+                                    className={`button2 ${
+                                        selectedPaymentMethod === "MOBILE_PHONE"
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() =>
+                                        selectPaymentMethod("MOBILE_PHONE")
+                                    }
+                                >
+                                    휴대폰
+                                </button>
+                                <button
+                                    id="CULTURE_GIFT_CERTIFICATE"
+                                    className={`button2 ${
+                                        selectedPaymentMethod ===
                                         "CULTURE_GIFT_CERTIFICATE"
-                                    )
-                                }
-                            >
-                                문화상품권
-                            </button>
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() =>
+                                        selectPaymentMethod(
+                                            "CULTURE_GIFT_CERTIFICATE"
+                                        )
+                                    }
+                                >
+                                    문화상품권
+                                </button>
+                                <button
+                                    id="FOREIGN_EASY_PAY"
+                                    className={`button2 ${
+                                        selectedPaymentMethod ===
+                                        "FOREIGN_EASY_PAY"
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() =>
+                                        selectPaymentMethod("FOREIGN_EASY_PAY")
+                                    }
+                                >
+                                    해외간편결제
+                                </button>
+                            </div>
                             <button
-                                id="FOREIGN_EASY_PAY"
-                                className={`button2 ${
-                                    selectedPaymentMethod === "FOREIGN_EASY_PAY"
-                                        ? "active"
-                                        : ""
-                                }`}
-                                onClick={() =>
-                                    selectPaymentMethod("FOREIGN_EASY_PAY")
-                                }
+                                className="button"
+                                onClick={() => requestPayment()}
                             >
-                                해외간편결제
+                                결제하기
                             </button>
                         </div>
-                        <button
-                            className="button"
-                            onClick={() => requestPayment()}
-                        >
-                            결제하기
-                        </button>
-                    </div>
-                    {/* <div className="box_section">
+                        {/* <div className="box_section">
                         <h1>정기 결제</h1>
                         <button
                             className="button"
@@ -293,6 +277,7 @@ export function CheckoutPage() {
                             빌링키 발급하기
                         </button>
                     </div> */}
+                    </div>
                 </div>
             </div>
         </div>
