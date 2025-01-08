@@ -49,7 +49,7 @@ function AddressList() {
                 })
                 .catch((error) => {
                     console.error("데이터 가져오기 실패:", error);
-                    navigate("/signIn"); // 실패 시 로그인 페이지로 이동
+                    // navigate("/signIn"); // 실패 시 로그인 페이지로 이동
                 });
         }
     }, [navigate]);
