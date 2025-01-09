@@ -80,16 +80,16 @@ function Payment2(props) {
     // 결제 정보 넘기기
     async function orderFin(e) {
         e.preventDefault();
-        const myData = Object.fromEntries(new FormData(document.myFrm));
+        // const myData = Object.fromEntries(new FormData(document.myFrm));
 
-        if (!myData.payment) {
-            alert("결제수단을 정해주세요");
-            return;
-        }
+        // if (!myData.payment) {
+        //     alert("결제수단을 정해주세요");
+        //     return;
+        // }
 
         const orderPayload = {
             email: email,
-            pay_to: myData.payment,
+            // pay_to: myData.payment,
             order_to: ordersData.customer_name,
             order_total: getTotal(),
             order_tel: ordersData.contact_number,
@@ -154,7 +154,7 @@ function Payment2(props) {
         <div className={styles.wrap}>
             <PayHead activeStep={1} />
             <form name="myFrm" className={styles.myform}>
-                <div className={styles.payments}>
+                {/* <div className={styles.payments}>
                     <div>결제방법</div>
                     <label>
                         <input type="radio" name="payment" value="카드" />
@@ -164,15 +164,15 @@ function Payment2(props) {
                         <input type="radio" name="payment" value="계좌이체" />
                         계좌이체
                     </label>
-                    {/* <label>
+                    <label>
                         <input type="radio" name="payment" value="payco" />
                         Payco
                     </label>
                     <label>
                         <input type="radio" name="payment" value="naver" />
                         네이버페이
-                    </label> */}
-                </div>
+                    </label>
+                </div> */}
                 <div className={styles.addressinfo}>
                     <div>배송지정보</div>
                     <div>{ordersData.customer_name}</div>

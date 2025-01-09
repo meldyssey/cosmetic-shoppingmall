@@ -105,7 +105,6 @@ function AOrderStatus(props) {
                 );
                 setIsEditable(false); // 수정하기 버튼 표시
                 window.location.reload();
-                // navigate("/admin/orderStatus");
             }
         } catch (error) {
             console.error("수정 실패 :", error);
