@@ -3,10 +3,13 @@ import ProductCard from "./ProductCard";
 import styles from "../../scss/product/homeTop.module.scss";
 import { Link } from "react-router-dom";
 import Pagination from "../dup/Pagination";
+import { useSelector } from "react-redux";
 
 const bkURL = process.env.REACT_APP_BACK_URL;
 
-const AllProduct = ({ prod, getProd }) => {
+const AllProduct = () => {
+    const prod = useSelector((state) => state.prod.data);
+
     // pagination 추가
     const [curPage, setCurPage] = useState(1); // Current page
     const [itemsPerPage] = useState(12); // Items per page
@@ -15,9 +18,6 @@ const AllProduct = ({ prod, getProd }) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const curProducts = prod.slice(indexOfFirstItem, indexOfLastItem);
 
-    useEffect(() => {
-        getProd();
-    }, [getProd]);
     return (
         <div>
             <div className={styles.homeTop}>
