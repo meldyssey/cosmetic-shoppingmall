@@ -19,45 +19,7 @@ const BathShowerHomeWrap = () => {
     const [bathShower, setBathShower] = useState([]);
     const prod = useSelector((state) => state.prod.data);
 
-    // const colognesGetAxios = () => {
-    //     console.log("product_category_thr : ", product_category_thr);
-
-    //     axios
-    //         .get(`${bkURL}/product/bath-body/bath-shower`)
-    //         .then((res) => {
-    //             // console.log("서버 다녀옴", res.data);
-    //             // console.log(product_scent);
-    //             // console.log(curPath); // "/path"
-
-    //             // console.log(
-    //             //     res.data.filter((item) => {
-    //             //         item.product_volume == "100ml";
-    //             //         item.product_scent == `${product_scent}`;
-    //             //     })
-    //             // );
-    //             let curProduct = res.data;
-    //             console.log(curProduct);
-
-    //             if (product_category_thr) {
-    //                 curProduct = res.data.filter(
-    //                     (item) =>
-    //                         item.product_category_thr ==
-    //                         `${product_category_thr}`
-    //                 );
-    //             }
-    //             setBathShower(curProduct);
-    //         })
-    //         .catch((err) => {
-    //             console.error("에러발생 ; ", err);
-    //         });
-    // };
-    // useEffect(() => {
-    //     colognesGetAxios();
-    //     console.log(bathShower);
-    //     window.scrollTo(0, 0);
-    // }, [product_category_thr]);
-
-    // console.log(product_category_thr);
+    
     useEffect(() => {
         console.log(product_category_thr);
         if (!product_category_thr) {

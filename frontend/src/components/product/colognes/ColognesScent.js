@@ -21,49 +21,7 @@ const ColognesScent = () => {
     const [colognes, setColognes] = useState([]);
     const prod = useSelector((state) => state.prod.data);
 
-    // const colognesGetAxios = () => {
-    //     console.log("product_scent : ", product_scent);
-
-    //     axios
-    //         .get(`${bkURL}/product/colognes`)
-    //         .then((res) => {
-    //             console.log("서버 다녀옴", res.data);
-    //             // console.log(product_scent);
-    //             // console.log(curPath); // "/path"
-
-    //             // console.log(
-    //             //     res.data.filter((item) => {
-    //             //         item.product_volume == "100ml";
-    //             //         item.product_scent == `${product_scent}`;
-    //             //     })
-    //             // );
-
-    //             let curProduct = res.data.filter(
-    //                 (item) => item.product_volume == "100ml"
-    //             );
-    //             console.log(curProduct);
-
-    //             if (product_scent) {
-    //                 curProduct = res.data.filter(
-    //                     (item) =>
-    //                         item.product_volume == "100ml" &&
-    //                         item.product_scent == `${product_scent}`
-    //                 );
-    //             }
-    //             setColognes(curProduct);
-    //         })
-    //         .catch((err) => {
-    //             console.error("에러발생 ; ", err);
-    //         });
-    // };
-    // useEffect(() => {
-    //     colognesGetAxios();
-    //     window.scrollTo(0, 0);
-    // }, [product_scent]);
-
-    console.log(product_scent);
     useEffect(() => {
-        // console.log(comp);
         if (!product_scent) {
             setComp(<ColognesTotal />);
         }

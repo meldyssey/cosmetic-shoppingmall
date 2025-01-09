@@ -13,35 +13,7 @@ const BathBodyTotal = () => {
     const [bodyCare, setBodyCare] = useState([]);
     const prod = useSelector((state) => state.prod.data);
 
-    // const candleGetAxios = () => {
-    //     axios
-    //         .get(`${bkURL}/product/bath-body/bath-shower`)
-    //         .then((res) => {
-    //             let curProduct = res.data;
-    //             console.log(curProduct);
-
-    //             setBathShower(curProduct);
-    //         })
-    //         .catch((err) => {
-    //             console.error("에러발생 ; ", err);
-    //         });
-    // };
-    // const diffuserGetAxios = () => {
-    //     axios
-    //         .get(`${bkURL}/product/bath-body/body-care`)
-    //         .then((res) => {
-    //             let curProduct = res.data;
-    //             console.log(curProduct);
-
-    //             setBodyCare(curProduct);
-    //         })
-    //         .catch((err) => {
-    //             console.error("에러발생 ; ", err);
-    //         });
-    // };
     useEffect(() => {
-        // candleGetAxios();
-        // diffuserGetAxios();
         setBathShower(
             prod.filter((item) => item.product_category_two == `bath-shower`)
         );
