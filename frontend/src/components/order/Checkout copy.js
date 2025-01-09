@@ -44,9 +44,9 @@ export function CheckoutPage() {
 
     const [isLoading, setIsLoading] = useState();
 
-    const orderPayloadString = JSON.stringify(orderPayload);
-    const prodString = JSON.stringify(prod);
-    const ordersDataString = JSON.stringify(ordersData);
+    // const orderPayloadString = JSON.stringify(orderPayload);
+    // const prodString = JSON.stringify(prod);
+    // const ordersDataString = JSON.stringify(ordersData);
 
     ////////////////////////////////여기까지
 
@@ -103,8 +103,6 @@ export function CheckoutPage() {
                         failUrl: window.location.origin + "/payment2/fail",
                         customerEmail,
                         customerName,
-                        // 가상계좌 안내, 퀵계좌이체 휴대폰 번호 자동 완성에 사용되는 값입니다. 필요하다면 주석을 해제해 주세요.
-                        // customerMobilePhone: "01012341234",
                         card: {
                             useEscrow: false,
                             flowMode: "DEFAULT",
@@ -127,11 +125,11 @@ export function CheckoutPage() {
                         method: "TRANSFER", // 계좌이체 결제
                         amount,
                         orderId: generateRandomString(),
-                        orderName: "토스 티셔츠 외 2건",
+                        orderName,
                         successUrl:
                             window.location.origin + "/payment2/success",
                         failUrl: window.location.origin + "/payment2/fail",
-                        customerEmail: orderPayload.email,
+                        customerEmail,
                         customerName,
                         // 가상계좌 안내, 퀵계좌이체 휴대폰 번호 자동 완성에 사용되는 값입니다. 필요하다면 주석을 해제해 주세요.
                         // customerMobilePhone: "01012341234",
@@ -140,6 +138,11 @@ export function CheckoutPage() {
                                 type: "소득공제",
                             },
                             useEscrow: false,
+                        },
+                        metadata: {
+                            orderPayload: JSON.stringify(orderPayload),
+                            prod: JSON.stringify(prod),
+                            ordersData: JSON.stringify(ordersData),
                         },
                     });
                     break;

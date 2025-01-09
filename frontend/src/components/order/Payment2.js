@@ -107,6 +107,7 @@ function Payment2(props) {
         };
         console.log("orderPayload:", orderPayload);
         console.log("data:", data);
+        console.log("ordersdata:", data);
         //이동연습
         navigate("/payment2/2", {
             state: { orderPayload, prod, ordersData },
@@ -156,21 +157,21 @@ function Payment2(props) {
                 <div className={styles.payments}>
                     <div>결제방법</div>
                     <label>
-                        <input type="radio" name="payment" value="card" />
-                        토스
+                        <input type="radio" name="payment" value="카드" />
+                        카드결제
                     </label>
                     <label>
-                        <input type="radio" name="payment" value="kakao" />
-                        Kakaopay
+                        <input type="radio" name="payment" value="계좌이체" />
+                        계좌이체
                     </label>
-                    <label>
+                    {/* <label>
                         <input type="radio" name="payment" value="payco" />
                         Payco
                     </label>
                     <label>
                         <input type="radio" name="payment" value="naver" />
                         네이버페이
-                    </label>
+                    </label> */}
                 </div>
                 <div className={styles.addressinfo}>
                     <div>배송지정보</div>
