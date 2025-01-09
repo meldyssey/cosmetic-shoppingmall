@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
 import styles from '../../scss/dup/map.module.scss';
+
+import React, { useState, useEffect } from 'react';
+import Pagination from "../dup/Pagination";
 import { Link } from 'react-router-dom';
 import { Map, MapMarker, useMap, MapTypeControl, ZoomControl, useKakaoLoader, MarkerClusterer, CustomOverlayMap } from "react-kakao-maps-sdk";
 
-export function KakaoMap() {
+function KakaoMap() {
     useKakaoLoader();
 
     const [positions, setPositions] = useState([]);
-
+    const [zoomLevel, setZoomLevel] = useState(13);
+    const [map, setMap] = useState(null);
+    
     useEffect(() => {
         setPositions(data.map(item => item.latlng));
     },[])
-
+    
     const data = [
         {
             content: <div style={{ fontSize: "13px", padding: "5px", }}>강남구 갤러리아점</div>,
@@ -171,25 +175,152 @@ export function KakaoMap() {
         },
     ]
 
-    // 배율별로 지도 따로 보내는거 적용해야 됨
+    const locationData = [
+        {
+            local: "강남구",
+            store: "강남구 갤러리아점",
+            address: "압구정로 343 1층, 강남구, 서울특별시 , 6008",
+            guide: "보기",
+        },
+        {
+            local: "강남구",
+            store: "강남구 현대무역점",
+            address: "테헤란로 517 1층, 강남구, 서울특별시 , 6164",
+            guide: "보기",
+        },
+        {
+            local: "강동구",
+            store: "현대 천호점",
+            address: "천호대로 1005 현대 백화점 천호점 1층, 강동구, 서울특별시, 5328",
+            guide: "보기",
+        },
+        {
+            local: "경기 고양시",
+            store: "현대 킨텍스점",
+            address: "일산서구 호수로 817, 1층, 고양시, 경기도, 10391",
+            guide: "보기",
+        },
+        {
+            local: "울산 남구",
+            store: "현대 울산점",
+            address: "삼산로 261 1층, 남구, 울산광역시, 44705",
+            guide: "보기",
+        },
+        {
+            local: "서울",
+            store: "롯데 노원점",
+            address: "동일로 1414 1층, 노원구, 서울특별시, 1695",
+            guide: "보기",
+        },
+        {
+            local: "대구 동구",
+            store: "신세계 대구점",
+            address: "동부로 149번지 1층, 동구, 대구광역시, 41229",
+            guide: "보기",
+        },
+        {
+            local: "인천",
+            store: "롯데 인천 터미널점",
+            address: "연남로 35 1층, 미추홀구 , 인천광역시, 22242",
+            guide: "보기",
+        },
+    ]
     
-    
+    const locations = [
+        { name: '서울', lat: 37.5665, lng: 126.978 },
+        { name: '부산', lat: 35.1796, lng: 129.0756 },
+        { name: '대구', lat: 35.8722, lng: 128.6025 },
+    ];
+
+    const handleClick = (lat, lng) => {
+        if (map) {
+            map.panTo({ lat, lng });
+        }
+    };
 
     const EventMarkerContainer = ({ position, content }) => {
-        const map = useMap()
-        const [isVisible, setIsVisible] = useState(false)
-    
+        const map = useMap();
+        const [isVisible, setIsVisible] = useState(false);
+
+        useEffect ( () => {
+            const handleZoomChange = () => {
+                const currentZoomLevel = map.getLevel();
+                setZoomLevel(currentZoomLevel);
+            }
+
+            kakao.maps.event.addListener(map, "zoom_changed", handleZoomChange);
+            return () => {
+                kakao.maps.event.removeListener(map, "zoom_changed", handleZoomChange);
+            }
+        }, [map]);
+
         return (
-            <MapMarker
-                position={position}
-                onClick={(marker) => map.panTo(marker.getPosition())}
-                onMouseOver={() => setIsVisible(true)}
-                onMouseOut={() => setIsVisible(false)}
+            (zoomLevel <= 10 && (
+                <MapMarker
+                    position={position}
+                    onClick={(marker) => map.panTo(marker.getPosition())}
+                    onMouseOver={() => setIsVisible(true)}
+                    onMouseOut={() => setIsVisible(false)}
                 >
-            {isVisible && content}
-            </MapMarker>
-        )
-    }
+                    {isVisible && content}
+                </MapMarker>
+            ))
+        );
+    };
+
+    const locationTable = ({ locationData }) => {
+        return (
+            <table>
+                <colgroup>
+                    <col style={{width: "20%" }} />
+                    <col style={{width: "20%" }} />
+                    <col style={{width: "auto" }} />
+                    <col style={{width: "15%" }} />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>지역</th>
+                        <th>지점명</th>
+                        <th>주소</th>
+                        <th>지도</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {locationData.map((item, index) => (
+                        <tr key={`${item.local}-${index}`}>
+                            <td>{item.local}</td>
+                            <td>{item.store}</td>
+                            <td>{item.address}</td>
+                            <td>{item.guide}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        );
+    };
+
+    const LocationProd = ({ locationData }) => {
+        const [curPage, setCurPage] = useState(1);
+        const [itemsPerPage] = useState(5);
+        const indexOfLastItem = curPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        const curLocations = locationData.slice(indexOfFirstItem, indexOfLastItem);
+        
+        return (
+            <div>
+                <div className={styles.table}>
+                    {locationTable({ locationData: curLocations })}
+                </div>
+                <Pagination
+                    totalItems={locationData.length}
+                    itemsPerPage={itemsPerPage}
+                    pagesPerGroup={5}
+                    curPage={curPage}
+                    setCurPage={setCurPage}
+                />
+            </div>
+        );
+    };
 
     return (
         <div className={styles.map}>
@@ -204,49 +335,60 @@ export function KakaoMap() {
                     </li>
                 </ol>
             </div>
+            <div className={styles.topDirTitle}>매장 안내</div>
 
+            <div>
+                {locations.map((location, index) => (
+                    <button key={index} onClick={() => handleClick(location.lat, location.lng)}>
+                        {location.name} 지도 보기 (수리중)
+                    </button>
+                ))}
+            </div>
 
-        <Map
-          center={{
-            lat: 36.8153810,
-            lng: 127.7867040,
-          }}
-          style={{
-            width: "90%",
-            height: "450px",
-            margin: "0 auto",
-          }}
-          level={12}
-        >
-
-        <MarkerClusterer
-            averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-            minLevel={11} // 클러스터 할 최소 지도 레벨
-        >
-        {positions.map((pos) => (
-            <CustomOverlayMap
-                key={`${pos.lat}-${pos.lng}`}
-                position={{
-                    lat: pos.lat,
-                    lng: pos.lng,
+            <Map
+                center={{
+                    lat: 36.4897036279608,
+                    lng: 127.729748179994,
                 }}
+                style={{
+                    width: "90%",
+                    height: "450px",
+                    margin: "20px auto",
+                }}
+                level={13}
+                onCreate={setMap} // Map이 생성될 때 map 상태를 설정합니다.
             >
-            </CustomOverlayMap>
-        ))}
-        </MarkerClusterer>
 
-        {data.map((value) => (
-            <EventMarkerContainer
-                key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
-                position={value.latlng}
-                content={value.content}
-            />
-        ))}
-        <MapTypeControl position={"TOPRIGHT"} />
-        <ZoomControl position={"RIGHT"} />
-        </Map>
+                <MarkerClusterer
+                    averageCenter={true}
+                    minLevel={11}
+                >
+                    {positions.map((pos) => (
+                        <CustomOverlayMap
+                            key={`${pos.lat}-${pos.lng}`}
+                            position={pos}
+                        >
+                        </CustomOverlayMap>
+                    ))}
+                </MarkerClusterer>
+
+                {data.map((value) => (
+                    <EventMarkerContainer
+                        key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
+                        position={value.latlng}
+                        content={value.content}
+                    />
+                ))}
+
+                <MapTypeControl position={"TOPRIGHT"} />
+                <ZoomControl position={"RIGHT"} />
+            </Map>
+
+            <LocationProd locationData={locationData} />
         </div>
-    )
+    );
 }
 
 export default KakaoMap;
+
+
