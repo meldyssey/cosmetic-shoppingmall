@@ -89,10 +89,22 @@ function AOrderStatus(props) {
                 modifyOrder
             );
             if (response.status === 200) {
+                console.log("새오더", order);
                 alert("수정이 완료되었습니다.");
+
+                // console.log();
+                setOrder(
+                    order.map(item =>
+                        item.order_id === response.data.order_id
+                            ? {
+                                  ...item,
+                                  status: response.data.status,
+                              }
+                            : item
+                    )
+                );
                 setIsEditable(false); // 수정하기 버튼 표시
                 window.location.reload();
-                // navigate("/admin/orderStatus");
             }
         } catch (error) {
             console.error("수정 실패 :", error);

@@ -92,7 +92,7 @@ module.exports = () => {
                     );
 
                     await con.execute(
-                        "UPDATE payment SET refund = 1 WHERE order_id = ?",
+                        "UPDATE payment SET refund = 1, refund_date = SYSDATE() WHERE order_id = ?",
                         [order.order_id]
                     );
                     console.log("토스환불취소성공");
@@ -100,6 +100,7 @@ module.exports = () => {
             }
             res.status(200).json({
                 message: "환불 완료 처리 성공",
+                status: "환불완료",
             });
         } catch (err) {
             console.error("수정 처리 오류:", err.message);
