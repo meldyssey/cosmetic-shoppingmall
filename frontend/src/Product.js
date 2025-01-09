@@ -18,9 +18,17 @@ import Search from "./components/dup/Search";
 import BestSeller from "./components/product/BestSeller";
 import AllProduct from "./components/product/AllProduct";
 import ScentFinder from "./components/dup/ScentFinder";
-import ProdListContainer from "./components/product/ProdListContainer";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getProdThunk } from "./redux/ThunkAction";
 
 function Product() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        // console.log("여기 진입");
+
+        dispatch(getProdThunk());
+    }, [dispatch]);
     return (
         <Routes>
             <Route path="/colognes" element={<ColognesHomeWrap />}>
@@ -58,7 +66,7 @@ function Product() {
             <Route path="/product/:product_opt_id" element={<DetailWrap />} />
             <Route path="/search" element={<Search />} />
             <Route path="/best-seller" element={<BestSeller />} />
-            <Route path="/all-product" element={<ProdListContainer />} />
+            <Route path="/all-product" element={<AllProduct />} />
             <Route path="/scent-finder" element={<ScentFinder />} />
         </Routes>
     );
