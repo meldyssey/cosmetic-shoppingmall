@@ -28,9 +28,13 @@ function SignUp() {
 
     useEffect(() => {
         if (kakaoEmail) {
-            setFormData(prev => ({ ...prev, email: kakaoEmail }));
+            // 카카오 이메일이 있는 경우 상태 업데이트
+            setFormData((prev) => ({ ...prev, email: kakaoEmail }));
+        } else {
+            // 카카오 이메일이 없는 경우 로그인 페이지로 리다이렉트
+            navigator('/signin'); 
         }
-    }, [kakaoEmail]);
+    }, [kakaoEmail, navigator]);
 
     const handleChange = async e => {
         //각 요소 이름, 값, 종류, 체크여부 데이터 저장(폼데이터 바꾸기)
@@ -71,7 +75,7 @@ function SignUp() {
                 if (!/^[가-힣]{2,5}$/.test(value)) return '이름을 정확히 입력해주세요.';
                 break;
             case 'email':
-                if (!/^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) return '유효한 이메일을 입력해주세요.';
+                if (!/^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) return '카카오 로그인이 필요합니다.';
                 break;
             case 'phone':
                 if (!/^01[0-9]-\d{3,4}-\d{4}$/.test(value)) return '연락처를 정확히 입력해주세요.';
@@ -208,7 +212,7 @@ function SignUp() {
                             </div>
 
                             <div className={styles.inputWrapper}>
-                                <input type="email" name="email" placeholder="*이메일" className={styles.input} required value={formData.email} onChange={handleChange} readOnly={true} />
+                                <input type="email" name="email" placeholder="※먼저 카카오 로그인이 필요합니다." className={styles.input} required value={formData.email} onChange={handleChange} readOnly={true} />
                                 {showErrors && errors.email && <div className={styles.error}>{errors.email}</div>}
                             </div>
                             {/* <button className={styles.chkbtn} onClick={emailChk}>
