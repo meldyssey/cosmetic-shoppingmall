@@ -25,10 +25,10 @@ export function SuccessPage() {
     useEffect(() => {
         async function confirm() {
             const requestData = {
+                // method: searchParams.get("method"),
                 orderId: searchParams.get("orderId"),
                 amount: searchParams.get("amount"),
                 paymentKey: searchParams.get("paymentKey"),
-                // metadata: searchParams.get("metadata"),
             };
             // const metadata = searchParams.get("metadata");
             // if (metadata) {
@@ -42,6 +42,7 @@ export function SuccessPage() {
                 paymentKey: requestData.paymentKey,
                 orderId: requestData.orderId,
                 amount: requestData.amount,
+                // method: requestData.method,
                 // metadata: requestData.metadata,
             });
 
@@ -58,8 +59,8 @@ export function SuccessPage() {
             if (!response.ok) {
                 throw { message: json.message, code: json.code };
             }
-            console.log("maxOrderId:", json.newOrderId);
-            console.log("메타데이터:", json.metadata);
+            // console.log("maxOrderId:", json.newOrderId);
+            // console.log("메타데이터:", json.metadata);
             setResponseData(json);
             setData(json.newOrderId);
         }

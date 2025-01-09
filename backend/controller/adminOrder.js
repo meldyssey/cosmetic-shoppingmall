@@ -100,6 +100,7 @@ module.exports = () => {
             }
             res.status(200).json({
                 message: "환불 완료 처리 성공",
+                status: "환불완료",
             });
         } catch (err) {
             console.error("수정 처리 오류:", err.message);
