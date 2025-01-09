@@ -9,7 +9,7 @@ import Map from "./components/dup/Map";
 import Basket from "./components/order/Basket";
 import Payment1 from "./components/order/Payment1";
 import Payment2 from "./components/order/Payment2";
-import { CheckoutPage } from "./components/order/Checkout copy";
+import { CheckoutPage } from "./components/order/Checkout";
 import { SuccessPage } from "./components/order/Success";
 import { FailPage } from "./components/order/Fail";
 // import { CancelPage } from "./components/order/Cancel";

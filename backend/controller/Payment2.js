@@ -78,7 +78,6 @@ module.exports = () => {
     //////////////// 토스결제창
     router.post("/confirm", async function (req, res) {
         const { paymentKey, orderId, amount } = req.body;
-        // console.log(method);
         const payData = {
             orderId: orderId,
             amount: amount,
@@ -113,8 +112,7 @@ module.exports = () => {
             const metadata = result.metadata;
             const orderPayload = JSON.parse(metadata.orderPayload);
             const prod = JSON.parse(metadata.prod);
-            console.log("오더페이로드파세", orderPayload);
-            console.log("프로드파세", prod);
+            console.log("결제방법", metadata.method);
 
             //order_id 가져오기
             const [ret] = await con.execute(
@@ -130,9 +128,9 @@ module.exports = () => {
             const data1 = [
                 maxOrderId,
                 orderPayload.email,
-                // "card",
                 // method,
-                orderPayload.pay_to,
+                // orderPayload.pay_to,
+                metadata.method,
                 orderPayload.order_to,
                 orderPayload.order_total,
                 orderPayload.order_tel,
