@@ -4,7 +4,6 @@ import styles from '../../scss/dup/scentFinder.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import { faQuoteRight } from '@fortawesome/free-solid-svg-icons';
-import { Helmet } from "react-helmet";
 
 const finderData = [
     {
@@ -38,45 +37,52 @@ const ScentFinder = () => {
             console.error('Kakao SDK가 로드되지 않았습니다.');
             return;
         }
-
+    
         if (!window.Kakao.isInitialized()) {
-            // JavaScript 키를 사용해 SDK 초기화
             window.Kakao.init(process.env.REACT_APP_KAKAO_JS_KEY);
-            console.log('Kakao SDK initialized with key:', process.env.REACT_APP_KAKAO_JS_KEY);
+            console.log('Kakao SDK 초기화 완료');
+        } else {
+            console.log('Kakao SDK는 이미 초기화되었습니다.');
         }
+    
+        console.log('현재 Kakao 상태:', window.Kakao);
     }, []);
     
-
     const shareToKakao = () => {
-        try {
-            if (!window.Kakao || !window.Kakao.Share) {
-                alert('Kakao SDK가 초기화되지 않았습니다.');
-                return;
-            }
+        if (!window.Kakao || !window.Kakao.Share) {
+            console.error('Kakao SDK가 초기화되지 않았거나 Share 모듈이 없습니다.');
+            alert('카카오톡 공유를 사용할 수 없습니다.');
+            return;
+        }
     
+        console.log('Kakao.Share.sendScrap 호출 준비');
+    
+        try {
             window.Kakao.Share.sendScrap({
-                requestUrl: 'https://web-jomalone-deploy-frontend-m5gmo1isb2cc7449.sel4.cloudtype.app/scent-finder', // 공유할 URL
+                requestUrl: 'http://localhost:3000/scent-finder',
                 templateId: 116083, // 템플릿 ID
+                templateArgs: {
+                    title: '나만의 시그니처 향을 찾아보세요!',
+                    description: '조 말론 런던의 센트 파인더와 함께 특별한 향기를 찾아보세요.',
+                },
             });
     
-            // 성공적으로 호출된 경우
-            alert('카카오톡으로 공유되었습니다!');
+            // 성공 메시지를 표시합니다.
+            console.log('공유 요청 전송');
         } catch (error) {
-            // 오류 처리
-            console.error('카카오톡 공유 실패:', error);
-            alert('카카오톡 공유에 실패했습니다.');
+            console.error('공유 실행 오류:', error);
         }
     };
     
+    const copyLink = () => {
+        navigator.clipboard.writeText(window.location.href).then(
+            () => alert('현재 페이지 링크가 복사되었습니다.'),
+            (err) => console.error('링크 복사 실패:', err)
+        );
+    };
+
     return (
         <>
-        <Helmet>
-                <title>센트 파인더</title>
-                <meta property="og:title" content="센트 파인더" />
-                <meta property="og:description" content="조 말론 런던에서 나만의 향을 찾아보세요!" />
-                <meta property="og:image" content="http://localhost:3000/imgs/product/scentFinderBanner.jpg" />
-                <meta property="og:url" content="https://web-jomalone-deploy-frontend-m5gmo1isb2cc7449.sel4.cloudtype.app/scent-finder" />
-        </Helmet>
         <div className={styles.scentFinder}>
             <div className={styles.title}>센트파인더</div>
             <div className={styles.content}>
@@ -105,9 +111,25 @@ const ScentFinder = () => {
                     <p>셀린 루</p>
                     <p>글로벌 프레그런스 헤드 디렉터</p>
                 </div>
-                <button className={styles.kakaoShareBtn} onClick={shareToKakao}>
+                <div className={styles.iconRow}>
+                    <button onClick={copyLink} className={styles.iconBtn}>
+                        <img
+                            src="/imgs/product/3138387.png"
+                            alt="링크 복사"
+                            className={`${styles.iconImg} ${styles.link}`}
+                        />
+                    </button>
+                    <button onClick={shareToKakao} className={styles.iconBtn}>
+                        <img
+                            src="/imgs/product/4494622.png"
+                            alt="카카오 공유하기"
+                            className={styles.iconImg}
+                        />
+                    </button>
+                </div>
+                {/* <button className={styles.kakaoShareBtn} onClick={shareToKakao}>
                     카카오톡으로 공유하기
-                </button>
+                </button> */}           
             </div>
 
             {openModal ? (

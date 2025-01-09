@@ -10,6 +10,7 @@ import Fruity from "../Fruity";
 import LightFloral from "../LightFloral";
 import Woody from "../Woody";
 import DiffuserTotal from "./DiffuserTotal";
+import { useSelector } from "react-redux";
 
 const bkURL = process.env.REACT_APP_BACK_URL;
 
@@ -18,45 +19,8 @@ const DiffuserHomeWrap = () => {
 
     const [comp, setComp] = useState(null);
     const [diffusers, setDiffusers] = useState([]);
-
-    const colognesGetAxios = () => {
-        console.log("product_scent : ", product_scent);
-
-        axios
-            .get(`${bkURL}/product/home-scents/diffusers`)
-            .then((res) => {
-                // console.log("서버 다녀옴", res.data);
-                // console.log(product_scent);
-                // console.log(curPath); // "/path"
-
-                // console.log(
-                //     res.data.filter((item) => {
-                //         item.product_volume == "100ml";
-                //         item.product_scent == `${product_scent}`;
-                //     })
-                // );
-                let curProduct = res.data;
-                // console.log(curProduct);
-
-                if (product_scent) {
-                    curProduct = res.data.filter(
-                        (item) => item.product_scent == `${product_scent}`
-                    );
-                }
-                setDiffusers(curProduct);
-            })
-            .catch((err) => {
-                console.error("에러발생 ; ", err);
-            });
-    };
+    const prod = useSelector((state) => state.prod.data);
     useEffect(() => {
-        colognesGetAxios();
-        console.log(diffusers);
-    }, [product_scent]);
-
-    console.log(product_scent);
-    useEffect(() => {
-        console.log(comp);
         if (!product_scent) {
             setComp(<DiffuserTotal />);
         }
@@ -75,6 +39,18 @@ const DiffuserHomeWrap = () => {
         if (product_scent == `woody`) {
             setComp(<Woody />);
         }
+        setDiffusers(
+            prod.filter((item) => {
+                if (product_scent) {
+                    return (
+                        item.product_category_two == `diffuser` &&
+                        item.product_scent == `${product_scent}`
+                    );
+                } else {
+                    return item.product_category_two == `diffuser`;
+                }
+            })
+        );
     }, [product_scent]);
     return (
         <div>
