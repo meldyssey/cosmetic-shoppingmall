@@ -74,6 +74,13 @@ const ScentFinder = () => {
         }
     };
     
+    const copyLink = () => {
+        navigator.clipboard.writeText(window.location.href).then(
+            () => alert('현재 페이지 링크가 복사되었습니다.'),
+            (err) => console.error('링크 복사 실패:', err)
+        );
+    };
+
     return (
         <>
         <div className={styles.scentFinder}>
@@ -104,9 +111,25 @@ const ScentFinder = () => {
                     <p>셀린 루</p>
                     <p>글로벌 프레그런스 헤드 디렉터</p>
                 </div>
-                <button className={styles.kakaoShareBtn} onClick={shareToKakao}>
+                <div className={styles.iconRow}>
+                    <button onClick={copyLink} className={styles.iconBtn}>
+                        <img
+                            src="/imgs/product/3138387.png"
+                            alt="링크 복사"
+                            className={`${styles.iconImg} ${styles.link}`}
+                        />
+                    </button>
+                    <button onClick={shareToKakao} className={styles.iconBtn}>
+                        <img
+                            src="/imgs/product/4494622.png"
+                            alt="카카오 공유하기"
+                            className={styles.iconImg}
+                        />
+                    </button>
+                </div>
+                {/* <button className={styles.kakaoShareBtn} onClick={shareToKakao}>
                     카카오톡으로 공유하기
-                </button>
+                </button> */}           
             </div>
 
             {openModal ? (
