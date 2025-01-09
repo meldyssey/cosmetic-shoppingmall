@@ -15,38 +15,6 @@ const ColognesSize = () => {
     const [colognes, setColognes] = useState([]);
     const prod = useSelector((state) => state.prod.data);
 
-    // const colognesGetAxios = () => {
-    //     // console.log("product_scent : ", product_scent);
-
-    //     axios
-    //         .get(`${bkURL}/product/colognes`)
-    //         .then((res) => {
-    //             // console.log("서버 다녀옴", res.data);
-    //             // console.log(product_scent);
-    //             console.log(curPath); // "/path"
-
-    //             // console.log(
-    //             //     res.data.filter((item) => {
-    //             //         item.product_volume == "100ml";
-    //             //         item.product_scent == `${product_scent}`;
-    //             //     })
-    //             // );
-    //             let curProduct = res.data;
-    //             if (product_volume) {
-    //                 curProduct = res.data.filter(
-    //                     (item) => item.product_volume == `${product_volume}`
-    //                 );
-    //             }
-    //             setColognes(curProduct);
-    //         })
-    //         .catch((err) => {
-    //             console.error("에러발생 ; ", err);
-    //         });
-    // };
-    // useEffect(() => {
-    //     colognesGetAxios();
-    //     window.scrollTo(0, 0);
-    // }, [product_volume]);
     useEffect(() => {
         setColognes(
             prod.filter((item) => {
