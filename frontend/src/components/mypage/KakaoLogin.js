@@ -16,9 +16,11 @@ function KakaoLoginHandler() {
                 .then(response => {
                     const { email, sessionToken, customer_name } = response.data;
 
-                    if (!email || !customer_name) {
-                        // 데이터베이스에 해당 이메일이 없는 경우
-                        alert('가입되지 않은 계정입니다. 계정을 생성해 주세요.');
+                    if (!email || !customer_name) {// db에 해당 이메일이 없는 경우
+                        if (state !== 'signup') {
+                            // state가 signup이 아닌 경우에만 알림 표시
+                            alert('가입되지 않은 계정입니다. 계정을 생성해 주세요.');
+                        }
                         navigate('/signUp', { state: { email } });
                         return;
                     }

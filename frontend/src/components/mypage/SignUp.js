@@ -9,7 +9,7 @@ function SignUp() {
     const bkURL = process.env.REACT_APP_BACK_URL;
 
     const kakaoEmail = location.state?.email || '';
-
+    const [loading, setLoading] = useState(true);
 
     const [formData, setFormData] = useState({
         name: '',      // 닉네임은 사용자가 직접 입력
@@ -27,15 +27,41 @@ function SignUp() {
     const [showErrors, setShowErrors] = useState(false); // 에러 메시지 표시 여부 상태 추가
 
     useEffect(() => {
-        if (kakaoEmail) {
-            // 카카오 이메일이 있는 경우 상태 업데이트
-            setFormData((prev) => ({ ...prev, email: kakaoEmail }));
-        } else {
-            // 카카오 이메일이 없는 경우 로그인 페이지로 리다이렉트
-            navigator('/signin'); 
+        const emailFromSession = sessionStorage.getItem('email');
+    
+        if (!emailFromSession) {
+            alert('카카오 로그인이 필요합니다.??');
+            navigator('/signin');
+            return;
         }
-    }, [kakaoEmail, navigator]);
-
+    
+        const checkEmail = async () => {
+            try {
+                const res = await axios.get(`${bkURL}/signUp/checkEmail`, {
+                    params: { email: emailFromSession },
+                });
+    
+                if (res.data.exists) {
+                    alert('이미 가입된 회원입니다. 메인 페이지로 이동합니다.');
+                    navigator('/'); // 메인 페이지로 리다이렉트
+                    return;
+                }
+    
+                setFormData((prev) => ({
+                    ...prev,
+                    email: emailFromSession, // 이메일을 상태에 설정
+                }));
+                setLoading(false); // 가입 가능 상태로 변경
+            } catch (err) {
+                console.error('이메일 확인 오류:', err);
+                alert('서버와 통신 중 오류가 발생했습니다.');
+                navigator('/signin'); // 에러 발생 시 로그인 페이지로 리다이렉트
+            }
+        };
+    
+        checkEmail();
+    }, [bkURL, navigator]);
+    
     const handleChange = async e => {
         //각 요소 이름, 값, 종류, 체크여부 데이터 저장(폼데이터 바꾸기)
         const { name, value, type, checked } = e.target;
@@ -177,6 +203,10 @@ function SignUp() {
             alert('서버와 통신 중 오류가 발생했습니다.');
         }
     };
+
+    if (loading) {
+        return <div></div>;
+    }
 
     return (
         <div className={styles.wrapper}>
