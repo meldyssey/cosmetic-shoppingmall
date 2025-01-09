@@ -11,7 +11,7 @@ import "../../scss/order/tossStyle.css";
 const clientKey = "test_ck_5OWRapdA8djX0X2qzkARVo1zEqZK";
 const customerKey = generateRandomString();
 
-export function CheckoutPage() {
+export function Checkout_del() {
     const [payment, setPayment] = useState(null);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
 

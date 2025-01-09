@@ -92,6 +92,10 @@ export function CheckoutPage() {
         // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
         // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
         try {
+            console.log("진입");
+            console.log("페이로드", JSON.stringify(orderPayload));
+            console.log("프로드", JSON.stringify(prod));
+            console.log("오더스데이터", JSON.stringify(ordersData));
             switch (selectedPaymentMethod) {
                 case "CARD":
                     await payment.requestPayment({
@@ -118,10 +122,6 @@ export function CheckoutPage() {
                         },
                     });
                     break; // 추가함
-
-                    console.log("페이로드", JSON.stringify(orderPayload));
-                    console.log("프로드", JSON.stringify(prod));
-                    console.log("오더스데이터", JSON.stringify(ordersData));
 
                 case "TRANSFER":
                     await payment.requestPayment({

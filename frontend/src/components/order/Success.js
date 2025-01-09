@@ -121,8 +121,8 @@ export function SuccessPage() {
                 </div>
             ) : (
                 <div className={styles.box_section}>
-                    <div className="spinner"></div>
-                    <p>결제 처리 중입니다... 잠시만 기다려주세요 🕒</p>
+                    <div className={styles.spinner}></div>
+                    <p>결제 처리 중입니다... 잠시만 기다려주세요</p>
                 </div>
                 // <p>Loading...</p>
             )}
