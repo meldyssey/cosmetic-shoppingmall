@@ -17,36 +17,10 @@ function SignIn() {
     };
 
     // 카카오 회원가입 버튼
-    const handleSignUp = async () => {
-        const kakaoEmail = sessionStorage.getItem('email'); // 로그인된 카카오 이메일 확인
-        
-        console.log(kakaoEmail)
-
-        if (!kakaoEmail) {
-            alert('카카오 로그인이 필요합니다ㅎㅇㅇ.');
-            return;
-        }
-    
-        try {
-            const response = await axios.get(`${bkURL}/signUp/checkEmail`, {
-                params: { email: kakaoEmail },
-            });
-    
-            if (response.data.exists) {
-                alert('이미 가입된 회원입니다. 메인 페이지로 이동합니다.');
-                navigate('/'); // 메인 페이지로 리다이렉트
-                return;
-            }
-    
-            // 중복되지 않은 경우 회원가입 페이지로 이동
-            const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&state=signup`;
-            window.location.href = KAKAO_AUTH_URL;
-        } catch (error) {
-            console.error('회원가입 처리 중 오류 발생:', error);
-            alert('회원가입 처리 중 문제가 발생했습니다.');
-        }
+    const handleSignUp = () => {
+        const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&state=signup`;
+        window.location.href = KAKAO_AUTH_URL;
     };
-    
 
     // 비밀번호 숨기기 토글
     const passwordHide = () => {

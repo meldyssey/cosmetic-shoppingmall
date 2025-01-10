@@ -9,7 +9,7 @@ function SignUp() {
     const bkURL = process.env.REACT_APP_BACK_URL;
 
     const kakaoEmail = location.state?.email || '';
-    const [loading, setLoading] = useState(true);
+
 
     const [formData, setFormData] = useState({
         name: '',      // 닉네임은 사용자가 직접 입력
@@ -27,41 +27,11 @@ function SignUp() {
     const [showErrors, setShowErrors] = useState(false); // 에러 메시지 표시 여부 상태 추가
 
     useEffect(() => {
-        const emailFromSession = sessionStorage.getItem('email');
-    
-        if (!emailFromSession) {
-            alert('카카오 로그인이 필요합니다.??');
-            navigator('/signin');
-            return;
+        if (kakaoEmail) {
+            setFormData(prev => ({ ...prev, email: kakaoEmail }));
         }
-    
-        const checkEmail = async () => {
-            try {
-                const res = await axios.get(`${bkURL}/signUp/checkEmail`, {
-                    params: { email: emailFromSession },
-                });
-    
-                if (res.data.exists) {
-                    alert('이미 가입된 회원입니다. 메인 페이지로 이동합니다.');
-                    navigator('/'); // 메인 페이지로 리다이렉트
-                    return;
-                }
-    
-                setFormData((prev) => ({
-                    ...prev,
-                    email: emailFromSession, // 이메일을 상태에 설정
-                }));
-                setLoading(false); // 가입 가능 상태로 변경
-            } catch (err) {
-                console.error('이메일 확인 오류:', err);
-                alert('서버와 통신 중 오류가 발생했습니다.');
-                navigator('/signin'); // 에러 발생 시 로그인 페이지로 리다이렉트
-            }
-        };
-    
-        checkEmail();
-    }, [bkURL, navigator]);
-    
+    }, [kakaoEmail]);
+
     const handleChange = async e => {
         //각 요소 이름, 값, 종류, 체크여부 데이터 저장(폼데이터 바꾸기)
         const { name, value, type, checked } = e.target;
@@ -101,7 +71,7 @@ function SignUp() {
                 if (!/^[가-힣]{2,5}$/.test(value)) return '이름을 정확히 입력해주세요.';
                 break;
             case 'email':
-                if (!/^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) return '카카오 로그인이 필요합니다.';
+                if (!/^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) return '유효한 이메일을 입력해주세요.';
                 break;
             case 'phone':
                 if (!/^01[0-9]-\d{3,4}-\d{4}$/.test(value)) return '연락처를 정확히 입력해주세요.';
@@ -119,94 +89,62 @@ function SignUp() {
     };
 
     // 회원가입 요청 처리 함수
-    const handleSubmit = async e => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // 기본 동작 방지
         setShowErrors(true); // 에러 메시지 표시
     
-        const errorsChk = {}; // 에러 메시지를 수집할 객체
+        console.log("폼 데이터 상태:", formData);
     
-        // 각 필드의 유효성 검사 결과 수집
+        // 유효성 검사
+        const errorsChk = {};
         for (const field in formData) {
             const error = ValueChk(field, formData[field]);
             if (error) {
-                errorsChk[field] = error; // 에러가 있을 경우 저장
+                errorsChk[field] = error;
             }
         }
+        setErrors(errorsChk);
     
-        setErrors(errorsChk); // 상태 업데이트
+        console.log("유효성 검사 결과:", errorsChk);
     
         if (Object.keys(errorsChk).length > 0) {
-            alert('입력 내용을 다시 확인해주세요.');
-            return; // 에러가 있으면 요청 중단
+            alert("입력 내용을 다시 확인해주세요.");
+            console.log("유효성 검사 실패");
+            return;
         }
     
-        const { email } = formData;
-    
         try {
-            // 이메일 중복 확인 요청
-            const emailCheckResponse = await axios.get(`${bkURL}/signUp/checkEmail`, {
-                params: { email },
-            });
-    
-            if (emailCheckResponse.data.exists) {
-                alert('이미 가입된 회원입니다.');
-                return; // 중복된 이메일이 있으면 요청 중단
-            }
-    
-            // 회원가입 요청 전송
+            console.log("회원가입 요청 전송 중...");
             const res = await axios.post(`${bkURL}/signUp/`, formData);
+            console.log("회원가입 요청 응답:", res.data);
     
-            if (res.data.error) {
-                alert(res.data.message); // 서버에서 에러 응답 시 메시지 표시
-                return;
+            if (res.data.status === "fail") {
+                alert(res.data.message); // 서버 응답 메시지 표시
+                console.log("회원가입 실패:", res.data.message);
+    
+                // 로그인 페이지로 이동
+                console.log("로그인 페이지로 이동 시도");
+                navigator("/signIn"); // 로그인 페이지로 이동
+                console.log("navigator 호출 완료");
+    
+                // 백업: 브라우저 기본 이동 방식 사용
+                setTimeout(() => {
+                    window.location.href = "/signIn";
+                }, 1000);
+                return; // 중단
             }
     
             alert(`${formData.name}님 가입을 환영합니다.`);
-            navigator('/signIn'); // 로그인 페이지로 이동
+            console.log("회원가입 성공");
+            navigator("/signIn"); // 로그인 페이지로 이동
         } catch (err) {
-            console.error('회원가입 요청 오류:', err);
-            alert('서버와 통신 중 오류가 발생했습니다.');
+            console.error("회원가입 요청 오류:", err.response?.data || err.message);
+            console.error("HTTP 상태 코드:", err.response?.status || "알 수 없음");
+            alert(err.response?.data?.message || "서버와 통신 중 오류가 발생했습니다.");
         }
     };
     
     
-    
-    const emailChk = async () => {
-        const { email } = formData;
-        const emailtype = /^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-        if (!email) {
-            alert('이메일을 입력해주세요.');
-            return;
-        }
-        if (!emailtype.test(email)) {
-            alert('유효한 이메일을 입력해주세요.');
-            return;
-        }
-
-        try {
-            const res = await axios.get(`${bkURL}/signUp/checkEmail`, {
-                params: { email }, // GET 요청에서 데이터를 전달할 때는 params 사용
-            });
-            console.log('Axios 요청 전송:', { email });
-
-            if (res.data.exists) {
-                setemailChkFinish(false); // 중복 확인 실패 시 false로 설정
-                alert('이미 사용 중인 이메일입니다. 다시 입력해주세요.');
-            } else {
-                setemailChkFinish(true);
-                seteditChk(true); // readOnly 설정
-                alert('사용 가능한 이메일입니다.');
-            }
-        } catch (err) {
-            console.error('이메일 확인 오류:', err);
-            alert('서버와 통신 중 오류가 발생했습니다.');
-        }
-    };
-
-    if (loading) {
-        return <div></div>;
-    }
 
     return (
         <div className={styles.wrapper}>
@@ -242,7 +180,7 @@ function SignUp() {
                             </div>
 
                             <div className={styles.inputWrapper}>
-                                <input type="email" name="email" placeholder="※먼저 카카오 로그인이 필요합니다." className={styles.input} required value={formData.email} onChange={handleChange} readOnly={true} />
+                                <input type="email" name="email" placeholder="※이전 페이지로 이동하여 카카오 로그인부터 해주세요." className={styles.input} required value={formData.email} onChange={handleChange} readOnly={true} />
                                 {showErrors && errors.email && <div className={styles.error}>{errors.email}</div>}
                             </div>
                             {/* <button className={styles.chkbtn} onClick={emailChk}>
