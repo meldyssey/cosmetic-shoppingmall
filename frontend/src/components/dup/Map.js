@@ -2,21 +2,21 @@ import styles from '../../scss/dup/map.module.scss';
 import React, { useState, useEffect } from 'react';
 import Pagination from "../dup/Pagination";
 import { Link } from 'react-router-dom';
-import { Map, MapMarker, MapTypeControl, ZoomControl, MarkerClusterer, CustomOverlayMap, useMap } from "react-kakao-maps-sdk";
+import { Map, MapMarker, MapTypeControl, ZoomControl, useMap } from "react-kakao-maps-sdk";
 
 function KakaoMap() {
     const [positions, setPositions] = useState([]);
-    const [zoomLevel, setZoomLevel] = useState(10);
+    const [zoomLevel, setZoomLevel] = useState(7);
     const [map, setMap] = useState(null);
     const [selectedMarker, setSelectedMarker] = useState(null);
+    const [curPage, setCurPage] = useState(1);
     const [center, setCenter] = useState({
-        // 클러스터 쓸 때
-        lat: 37.5654385176408,
-        lng: 126.976983237511, 
-
-        // 클러스터 안 쓸 때
-        // lat: 36.4897036279608,
-        // lng: 127.729748179994,
+        lat: 37.564562423078826,
+        lng: 126.9771588339448, 
+    });
+    const [mapSize, setMapSize] = useState({
+        width: "90%",
+        height: "450px"
     });
 
     const data = [
@@ -38,7 +38,7 @@ function KakaoMap() {
         },
         {
             content: <div style={{ fontSize: "13px", padding: "5px", }}>남구 현대 울산점</div>,
-            latlng: { lat: 34.9851453035827, lng: 127.503359561051 },
+            latlng: { lat: 35.538766441333514, lng: 129.33888638817382 },
         },
         {
             content: <div style={{ fontSize: "13px", padding: "5px", }}>롯데 노원점</div>,
@@ -212,7 +212,7 @@ function KakaoMap() {
             store: "현대 울산점",
             address: "삼산로 261 1층, 남구, 울산광역시, 44705",
             guide: "보기",
-            latlng: { lat: 34.9851453035827, lng: 127.503359561051 },
+            latlng: { lat: 35.538766441333514, lng: 129.33888638817382 },
         },
         {
             local: "서울",
@@ -454,6 +454,27 @@ function KakaoMap() {
         },
     ]
 
+    // window resize 이벤트 처리
+    useEffect(() => {
+        const handleResize = () => {
+        // 지도가 있을 때만 실행
+        if (map) {
+            // 지도 크기 업데이트
+            map.relayout();
+            // 중심점 다시 설정
+            map.setCenter(new kakao.maps.LatLng(center.lat, center.lng));
+        }
+    };
+
+    // resize 이벤트 리스너 등록
+        window.addEventListener('resize', handleResize);
+
+    // cleanup
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [map, center]);
+
     useEffect(() => {
         setPositions(data.map(item => item.latlng));
     }, []);
@@ -468,7 +489,7 @@ function KakaoMap() {
         const map = useMap();
         const [isVisible, setIsVisible] = useState(false);
 
-        useEffect ( () => {
+        useEffect(() => {
             const handleZoomChange = () => {
                 const currentZoomLevel = map.getLevel();
                 setZoomLevel(currentZoomLevel);
@@ -532,8 +553,7 @@ function KakaoMap() {
         );
     };
 
-    const LocationProd = ({ locationData }) => {
-        const [curPage, setCurPage] = useState(1);
+    const LocationProd = ({ locationData, curPage, setCurPage }) => {
         const [itemsPerPage] = useState(5);
         const indexOfLastItem = curPage * itemsPerPage;
         const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -573,38 +593,13 @@ function KakaoMap() {
             <Map
                 center={center}
                 style={{
-                    width: "90%",
-                    height: "450px",
+                    width: mapSize.width,
+                    height: mapSize.height,
                     margin: "20px auto",
                 }}
                 level={zoomLevel}
                 onCreate={setMap}
             >
-                <MarkerClusterer
-                    averageCenter={true}
-                    minLevel={11}
-                >
-                    {positions.map((pos, index) => (
-                        <React.Fragment key={`marker-group-${index}`}>
-                            <MapMarker
-                                key={`${pos.lat}-${pos.lng}`}
-                                position={pos}
-                                image={selectedMarker === index ? {
-                                    src: "http://t1.daumcdn.net/mapjsapi/images/marker.png",
-                                    size: { width: 29, height: 42 }
-                                } : undefined}
-                                onClick={() => setSelectedMarker(index)}
-
-                            />
-                            <CustomOverlayMap
-                                key={`overlay-${pos.lat}-${pos.lng}`}
-                                position={pos}
-                            >
-                            </CustomOverlayMap>
-                        </React.Fragment>
-                    ))}
-                </MarkerClusterer>
-
                 {data.map((value) => (
                     <EventMarkerContainer
                         key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
@@ -617,7 +612,11 @@ function KakaoMap() {
                 <ZoomControl position={"RIGHT"} />
             </Map>
 
-            <LocationProd locationData={locationData} />
+            <LocationProd 
+                locationData={locationData} 
+                curPage={curPage}
+                setCurPage={setCurPage}
+            />
         </div>
     );
 }
