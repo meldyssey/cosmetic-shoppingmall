@@ -1,45 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import styles from '../../scss/dup/search.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import ProductCard from '../product/ProductCard.js';
+import React, { useEffect, useState } from "react";
+import styles from "../../scss/dup/search.module.scss";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import ProductCard from "../product/ProductCard.js";
+
+const bkURL = process.env.REACT_APP_BACK_URL;
 
 const Search = () => {
     const [product, setProduct] = useState([]);
-    const [text, setText] = useState('');
+    const [text, setText] = useState("");
     const searchGo = (me) => {
         me.preventDefault();
-        console.log('submitGo 진입');
+        console.log("submitGo 진입");
         const frmData = new FormData(document.myFrm);
         console.log(frmData);
         const data = Object.fromEntries(frmData);
         console.log(data);
 
         Object.keys(data).forEach((key) => {
-            if (data[key] === '') {
+            if (data[key] === "") {
                 data[key] = null;
             }
         });
 
         if (!data.text) {
-            alert('검색할 단어를 입력해 주세요.');
+            alert("검색할 단어를 입력해 주세요.");
             return;
         }
 
         axios
-            .post(`http://localhost:5001/product/search`, data)
+            .post(`${bkURL}/product/search`, data)
             .then((res) => {
-                console.log('검색 완료');
+                console.log("검색 완료");
 
                 setProduct(res.data);
-                setText('해당하는 제품이 존재하지 않습니다.');
+                setText("해당하는 제품이 존재하지 않습니다.");
             })
             .catch((err) => {
-                console.error('에러발생 ; ', err);
+                console.error("에러발생 ; ", err);
             });
     };
     useEffect(() => {
-        console.log('ProductCard 동작');
+        console.log("ProductCard 동작");
     }, [product]);
 
     return (
@@ -51,7 +53,11 @@ const Search = () => {
                     <option value="home-scents">홈 프레그런스</option>
                     <option value="bath-body">배스 앤 바디</option>
                 </select>
-                <input type="text" placeholder="찾으시는 상품을 입력하여 주세요." name="text" />
+                <input
+                    type="text"
+                    placeholder="찾으시는 상품을 입력하여 주세요."
+                    name="text"
+                />
                 <button onClick={searchGo}>검색</button>
             </form>
             <div className={styles.defContent}>
@@ -61,7 +67,11 @@ const Search = () => {
                 <Link to="/home-scents">홈 프레그런스</Link>
                 <Link to="/bath-body">배스 앤 바디</Link>
             </div>
-            {product[0] ? <ProductCard product={product} /> : <div className={styles.notice}>{text}</div>}
+            {product[0] ? (
+                <ProductCard product={product} />
+            ) : (
+                <div className={styles.notice}>{text}</div>
+            )}
         </div>
     );
 };
