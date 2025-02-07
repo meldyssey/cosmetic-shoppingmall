@@ -163,7 +163,11 @@ module.exports = () => {
             const data3 = [orderId, maxOrderId, amount, paymentKey];
             console.log("결제테이블", data3);
             await con.execute(sql3, data3);
-
+            // TODO: 결제 승인 실패 비즈니스 로직을 구현하세요.
+            if (!response.ok) {
+                res.status(response.status).json(result);
+                return;
+            }
             // TODO: 결제 완료 비즈니스 로직을 구현하세요.
             res.status(response.status).json({
                 result,

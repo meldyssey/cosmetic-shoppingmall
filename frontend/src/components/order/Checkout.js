@@ -93,9 +93,6 @@ export function CheckoutPage() {
         // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
         try {
             console.log("진입");
-            console.log("페이로드", JSON.stringify(orderPayload));
-            console.log("프로드", JSON.stringify(prod));
-            console.log("오더스데이터", JSON.stringify(ordersData));
             switch (selectedPaymentMethod) {
                 case "CARD":
                     await payment.requestPayment({
@@ -151,7 +148,7 @@ export function CheckoutPage() {
                     });
                     break;
                 default:
-                    alert("유효하지 않은 결제 방식입니다."); /// 왜 필요?
+                    alert("유효하지 않은 결제 방식입니다.");
             }
         } catch (error) {
             console.error("결제 실패:", error);
@@ -164,69 +161,66 @@ export function CheckoutPage() {
             <div className="wrap">
                 <PayHead activeStep={2} />
                 <div className="myform">
-                    <div className="max-w-540 w-100">
-                        <div className="addressinfo">
-                            <div>
-                                <h1>결제수단</h1>
-                                <div
-                                    id="payment-method"
-                                    style={{
-                                        margin: "10px 0",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                    }}
-                                >
-                                    <span className="pay">
-                                        <input
-                                            type="radio"
-                                            name="paymentMethod"
-                                            value="CARD"
-                                            id="CARD"
-                                            checked={
-                                                selectedPaymentMethod === "CARD"
-                                            }
-                                            onChange={() =>
-                                                selectPaymentMethod("CARD")
-                                            }
-                                        />
-                                        <label
-                                            htmlFor="CARD"
-                                            className="label-text"
-                                        >
-                                            카드결제
-                                        </label>
-                                    </span>
-                                    <span className="pay">
-                                        <input
-                                            type="radio"
-                                            name="paymentMethod"
-                                            value="TRANSFER"
-                                            id="TRANSFER"
-                                            checked={
-                                                selectedPaymentMethod ===
-                                                "TRANSFER"
-                                            }
-                                            onChange={() =>
-                                                selectPaymentMethod("TRANSFER")
-                                            }
-                                        />
+                    <div className="addressinfo">
+                        <div>
+                            <h1>결제수단</h1>
+                            <div
+                                id="payment-method"
+                                style={{
+                                    margin: "10px 0",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                }}
+                            >
+                                <span className="pay">
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="CARD"
+                                        id="CARD"
+                                        checked={
+                                            selectedPaymentMethod === "CARD"
+                                        }
+                                        onChange={() =>
+                                            selectPaymentMethod("CARD")
+                                        }
+                                    />
+                                    <label
+                                        htmlFor="CARD"
+                                        className="label-text"
+                                    >
+                                        카드결제
+                                    </label>
+                                </span>
+                                <span className="pay">
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="TRANSFER"
+                                        id="TRANSFER"
+                                        checked={
+                                            selectedPaymentMethod === "TRANSFER"
+                                        }
+                                        onChange={() =>
+                                            selectPaymentMethod("TRANSFER")
+                                        }
+                                    />
 
-                                        <label
-                                            htmlFor="TRANSFER"
-                                            className="label-text"
-                                        >
-                                            계좌이체
-                                        </label>
-                                    </span>
-                                </div>
-                                <button
-                                    className="submit"
-                                    onClick={() => requestPayment()}
-                                >
-                                    {orderPayload.order_total.toLocaleString()}
-                                    원 결제하기
-                                </button>
+                                    <label
+                                        htmlFor="TRANSFER"
+                                        className="label-text"
+                                    >
+                                        계좌이체
+                                    </label>
+                                </span>
                             </div>
+                            <button
+                                className="submit"
+                                onClick={() => requestPayment()}
+                            >
+                                {orderPayload.order_total.toLocaleString()}원
+                                결제하기
+                            </button>
                         </div>
                     </div>
                 </div>
