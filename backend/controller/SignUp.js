@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
 
         if (existingUser.length > 0) {
             console.log('이미 가입된 회원 발견:', email);
-            return res.json({ message: '이미 가입된 회원입니다.' });
+            return res.status(400).json({ status: 'fail', message: '이미 가입된 회원입니다' });
         }
 
         // 고객번호 생성
