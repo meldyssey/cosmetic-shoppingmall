@@ -1,6 +1,5 @@
-# 조말론 홈페이지 리뉴얼 프로젝트
-
-<img width="1674" alt="image" src="https://github.com/user-attachments/assets/abca8742-98a2-4ae1-8c32-bfdab3491c9a" />
+# 코스메틱 쇼핑몰 홈페이지 리뉴얼 프로젝트
+- img 제외
 
 ## 개발기간
 - 홈페이지 구축 : 2024.11.21 ~ 12.13
